@@ -1,0 +1,11 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Chowdhury Agro",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Chowdhury Agro",
+  "start_url": "/",
+  "theme_color": "#ffffff"
+}
