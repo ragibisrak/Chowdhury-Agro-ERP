@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.16</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.17</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -120,16 +120,41 @@
         html.user-authenticated #view-login { display: none !important; }
         html.user-authenticated #appContainer { display: flex !important; }
 
-        /* YouTube-Style Toggleable Sidebar Drawer */
-        .youtube-sidebar {
+        /* Sidebar Styling based on Mode */
+        /* WEBSITE MODE: Sidebar is part of the layout flow on desktop, or collapsible drawer */
+        .sidebar-website {
+            width: 260px;
+            shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 1023px) {
+            .sidebar-website {
+                position: fixed;
+                top: 0; left: 0; bottom: 0;
+                z-index: 50;
+                width: 280px;
+                transform: translateX(-100%);
+                height: 100%;
+            }
+            .sidebar-website.open {
+                transform: translateX(0);
+            }
+        }
+
+        /* ANDROID APK MODE: Drawer overlay mode across all viewports */
+        .sidebar-apk {
             position: fixed;
             top: 0; left: 0; bottom: 0;
             z-index: 50;
             width: 280px;
             transform: translateX(-100%);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 100%;
         }
-        .youtube-sidebar.open {
+        .sidebar-apk.open {
             transform: translateX(0);
         }
 
@@ -165,7 +190,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.16</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.17</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -192,19 +217,25 @@
         <!-- YOUTUBE-STYLE TOP HEADER BAR -->
         <header class="glass-card px-4 py-3 rounded-2xl flex items-center justify-between sticky top-0 z-40">
             <div class="flex items-center space-x-3">
-                <button onclick="toggleYouTubeSidebar()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-cyan-400 cursor-pointer transition flex items-center justify-center" title="Toggle Navigation Sidebar">
+                <button onclick="toggleSidebar()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-cyan-400 cursor-pointer transition flex items-center justify-center" title="Toggle Navigation Sidebar">
                     <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
                 <div class="flex items-center space-x-2.5">
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.16</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.17</p>
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- MODE SWITCHER BUTTON -->
+                <button onclick="toggleAppMode()" id="modeSwitchBtn" class="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 text-[11px] font-mono font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-sm" title="Switch between Website and Android APK Mode">
+                    <i data-lucide="monitor" class="w-3.5 h-3.5" id="modeIcon"></i>
+                    <span id="modeText">Website Mode</span>
+                </button>
+
                 <div class="hidden sm:flex items-center space-x-2 font-mono text-xs">
                     <span id="roleBadge" class="px-2.5 py-1 rounded-full font-mono font-bold uppercase border"></span>
                     <div id="liveClock" class="text-cyan-600 dark:text-cyan-300 font-semibold px-2 py-1 bg-slate-800/50 rounded-lg border border-slate-700/60">00:00:00</div>
@@ -215,21 +246,21 @@
             </div>
         </header>
 
-        <!-- LAYOUT WRAPPER (Sidebar Drawer + Backdrop + Main Workspace) -->
-        <div class="flex flex-col relative">
+        <!-- LAYOUT WRAPPER (Sidebar + Backdrop + Main Workspace) -->
+        <div class="flex flex-row gap-4 sm:gap-6 relative">
             
             <!-- BACKDROP FOR SIDEBAR DRAWER -->
-            <div id="sidebarBackdrop" onclick="toggleYouTubeSidebar()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+            <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
 
-            <!-- YOUTUBE-STYLE SIDEBAR NAVIGATION DRAWER -->
-            <aside id="youtubeSidebarDrawer" class="youtube-sidebar flex flex-col gap-3 glass-card p-4 overflow-y-auto h-full shadow-2xl">
+            <!-- SIDEBAR NAVIGATION (Dynamic class via mode switcher) -->
+            <aside id="appSidebar" class="sidebar-website glass-card p-4 overflow-y-auto">
                 <!-- Drawer Header -->
                 <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
                     <div class="flex items-center space-x-2">
                         <div class="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold">Δ</div>
                         <span class="text-xs font-bold text-cyan-400 tracking-wider">CHOWDHURY AGRO</span>
                     </div>
-                    <button onclick="toggleYouTubeSidebar()" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white cursor-pointer transition">
+                    <button onclick="toggleSidebar()" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white cursor-pointer transition">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -300,7 +331,7 @@
             </aside>
 
             <!-- Main Content Area -->
-            <main class="flex-grow flex flex-col justify-between space-y-4 sm:space-y-6 pt-2">
+            <main class="flex-grow flex flex-col justify-between space-y-4 sm:space-y-6 pt-2 min-w-0">
                 <div>
                     <!-- DASHBOARD VIEW -->
                     <div id="view-dashboard" class="space-y-4 sm:space-y-6 fade-slide-enter">
@@ -913,7 +944,7 @@
 
                 <!-- Footer -->
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.16 • Universal YouTube Sidebar Drawer Toggle Fix
+                    CHOWDHURY AGRO ERP CORE v4.17 • Website & Android APK Mode Switcher
                 </footer>
             </main>
         </div>
@@ -948,6 +979,52 @@
 
     <!-- APP LOGIC & STABILIZED CONTROLLERS -->
     <script>
+        // --- MODE SWITCHER LOGIC (Website Mode vs Android APK Mode) ---
+        let currentAppMode = 'website'; // 'website' or 'apk'
+
+        function toggleAppMode() {
+            try {
+                const sidebar = document.getElementById('appSidebar');
+                const backdrop = document.getElementById('sidebarBackdrop');
+                const modeText = document.getElementById('modeText');
+                const modeIcon = document.getElementById('modeIcon');
+
+                if (currentAppMode === 'website') {
+                    currentAppMode = 'apk';
+                    if (sidebar) {
+                        sidebar.className = 'sidebar-apk glass-card p-4 overflow-y-auto';
+                        sidebar.classList.remove('open');
+                    }
+                    if (backdrop) backdrop.classList.add('hidden');
+                    if (modeText) modeText.innerText = 'Android APK Mode';
+                    if (modeIcon) modeIcon.setAttribute('data-lucide', 'smartphone');
+                    localStorage.setItem('chowdhury_app_mode', 'apk');
+                } else {
+                    currentAppMode = 'website';
+                    if (sidebar) {
+                        sidebar.className = 'sidebar-website glass-card p-4 overflow-y-auto';
+                        sidebar.classList.remove('open');
+                    }
+                    if (backdrop) backdrop.classList.add('hidden');
+                    if (modeText) modeText.innerText = 'Website Mode';
+                    if (modeIcon) modeIcon.setAttribute('data-lucide', 'monitor');
+                    localStorage.setItem('chowdhury_app_mode', 'website');
+                }
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            } catch(e) {}
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('appSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+            if (backdrop) {
+                backdrop.classList.toggle('hidden');
+            }
+        }
+
         // --- MULTI-USER ROLE AUTHENTICATION & PERMISSIONS ---
         function getCurrentRole() {
             try {
@@ -1078,18 +1155,6 @@
                 }
             } catch(e) {
                 window.location.reload();
-            }
-        }
-
-        // Universal YouTube-Style Sidebar Drawer Toggle (Works on all screen sizes)
-        function toggleYouTubeSidebar() {
-            const sidebar = document.getElementById('youtubeSidebarDrawer');
-            const backdrop = document.getElementById('sidebarBackdrop');
-            if (sidebar) {
-                sidebar.classList.toggle('open');
-            }
-            if (backdrop) {
-                backdrop.classList.toggle('hidden');
             }
         }
 
@@ -1252,6 +1317,18 @@
 
                 loadSharedData();
 
+                // Restore saved app mode if any
+                const savedMode = localStorage.getItem('chowdhury_app_mode');
+                if (savedMode === 'apk') {
+                    currentAppMode = 'apk';
+                    const sidebar = document.getElementById('appSidebar');
+                    const modeText = document.getElementById('modeText');
+                    const modeIcon = document.getElementById('modeIcon');
+                    if (sidebar) sidebar.className = 'sidebar-apk glass-card p-4 overflow-y-auto';
+                    if (modeText) modeText.innerText = 'Android APK Mode';
+                    if (modeIcon) modeIcon.setAttribute('data-lucide', 'smartphone');
+                }
+
                 updateClock();
                 renderDashboardBalances();
                 renderCustomersTable();
@@ -1348,14 +1425,12 @@
                         }
                     });
 
-                    // Automatically close sidebar on navigation click
-                    const sidebar = document.getElementById('youtubeSidebarDrawer');
+                    // If in APK mode or mobile screen size, automatically close sidebar on navigation
+                    const sidebar = document.getElementById('appSidebar');
                     const backdrop = document.getElementById('sidebarBackdrop');
-                    if (sidebar && sidebar.classList.contains('open')) {
-                        sidebar.classList.remove('open');
-                    }
-                    if (backdrop && !backdrop.classList.contains('hidden')) {
-                        backdrop.classList.add('hidden');
+                    if (currentAppMode === 'apk' || window.innerWidth < 1024) {
+                        if (sidebar) sidebar.classList.remove('open');
+                        if (backdrop) backdrop.classList.add('hidden');
                     }
 
                     if (viewName === 'inventory') renderInventoryTable();
