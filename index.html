@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.6</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.7</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -150,7 +150,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.6</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.7</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -181,7 +181,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.6</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.7</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -251,23 +251,27 @@
                     </div>
                 </div>
 
-                <!-- Quick Navigation Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                    <div onclick="switchView('manufacturing')" class="glass-card p-5 sm:p-6 rounded-2xl hover-purple cursor-pointer group text-left">
-                        <h3 class="text-sm sm:text-base font-bold group-hover:text-purple-400 transition">Manufacturing & Production</h3>
-                        <p class="text-xs text-slate-400 mt-1 font-medium">Produce sweets & add to finish goods stock.</p>
+                <!-- Quick Navigation Cards (All 5 Modules) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                    <div onclick="switchView('manufacturing')" class="glass-card p-5 rounded-2xl hover-purple cursor-pointer group text-left">
+                        <h3 class="text-sm font-bold group-hover:text-purple-400 transition">Manufacturing</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 font-medium">Produce sweets & add to finish goods stock.</p>
                     </div>
-                    <div onclick="switchView('sales')" class="glass-card p-5 sm:p-6 rounded-2xl hover-cyan cursor-pointer group text-left">
-                        <h3 class="text-sm sm:text-base font-bold group-hover:text-cyan-400 transition">Sales Matrix & POS</h3>
-                        <p class="text-xs text-slate-400 mt-1 font-medium">Generate printable invoices & billing slips.</p>
+                    <div onclick="switchView('purchases')" class="glass-card p-5 rounded-2xl hover-amber cursor-pointer group text-left">
+                        <h3 class="text-sm font-bold group-hover:text-amber-500 transition">Purchase & SCM</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 font-medium">Receive stock shipments and log GRNs.</p>
                     </div>
-                    <div onclick="switchView('expenses')" class="glass-card p-5 sm:p-6 rounded-2xl hover-rose cursor-pointer group text-left">
-                        <h3 class="text-sm sm:text-base font-bold group-hover:text-rose-400 transition">Operating Expenses</h3>
-                        <p class="text-xs text-slate-400 mt-1 font-medium">Track utility bills, transport, and labor.</p>
+                    <div onclick="switchView('sales')" class="glass-card p-5 rounded-2xl hover-cyan cursor-pointer group text-left">
+                        <h3 class="text-sm font-bold group-hover:text-cyan-400 transition">Sales Matrix & POS</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 font-medium">Generate printable invoices & billing slips.</p>
                     </div>
-                    <div onclick="switchView('inventory')" class="glass-card p-5 sm:p-6 rounded-2xl hover-emerald cursor-pointer group text-left">
-                        <h3 class="text-sm sm:text-base font-bold group-hover:text-emerald-400 transition">Inventory & Alerts</h3>
-                        <p class="text-xs text-slate-400 mt-1 font-medium">Monitor low stock and manage categories.</p>
+                    <div onclick="switchView('expenses')" class="glass-card p-5 rounded-2xl hover-rose cursor-pointer group text-left">
+                        <h3 class="text-sm font-bold group-hover:text-rose-400 transition">Expenses</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 font-medium">Track utility bills, transport, and labor.</p>
+                    </div>
+                    <div onclick="switchView('inventory')" class="glass-card p-5 rounded-2xl hover-emerald cursor-pointer group text-left">
+                        <h3 class="text-sm font-bold group-hover:text-emerald-400 transition">Inventory & Alerts</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 font-medium">Monitor low stock and manage categories.</p>
                     </div>
                 </div>
             </div>
@@ -606,7 +610,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.6 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.7 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
         </footer>
     </div>
 
@@ -705,6 +709,7 @@
                     renderRecordsTable();
                     renderManufacturingTable();
                     populateMfgProductDropdown();
+                    populatePurchaseProductDropdown();
 
                     if (typeof lucide !== 'undefined') lucide.createIcons();
                 }, 350);
@@ -1177,6 +1182,7 @@
             renderInventoryTable();
             populateSalesProductDropdown();
             populateMfgProductDropdown();
+            populatePurchaseProductDropdown();
             alert("Product updated successfully!");
         }
 
@@ -1191,6 +1197,7 @@
                 renderInventoryTable();
                 populateSalesProductDropdown();
                 populateMfgProductDropdown();
+                populatePurchaseProductDropdown();
             }
         }
 
@@ -1663,6 +1670,7 @@
                 renderManufacturingTable();
                 populateSalesProductDropdown();
                 populateMfgProductDropdown();
+                populatePurchaseProductDropdown();
             }
         }
     </script>
