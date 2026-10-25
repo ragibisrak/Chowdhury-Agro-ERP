@@ -17,14 +17,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css" id="flatpickrTheme">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    <!-- Safe Pre-Render Authentication Check (Eliminates Blank Screen Bug) -->
+    <script>
+        if (localStorage.getItem('chowdhury_logged_in') === 'true') {
+            document.documentElement.classList.add('user-authenticated');
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; -webkit-tap-highlight-color: transparent; }
         
         /* Dark Mode Defaults */
         .dark body { background-color: #030712; color: #f3f4f6; }
-        .dark .glass-card { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.5); }
-        .dark .custom-input { background-color: #0f172a; border-color: #334155; color: #ffffff; }
+        .dark .glass-card { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .dark .custom-input { background-color: #0f172a; border-color: #334155; color: #ffffff; transition: all 0.2s ease; }
 
         /* Enhanced Light Mode Styles with Crisp Borders & Soft Shadows */
         html:not(.dark) body { background-color: #f8fafc; color: #0f172a; }
@@ -32,9 +39,9 @@
             background: #ffffff; 
             border: 1px solid #cbd5e1 !important; 
             box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04); 
-            transition: all 0.2s ease-in-out;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        html:not(.dark) .custom-input { background-color: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
+        html:not(.dark) .custom-input { background-color: #f8fafc; border-color: #cbd5e1; color: #0f172a; transition: all 0.2s ease; }
         html:not(.dark) .custom-input:focus { background-color: #ffffff; border-color: #0284c7; }
         html:not(.dark) .text-slate-400 { color: #64748b !important; }
         html:not(.dark) .text-slate-300 { color: #334155 !important; }
@@ -43,49 +50,38 @@
         html:not(.dark) .bg-slate-900 { background-color: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; }
         html:not(.dark) .bg-slate-800 { background-color: #e2e8f0 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
 
-        /* Light Mode Hover Outlines for interactive/clickable cards */
-        html:not(.dark) .hover-amber:hover { border-color: #f59e0b !important; box-shadow: 0 4px 14px -2px rgba(245, 158, 11, 0.25); }
-        html:not(.dark) .hover-cyan:hover { border-color: #06b6d4 !important; box-shadow: 0 4px 14px -2px rgba(6, 182, 212, 0.25); }
-        html:not(.dark) .hover-emerald:hover { border-color: #10b981 !important; box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.25); }
-        html:not(.dark) .hover-purple:hover { border-color: #a855f7 !important; box-shadow: 0 4px 14px -2px rgba(168, 85, 247, 0.25); }
+        /* Dynamic Hover Animations & Glow Outlines */
+        .glass-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.15); }
+        html:not(.dark) .hover-amber:hover { border-color: #f59e0b !important; box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.25); }
+        html:not(.dark) .hover-cyan:hover { border-color: #06b6d4 !important; box-shadow: 0 8px 24px -4px rgba(6, 182, 212, 0.25); }
+        html:not(.dark) .hover-emerald:hover { border-color: #10b981 !important; box-shadow: 0 8px 24px -4px rgba(16, 185, 129, 0.25); }
+        html:not(.dark) .hover-purple:hover { border-color: #a855f7 !important; box-shadow: 0 8px 24px -4px rgba(168, 85, 247, 0.25); }
 
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         .flatpickr-calendar { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2); }
 
-        /* Smooth UI Transition Animations */
+        /* Safe Pre-Render Authentication Rules (Zero Blank Screen) */
+        #appContainer { display: none; }
+        html.user-authenticated #view-login { display: none !important; }
+        html.user-authenticated #appContainer { display: flex !important; }
+
+        /* Smooth UI View & Element Transition Animations */
+        @keyframes fadeSlideIn {
+            0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
         .fade-slide-enter {
-            opacity: 0;
-            transform: translateY(12px) scale(0.98);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-slide-enter-active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        .fade-slide-exit {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .fade-slide-exit-active {
-            opacity: 0;
-            transform: translateY(-12px) scale(0.98);
+            animation: fadeSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
-    <script>
-        // Check login instantly on load to prevent blank screen
-        if (localStorage.getItem('chowdhury_logged_in') === 'true') {
-            document.write('<style>#view-login { display: none !important; } #appContainer { display: flex !important; }</style>');
-        }
-    </script>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-3 sm:p-6">
 
     <!-- LOGIN SCREEN VIEW -->
     <div id="view-login" class="flex-grow flex items-center justify-center transition-all duration-300">
-        <div class="glass-card p-6 sm:p-8 rounded-3xl w-full max-w-md space-y-6 shadow-2xl hover-cyan fade-slide-enter fade-slide-enter-active" id="loginCard">
+        <div class="glass-card p-6 sm:p-8 rounded-3xl w-full max-w-md space-y-6 shadow-2xl hover-cyan fade-slide-enter" id="loginCard">
             <div class="text-center space-y-2">
-                <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-500 font-bold text-xl">Δ</div>
+                <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-500 font-bold text-xl animate-pulse">Δ</div>
                 <h1 class="text-xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                 <p class="text-xs text-slate-400 font-mono">SECURE ERP GATEWAY V3.0</p>
             </div>
@@ -100,7 +96,7 @@
                     <input type="password" id="loginPass" required placeholder="Enter PIN..." autocomplete="current-password" class="custom-input w-full border rounded-xl p-3 text-sm font-mono">
                 </div>
                 <div id="loginError" class="text-rose-500 text-xs text-center font-medium hidden">Invalid Credentials. Please check username & password.</div>
-                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition shadow-lg shadow-cyan-500/20">Authenticate & Unlock ERP</button>
+                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition transform active:scale-95 shadow-lg shadow-cyan-500/20">Authenticate & Unlock ERP</button>
             </form>
             <div class="text-center">
                 <p class="text-[10px] text-slate-500 font-mono">Authorized Personnel Only</p>
@@ -109,7 +105,7 @@
     </div>
 
     <!-- MAIN APP CONTAINER (Hidden until login) -->
-    <div id="appContainer" class="hidden flex-grow flex flex-col justify-between space-y-4 sm:space-y-6 fade-slide-enter">
+    <div id="appContainer" class="flex-grow flex flex-col justify-between space-y-4 sm:space-y-6 fade-slide-enter">
         <!-- Top Navigation -->
         <header class="glass-card p-4 sm:px-6 sm:py-4 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center justify-between w-full md:w-auto">
@@ -141,22 +137,22 @@
                     <i data-lucide="moon" class="w-4 h-4" id="themeIcon"></i>
                 </button>
 
-                <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/40 text-cyan-700 dark:text-cyan-300 font-semibold cursor-pointer">Dashboard</button>
-                <button onclick="switchView('purchases')" class="text-xs px-3 py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-semibold cursor-pointer">Purchase & SCM</button>
-                <button onclick="switchView('sales')" class="text-xs px-3 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/40 text-indigo-700 dark:text-indigo-300 font-semibold cursor-pointer">Sales Matrix</button>
-                <button onclick="switchView('inventory')" class="text-xs px-3 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 font-semibold cursor-pointer">Inventory</button>
-                <button onclick="switchView('records')" class="text-xs px-3 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-semibold cursor-pointer">Logs</button>
-                <button onclick="handleLogout()" class="text-xs px-3 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 text-rose-600 dark:text-rose-300 font-semibold cursor-pointer" title="Secure Logout">Logout</button>
+                <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/40 text-cyan-700 dark:text-cyan-300 font-semibold cursor-pointer transition transform active:scale-95">Dashboard</button>
+                <button onclick="switchView('purchases')" class="text-xs px-3 py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-semibold cursor-pointer transition transform active:scale-95">Purchase & SCM</button>
+                <button onclick="switchView('sales')" class="text-xs px-3 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/40 text-indigo-700 dark:text-indigo-300 font-semibold cursor-pointer transition transform active:scale-95">Sales Matrix</button>
+                <button onclick="switchView('inventory')" class="text-xs px-3 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 font-semibold cursor-pointer transition transform active:scale-95">Inventory</button>
+                <button onclick="switchView('records')" class="text-xs px-3 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-semibold cursor-pointer transition transform active:scale-95">Logs</button>
+                <button onclick="handleLogout()" class="text-xs px-3 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 text-rose-600 dark:text-rose-300 font-semibold cursor-pointer transition transform active:scale-95" title="Secure Logout">Logout</button>
             </div>
         </header>
 
         <!-- Main Content Area -->
         <main class="flex-grow">
             <!-- DASHBOARD VIEW -->
-            <div id="view-dashboard" class="space-y-4 sm:space-y-6">
+            <div id="view-dashboard" class="space-y-4 sm:space-y-6 fade-slide-enter">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl hover-cyan flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <span class="text-[10px] bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 px-2.5 py-1 rounded-full font-mono border border-cyan-500/40 font-bold">SYSTEM ONLINE (SYNCED)</span>
+                        <span class="text-[10px] bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 px-2.5 py-1 rounded-full font-mono border border-cyan-500/40 font-bold">SYSTEM ONLINE (LIVE SYNC)</span>
                         <h2 id="welcomeGreeting" class="text-xl sm:text-2xl font-bold mt-3">Welcome back</h2>
                         <p class="text-xs text-slate-400 mt-1">Multi-device synchronization active across active browser instances.</p>
                     </div>
@@ -208,7 +204,7 @@
             </div>
 
             <!-- PURCHASE & SCM VIEW -->
-            <div id="view-purchases" class="hidden space-y-4 sm:space-y-6">
+            <div id="view-purchases" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Purchase & Supply Chain (SCM)</h2>
@@ -240,7 +236,7 @@
                             <label class="text-[10px] text-slate-400 block mb-1">Received Quantity</label>
                             <input type="number" id="purchaseQtyInput" value="10" min="1" class="custom-input w-full border rounded-lg p-2.5 text-xs">
                         </div>
-                        <button onclick="addPurchaseItem()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-lg text-xs cursor-pointer transition">Add to Purchase Manifest</button>
+                        <button onclick="addPurchaseItem()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-lg text-xs cursor-pointer transition transform active:scale-95">Add to Purchase Manifest</button>
                     </div>
 
                     <div class="glass-card p-4 sm:p-5 rounded-xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-amber">
@@ -268,14 +264,14 @@
                                 <p class="text-xs text-slate-400">Current Manifest Value:</p>
                                 <p id="purchaseGrandTotal" class="text-lg sm:text-xl font-bold font-mono text-amber-600 dark:text-amber-400">0.00 TK.</p>
                             </div>
-                            <button onclick="finalizePurchase()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition">Confirm GRN & Save Record</button>
+                            <button onclick="finalizePurchase()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95">Confirm GRN & Save Record</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- SALES MATRIX VIEW -->
-            <div id="view-sales" class="hidden space-y-4 sm:space-y-6">
+            <div id="view-sales" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Sales Matrix & Billing</h2>
@@ -302,7 +298,7 @@
                             <label class="text-[10px] text-slate-400 block mb-1">Quantity</label>
                             <input type="number" id="itemQty" value="1" min="1" class="custom-input w-full border rounded-lg p-2.5 text-xs">
                         </div>
-                        <button onclick="addToCart()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-lg text-xs cursor-pointer transition">Add to Cart</button>
+                        <button onclick="addToCart()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-lg text-xs cursor-pointer transition transform active:scale-95">Add to Cart</button>
                     </div>
                     <div class="glass-card p-4 sm:p-5 rounded-xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-cyan">
                         <div>
@@ -329,14 +325,14 @@
                                 <p class="text-xs text-slate-400">Grand Total:</p>
                                 <p id="cartGrandTotal" class="text-lg sm:text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400">0.00 TK.</p>
                             </div>
-                            <button onclick="checkoutSale()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition">Complete Sale & Sync</button>
+                            <button onclick="checkoutSale()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95">Complete Sale & Sync</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- TRANSACTION RECORDS HUB VIEW -->
-            <div id="view-records" class="hidden space-y-4 sm:space-y-6">
+            <div id="view-records" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Transaction Records Hub</h2>
@@ -391,7 +387,7 @@
             </div>
 
             <!-- INVENTORY CATALOG VIEW -->
-            <div id="view-inventory" class="hidden space-y-4 sm:space-y-6">
+            <div id="view-inventory" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Agro Product Catalog & Categories</h2>
@@ -490,17 +486,17 @@
             if (authenticatedRole) {
                 localStorage.setItem('chowdhury_logged_in', 'true');
                 localStorage.setItem('chowdhury_role', authenticatedRole);
+                document.documentElement.classList.add('user-authenticated');
                 
                 const loginView = document.getElementById('view-login');
-                loginView.classList.add('fade-slide-exit-active');
+                loginView.style.opacity = '0';
+                loginView.style.transform = 'translateY(-12px)';
+                loginView.style.transition = 'all 0.3s ease';
 
                 setTimeout(() => {
                     loginView.classList.add('hidden');
-                    loginView.classList.remove('fade-slide-exit-active');
-                    
                     const appContainer = document.getElementById('appContainer');
                     appContainer.classList.remove('hidden');
-                    appContainer.classList.add('fade-slide-enter-active');
                     
                     applyRolePermissions();
                     loadSharedData();
@@ -516,11 +512,14 @@
 
         function handleLogout() {
             const appContainer = document.getElementById('appContainer');
-            appContainer.classList.add('fade-slide-exit-active');
+            appContainer.style.opacity = '0';
+            appContainer.style.transform = 'translateY(12px)';
+            appContainer.style.transition = 'all 0.3s ease';
 
             setTimeout(() => {
                 appContainer.classList.add('hidden');
-                appContainer.classList.remove('fade-slide-exit-active');
+                appContainer.style.opacity = '';
+                appContainer.style.transform = '';
 
                 document.getElementById('loginUser').value = '';
                 document.getElementById('loginPass').value = '';
@@ -528,10 +527,12 @@
 
                 const loginView = document.getElementById('view-login');
                 loginView.classList.remove('hidden');
-                loginView.classList.add('fade-slide-enter-active');
+                loginView.style.opacity = '1';
+                loginView.style.transform = 'translateY(0)';
 
                 localStorage.removeItem('chowdhury_logged_in');
                 localStorage.removeItem('chowdhury_role');
+                document.documentElement.classList.remove('user-authenticated');
             }, 300);
         }
 
@@ -819,8 +820,7 @@
             loadSharedData();
 
             if (localStorage.getItem('chowdhury_logged_in') === 'true') {
-                document.getElementById('view-login').classList.add('hidden');
-                document.getElementById('appContainer').classList.remove('hidden');
+                document.documentElement.classList.add('user-authenticated');
                 applyRolePermissions();
             }
 
@@ -861,11 +861,17 @@
         function switchView(viewName) {
             ['view-dashboard', 'view-purchases', 'view-sales', 'view-inventory', 'view-records'].forEach(v => {
                 const el = document.getElementById(v);
-                if (el) el.classList.add('hidden');
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('fade-slide-enter');
+                }
             });
             const target = document.getElementById(`view-${viewName}`);
             if (target) {
                 target.classList.remove('hidden');
+                void target.offsetWidth; // Trigger reflow for smooth re-animation
+                target.classList.add('fade-slide-enter');
+
                 if (viewName === 'inventory') renderInventoryTable();
                 if (viewName === 'sales') populateSalesProductDropdown();
                 if (viewName === 'purchases') populatePurchaseProductDropdown();
