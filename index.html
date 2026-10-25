@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.28</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.29</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -168,25 +168,25 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <!-- LOGIN SCREEN -->
+    <!-- LOGIN SCREEN (SECURED) -->
     <div id="view-login" class="flex-grow flex items-center justify-center transition-all duration-300">
         <div class="glass-card p-6 sm:p-8 rounded-3xl w-full max-w-md space-y-6 shadow-2xl hover-cyan fade-slide-enter" id="loginCard">
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.28</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.29</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider font-semibold">Username ID (owner / manager)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider font-semibold">Username ID</label>
                     <input type="text" id="loginUser" required placeholder="Enter username..." autocomplete="off" class="custom-input w-full border rounded-xl p-3 text-sm font-medium">
                 </div>
                 <div>
-                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider font-semibold">Access PIN / Password (1234 / 4321)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider font-semibold">Access PIN / Password</label>
                     <input type="password" id="loginPass" required placeholder="Enter PIN..." autocomplete="current-password" class="custom-input w-full border rounded-xl p-3 text-sm font-mono font-medium">
                 </div>
-                <div id="loginError" class="text-rose-500 text-xs text-center font-medium hidden">Invalid Credentials. Owner: 1234 | Manager: 4321</div>
+                <div id="loginError" class="text-rose-500 text-xs text-center font-medium hidden">Invalid credentials. Please verify your username and PIN.</div>
                 <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition transform active:scale-95 shadow-lg shadow-cyan-500/30">Authenticate & Unlock ERP</button>
             </form>
             <div class="text-center">
@@ -207,7 +207,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.28</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.29</p>
                     </div>
                 </div>
             </div>
@@ -1121,7 +1121,7 @@
                 </div>
 
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.28 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.29 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
@@ -1356,7 +1356,8 @@
             { code: "IT000004", name: "Malai Roll #4", group: "Finish Goods", category: "Malai Roll[ITEM]", unit: "BAG", retailRate: 245.0, wholesaleRate: 235.0, purchaseRate: 0.0, openingQty: 25 },
             { code: "RM000100", name: "Sour Yogurt #100", group: "Raw Material", category: "Sour Yogurt[ITEM]", unit: "BAG", retailRate: 485.0, wholesaleRate: 475.0, purchaseRate: 330.0, openingQty: 100 },
             { code: "RM000101", name: "Dahi Vada #101", group: "Raw Material", category: "Dahi Vada[ITEM]", unit: "PCS", retailRate: 110.0, wholesaleRate: 100.0, purchaseRate: 50.0, openingQty: 80 },
-            { code: "AG000151", name: "Guchi Peyera #151", group: "Agro", category: "Guchi Peyera[ITEM]", unit: "BAG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 200.0, openingQty: 60 }
+            { code: "AG000151", name: "Guchi Peyera #151", group: "Agro", category: "Guchi Peyera[ITEM]", unit: "BAG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 200.0, openingQty: 60 },
+            { code: "RM000102", name: "45 kg Cylinder", group: "Raw Material", category: "Raw Material[ITEM]", unit: "PCS", retailRate: 2500.0, wholesaleRate: 2400.0, purchaseRate: 2200.0, openingQty: 20 }
         ];
 
         let agroProducts = [];
@@ -1390,7 +1391,7 @@
                 systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
                 agroProducts = savedProducts ? JSON.parse(savedProducts) : JSON.parse(JSON.stringify(defaultAgroProducts));
                 customerDirectory = savedCustomers ? JSON.parse(savedCustomers) : [{ id: "CUST-1001", name: "Walk-in Customer", phone: "N/A", address: "General Counter", creditLimit: 0 }];
-                supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
+                supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal, 45 kg Cylinder", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
                 
                 staffDirectory = savedStaff ? JSON.parse(savedStaff) : [
                     { id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Branch", phone: "01799887766", salary: 14000 }
@@ -1427,7 +1428,7 @@
 
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.28",
+                version: "4.29",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
