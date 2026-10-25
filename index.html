@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.23</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.24</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -187,7 +187,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.23</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.24</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -221,7 +221,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.23</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.24</p>
                     </div>
                 </div>
             </div>
@@ -312,7 +312,7 @@
                     </div>
                     <button onclick="switchView('records')" id="nav-btn-records" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-purple-500/10 text-slate-300 hover:text-purple-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-purple-500/30">
                         <i data-lucide="file-text" class="w-4 h-4 shrink-0"></i>
-                        <span>Logs Hub</span>
+                        <span>Logs & Sync Hub</span>
                     </button>
 
                     <div class="pt-3 border-t border-slate-800/80">
@@ -963,10 +963,29 @@
                     <div id="view-records" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
                             <div class="text-left">
-                                <h2 class="text-lg sm:text-xl font-bold">Transaction Records & Logs Hub</h2>
-                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Search and filter historical purchase, sales, manufacturing, and expense logs by date or date range.</p>
+                                <h2 class="text-lg sm:text-xl font-bold">Transaction Records & Sync Hub</h2>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Search historical logs and backup or restore your entire database across devices.</p>
                             </div>
                             <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                        </div>
+
+                        <!-- BACKUP & RESTORE PANEL (SOLVES ORIGIN / APP SYNC ISSUES) -->
+                        <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4 border border-cyan-500/30 bg-cyan-500/5">
+                            <div class="text-left">
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400">🔄 Cross-Device Database Sync (Backup & Restore)</h3>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Export all 173+ items, customers, and records to a JSON file, or import it to sync website & APK.</p>
+                            </div>
+                            <div class="flex items-center space-x-2.5 w-full sm:w-auto">
+                                <button onclick="exportDatabaseJSON()" class="flex-grow sm:flex-grow-0 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs cursor-pointer transition shadow-md shadow-cyan-500/20 flex items-center justify-center space-x-1.5">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    <span>Export DB (JSON)</span>
+                                </button>
+                                <label class="flex-grow sm:flex-grow-0 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs cursor-pointer transition shadow-md shadow-emerald-500/20 flex items-center justify-center space-x-1.5">
+                                    <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                                    <span>Import DB</span>
+                                    <input type="file" id="importFileField" accept=".json" onchange="importDatabaseJSON(event)" class="hidden">
+                                </label>
+                            </div>
                         </div>
 
                         <!-- Hub Controls -->
@@ -1064,7 +1083,7 @@
 
                 <!-- Footer -->
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.23 • Supplier-Filtered Purchase Dropdown
+                    CHOWDHURY AGRO ERP CORE v4.24 • Cross-Device JSON DB Sync
                 </footer>
             </main>
         </div>
@@ -1369,6 +1388,88 @@
                 localStorage.setItem('chowdhury_manufacturing', JSON.stringify(manufacturingHistory));
             } catch(e) {
                 console.error("Error saving shared data:", e);
+            }
+        }
+
+        // --- DATABASE EXPORT & IMPORT (JSON SYNC) ---
+        function exportDatabaseJSON() {
+            try {
+                const dbData = {
+                    version: "4.24",
+                    exportDate: new Date().toISOString(),
+                    balances: systemBalances,
+                    products: agroProducts,
+                    customers: customerDirectory,
+                    suppliers: supplierDirectory,
+                    staff: staffDirectory,
+                    purchases: purchaseHistory,
+                    sales: salesHistory,
+                    expenses: expenseHistory,
+                    manufacturing: manufacturingHistory
+                };
+
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dbData, null, 2));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", `ChowdhuryAgro_DB_Backup_${new Date().toISOString().split('T')[0]}.json`);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            } catch(e) {
+                alert("Error exporting database: " + e.message);
+            }
+        }
+
+        function importDatabaseJSON(event) {
+            try {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const parsedDB = JSON.parse(e.target.result);
+                        if (!parsedDB.products || !parsedDB.customers) {
+                            alert("Invalid backup file format!");
+                            return;
+                        }
+
+                        if (confirm(`Import database backup? This will replace current local records with ${parsedDB.products.length} products.`)) {
+                            systemBalances = parsedDB.balances || systemBalances;
+                            agroProducts = parsedDB.products || agroProducts;
+                            customerDirectory = parsedDB.customers || customerDirectory;
+                            supplierDirectory = parsedDB.suppliers || supplierDirectory;
+                            staffDirectory = parsedDB.staff || staffDirectory;
+                            purchaseHistory = parsedDB.purchases || purchaseHistory;
+                            salesHistory = parsedDB.sales || salesHistory;
+                            expenseHistory = parsedDB.expenses || expenseHistory;
+                            manufacturingHistory = parsedDB.manufacturing || manufacturingHistory;
+
+                            saveSharedData();
+
+                            renderDashboardBalances();
+                            renderInventoryTable();
+                            renderRecordsTable();
+                            renderManufacturingTable();
+                            renderCustomersTable();
+                            renderSuppliersTable();
+                            renderStaffTable();
+                            renderItemsEntryTable();
+                            populateSalesProductDropdown();
+                            populateSalesCustomerDropdown();
+                            populatePurchaseSupplierDropdown();
+                            populateMfgProductDropdown();
+
+                            alert(`Database successfully imported! Loaded ${agroProducts.length} total products.`);
+                        }
+                    } catch(err) {
+                        alert("Error parsing JSON backup file: " + err.message);
+                    }
+                };
+                reader.readAsText(file);
+                event.target.value = ''; // Reset input
+            } catch(e) {
+                alert("Error importing database: " + e.message);
             }
         }
 
@@ -2585,12 +2686,10 @@
                 if (!select) return;
                 select.innerHTML = '';
 
-                // Extract allowed item names from supplier provides string (split by comma)
                 const allowedNames = supplierProvidesStr 
                     ? supplierProvidesStr.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
                     : [];
 
-                // Filter products: must match raw material/agro AND be provided by this supplier
                 const purchaseEligible = agroProducts.filter(p => {
                     const g = (p.group || '').toLowerCase();
                     const isRawOrAgro = g.includes('raw material') || g.includes('agro');
