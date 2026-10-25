@@ -697,7 +697,19 @@
             const savedExpenses = localStorage.getItem('chowdhury_expenses');
 
             systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
-            agroProducts = savedProducts ? JSON.parse(savedProducts) : JSON.parse(JSON.stringify(defaultAgroProducts));
+            
+            // Intelligent fallback: if local storage has products, load them. If empty, load defaults.
+            if (savedProducts) {
+                try {
+                    const parsed = JSON.parse(savedProducts);
+                    agroProducts = (Array.isArray(parsed) && parsed.length > 0) ? parsed : JSON.parse(JSON.stringify(defaultAgroProducts));
+                } catch(e) {
+                    agroProducts = JSON.parse(JSON.stringify(defaultAgroProducts));
+                }
+            } else {
+                agroProducts = JSON.parse(JSON.stringify(defaultAgroProducts));
+            }
+
             purchaseHistory = savedPurchases ? JSON.parse(savedPurchases) : [];
             salesHistory = savedSales ? JSON.parse(savedSales) : [];
             expenseHistory = savedExpenses ? JSON.parse(savedExpenses) : [];
