@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.27</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.28</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -174,7 +174,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.27</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.28</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -207,7 +207,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.27</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.28</p>
                     </div>
                 </div>
             </div>
@@ -262,10 +262,6 @@
                         <i data-lucide="briefcase" class="w-4 h-4 shrink-0"></i>
                         <span>Staff & Supplier Manager</span>
                     </button>
-                    <button onclick="switchView('attendance')" id="nav-btn-attendance" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
-                        <i data-lucide="calendar-check" class="w-4 h-4 shrink-0"></i>
-                        <span>Staff Attendance Hub</span>
-                    </button>
                     <button onclick="switchView('inventory')" id="nav-btn-inventory" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="boxes" class="w-4 h-4 shrink-0"></i>
                         <span>Inventory</span>
@@ -294,6 +290,10 @@
                     <div class="pt-2 pb-1 border-t border-slate-800/80">
                         <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest px-3 py-1 font-bold">System Hub</p>
                     </div>
+                    <button onclick="switchView('attendance')" id="nav-btn-attendance" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
+                        <i data-lucide="calendar-check" class="w-4 h-4 shrink-0"></i>
+                        <span>Staff Attendance Hub</span>
+                    </button>
                     <button onclick="switchView('records')" id="nav-btn-records" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-purple-500/10 text-slate-300 hover:text-purple-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="file-text" class="w-4 h-4 shrink-0"></i>
                         <span>Logs & Sync Hub</span>
@@ -344,7 +344,7 @@
                         </div>
 
                         <div class="space-y-3">
-                            <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest text-left px-1">Quick Access Hub (Core Modules)</h3>
+                            <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest text-left px-1">Quick Access Hub (Important 8 Core Modules)</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                                 <div onclick="switchView('customers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
@@ -367,13 +367,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Vendors, items & locations.</p>
                                     </div>
                                 </div>
-                                <div onclick="switchView('attendance')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
-                                    <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Attendance Hub</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Log present/absent dates.</p>
-                                    </div>
-                                </div>
                                 <div onclick="switchView('inventory')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0"><i data-lucide="boxes" class="w-5 h-5"></i></div>
                                     <div>
@@ -386,6 +379,13 @@
                                     <div>
                                         <h4 class="text-xs sm:text-sm font-bold group-hover:text-purple-400 transition">Manufacturing</h4>
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Record production batches.</p>
+                                    </div>
+                                </div>
+                                <div onclick="switchView('purchases')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Purchase</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Restock raw materials.</p>
                                     </div>
                                 </div>
                                 <div onclick="switchView('sales')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
@@ -1121,7 +1121,7 @@
                 </div>
 
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.27 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.28 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
@@ -1427,7 +1427,7 @@
 
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.27",
+                version: "4.28",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
@@ -2291,7 +2291,6 @@
                 const staffObj = staffDirectory.find(s => s.id === staffId);
                 if (!staffObj) return;
 
-                // Check if entry already exists for this staff on this date, update if so or add new
                 const existingIndex = attendanceHistory.findIndex(a => a.staffId === staffId && a.rawDate === dateVal);
                 if (existingIndex > -1) {
                     attendanceHistory[existingIndex].status = status;
