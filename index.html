@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.0</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.1</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -111,7 +111,7 @@
         .font-mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.025em; }
         .flatpickr-calendar { box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.45); border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.1); }
 
-        /* Pre-Render Auth Rules: Default show login, hide app */
+        /* Pre-Render Auth Rules */
         #appContainer { display: none !important; }
         #view-login { display: flex !important; }
 
@@ -149,7 +149,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.0</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.1</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -180,7 +180,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.0</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.1</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -272,8 +272,9 @@
 
             <!-- PURCHASE & SCM VIEW -->
             <div id="view-purchases" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
-                    <div>
+                    <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Purchase & Supply Chain (SCM)</h2>
                         <p class="text-xs text-slate-400 mt-0.5 font-medium">Restock Raw Materials & Agro/Feed inventory via verified GRN entries.</p>
                     </div>
@@ -339,8 +340,9 @@
 
             <!-- SALES MATRIX VIEW -->
             <div id="view-sales" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
-                    <div>
+                    <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Sales Matrix & POS Billing</h2>
                         <p class="text-xs text-slate-400 mt-0.5 font-medium">Process customer orders and generate printable thermal receipts.</p>
                     </div>
@@ -400,8 +402,9 @@
 
             <!-- OPERATING EXPENSES VIEW -->
             <div id="view-expenses" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-rose">
-                    <div>
+                    <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Operating Expense Ledger (OpEx)</h2>
                         <p class="text-xs text-slate-400 mt-0.5 font-medium">Track utility bills, transport, wages, and store maintenance costs.</p>
                     </div>
@@ -461,12 +464,13 @@
                 </div>
             </div>
 
-            <!-- TRANSACTION RECORDS HUB VIEW -->
+            <!-- TRANSACTION RECORDS HUB VIEW (NOW INCLUDES EXPENSES) -->
             <div id="view-records" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
-                    <div>
-                        <h2 class="text-lg sm:text-xl font-bold">Transaction Records Hub</h2>
-                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Search and filter historical purchase and sales logs by date.</p>
+                    <div class="text-left">
+                        <h2 class="text-lg sm:text-xl font-bold">Transaction Records & Logs Hub</h2>
+                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Search and filter historical purchase, sales, and expense logs by date.</p>
                     </div>
                     <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                 </div>
@@ -476,6 +480,7 @@
                     <div class="flex space-x-2 overflow-x-auto pb-1 lg:pb-0 shrink-0">
                         <button onclick="setRecordTab('purchase')" id="rec-tab-purchase" class="text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20">Purchase Records (GRN)</button>
                         <button onclick="setRecordTab('sales')" id="rec-tab-sales" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Sales Invoices</button>
+                        <button onclick="setRecordTab('expenses')" id="rec-tab-expenses" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Operating Expenses</button>
                     </div>
                     
                     <div class="flex items-center space-x-2 flex-wrap sm:flex-nowrap gap-2">
@@ -500,7 +505,7 @@
                     <div class="overflow-x-auto max-h-[500px]">
                         <table class="w-full text-left text-xs min-w-[650px]">
                             <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
-                                <tr>
+                                <tr id="recordTableHeaderRow">
                                     <th class="pb-2.5 pl-3">Ref ID</th>
                                     <th class="pb-2.5">Date</th>
                                     <th id="recordHeaderParty" class="pb-2.5">Supplier / Vendor</th>
@@ -519,8 +524,9 @@
 
             <!-- INVENTORY CATALOG VIEW -->
             <div id="view-inventory" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
-                    <div>
+                    <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Agro Product Catalog & Stock Alerts</h2>
                         <p class="text-xs text-slate-400 mt-0.5 font-medium">Monitor low inventory levels and filter by category groups.</p>
                     </div>
@@ -564,7 +570,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.0 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.1 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
         </footer>
     </div>
 
@@ -664,6 +670,7 @@
                     if (typeof lucide !== 'undefined') lucide.createIcons();
                 }, 350);
             } else {
+                errorEl.classList.add('hidden'); // Fix typo in original if needed, or keep standard
                 errorEl.classList.remove('hidden');
             }
         }
@@ -703,179 +710,11 @@
         };
 
         const defaultAgroProducts = [
-            { code: "P000185", name: "Toffy Bar", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 750.0, wholesaleRate: 740.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000184", name: "Sp Laddu", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000183", name: "Cylinder 45Kg", group: "Raw Material", category: "Energy", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000182", name: "Laddu Item", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000181", name: "ShanPapri 250GM", group: "Finish Goods", category: "Dry Items", unit: "Pcs", retailRate: 130.0, wholesaleRate: 125.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000180", name: "SP Box 500Gm", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000179", name: "Rakubsha", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000178", name: "Sondesh Roll", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000177", name: "Kheer Nut", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 500.0, wholesaleRate: 490.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000176", name: "Irani Vug", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000175", name: "Nut", group: "Raw Material", category: "Dry Items", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000174", name: "Mawa Malaikari", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 400.0, wholesaleRate: 400.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000173", name: "Tunga", group: "General", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000172", name: "Mihidana", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 0.0, wholesaleRate: 350.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000171", name: "chana sp", group: "Raw Material", category: "Sweet", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 345.0, openingQty: 0 },
-            { code: "P000170", name: "water", group: "Raw Material", category: "General", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000169", name: "Jilapi Item", group: "Raw Material", category: "Dry Items", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000168", name: "Gurer Chana Sondesh", group: "Finish Goods", category: "General", unit: "Kg", retailRate: 0.0, wholesaleRate: 790.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000167", name: "Patali Gur", group: "Raw Material", category: "Sweet", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000166", name: "Milk Cream", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000165", name: "Kaju Barfi", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 1000.0, wholesaleRate: 950.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000164", name: "Ovaltine", group: "Raw Material", category: "Milk", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000163", name: "Milk Barfi", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000162", name: "Mihidana Barfi", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 420.0, wholesaleRate: 410.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000161", name: "Hafsi", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000160", name: "Buter Barfi", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000159", name: "Cocunut Peyara", group: "General", category: "Dry Items", unit: "Kg", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000158", name: "Roll  Peyara", group: "General", category: "Dry Items", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000157", name: "Kheer Peyara", group: "General", category: "Dry Items", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000156", name: "Kasmiri Barfi", group: "General", category: "Dry Items", unit: "Kg", retailRate: 800.0, wholesaleRate: 790.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000155", name: "Munda Dry Sondesh", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000154", name: "Ilish Petty", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 800.0, wholesaleRate: 790.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000153", name: "Guchi Peyara", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000152", name: "Badshah Vug", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 480.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000151", name: "Sailage", group: "Agro", category: "Feed", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000150", name: "Box Royel", group: "Raw Material", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000149", name: "Cherry", group: "Raw Material", category: "Sweet", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000148", name: "Rope", group: "Agro", category: "Feed", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000147", name: "Ambar Khejur", group: "Raw Material", category: "Dry Items", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000146", name: "Royel Khejur", group: "Raw Material", category: "Dry Items", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000145", name: "Dabas Khejur", group: "Raw Material", category: "Dry Items", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000144", name: "Ajwa Khejur", group: "Raw Material", category: "Dry Items", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000143", name: "Farmland Milk", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000142", name: "Chana Muki", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000141", name: "Net Bag Small", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000140", name: "Net Bag Med", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000139", name: "Net Bag Big", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000138", name: "Paper", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000137", name: "Sticker", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000136", name: "Nimki Box", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000135", name: "Washing Powder", group: "Raw Material", category: "General", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000134", name: "Jelly", group: "Raw Material", category: "Dry Items", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000133", name: "Cake Sweet", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000132", name: "Lemon Sweet", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000131", name: "Disel", group: "Raw Material", category: "Energy", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000130", name: "cow medicine", group: "Agro", category: "Feed", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000129", name: "Kaju", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000128", name: "Muscat Halwa", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000127", name: "Gloves", group: "General", category: "Packaging Item", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000126", name: "Khir Toast", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000125", name: "Sanduis", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000124", name: "Chana Balusha", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000123", name: "Dal", group: "General", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000122", name: "Payes item", group: "Raw Material", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000121", name: "Yogurt Sour", group: "General", category: "General", unit: "Kg", retailRate: 300.0, wholesaleRate: 290.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000120", name: "Balish", group: "General", category: "Sweet", unit: "Kg", retailRate: 500.0, wholesaleRate: 490.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000119", name: "Laccha Semai", group: "General", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000118", name: "Butter Oil 400gm", group: "Raw Material", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000117", name: "Barli", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000116", name: "Gajor Payes", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000115", name: "Gajor", group: "General", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000114", name: "Oil 5 Ltr", group: "General", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000113", name: "Oil  1Ltr", group: "General", category: "General", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000112", name: "Sodium Hydros", group: "General", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000111", name: "Citric acid", group: "General", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000110", name: "Ramdan item", group: "General", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000109", name: "Rice", group: "General", category: "General", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000108", name: "Stepler Pin", group: "General", category: "General", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000107", name: "Tejpata", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 120.0, wholesaleRate: 120.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000106", name: "Elachi", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 2500.0, wholesaleRate: 2500.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000105", name: "Silver Bowl", group: "General", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000104", name: "Jar 50Kg", group: "General", category: "General", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000103", name: "kismiss", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000102", name: "Pesta Badam", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 2620.0, wholesaleRate: 2620.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000101", name: "Box 250 Gm", group: "General", category: "General", unit: "Pcs", retailRate: 6.5, wholesaleRate: 6.5, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P000100", name: "Khejur", group: "Finish Goods", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00099", name: "Jilapi", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 140.0, wholesaleRate: 140.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00098", name: "Almond Nut", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 950.0, wholesaleRate: 950.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00097", name: "Coconuts Powder", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 220.0, wholesaleRate: 220.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00096", name: "Beson", group: "Raw Material", category: "General", unit: "Kg", retailRate: 80.0, wholesaleRate: 80.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00095", name: "Milk Pack", group: "General", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00094", name: "Small Bag", group: "Raw Material", category: "Grocery", unit: "Pcs", retailRate: 2.0, wholesaleRate: 2.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00093", name: "Logo Bag Big", group: "Raw Material", category: "Grocery", unit: "Pcs", retailRate: 7.0, wholesaleRate: 6.9, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00092", name: "Medicine", group: "Agro", category: "Feed", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00091", name: "Mini Chomchom", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 400.0, wholesaleRate: 400.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00090", name: "Oil Tin", group: "Raw Material", category: "Grocery", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00089", name: "Gajorer Borfi", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 550.0, wholesaleRate: 540.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00088", name: "Gajor Sandwich", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 550.0, wholesaleRate: 540.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00087", name: "Zafran Sandwich", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 500.0, wholesaleRate: 425.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00086", name: "Kachlivug", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 450.0, wholesaleRate: 382.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00085", name: "Roshgolla", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00084", name: "Rubber", group: "General", category: "General", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00083", name: "Chira Feed", group: "Agro", category: "General", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00082", name: "Mawah Balushah", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 360.0, wholesaleRate: 360.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00081", name: "Oil Drum 186Kg", group: "Raw Material", category: "General", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00080", name: "Firnee", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 650.0, wholesaleRate: 640.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00079", name: "Color", group: "Raw Material", category: "Sweet", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00078", name: "Dry Sweets", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 560.0, wholesaleRate: 550.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00077", name: "Jali", group: "Raw Material", category: "Grocery", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00079", name: "Mouchak", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00079", name: "Pata Chomchom", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00074", name: "Cow feed", group: "Agro", category: "Feed", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00073", name: "Salt 50Kg", group: "Agro", category: "Feed", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-72", name: "Baby Sweet", group: "Finish Goods", category: "General", unit: "Kg", retailRate: 420.0, wholesaleRate: 410.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Ghee", group: "Finish Goods", category: "General", unit: "Kg", retailRate: 0.0, wholesaleRate: 1360.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Orange Sondesh", group: "Finish Goods", category: "General", unit: "Kg", retailRate: 650.0, wholesaleRate: 640.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Chanar Payes", group: "Finish Goods", category: "General", unit: "Kg", retailRate: 650.0, wholesaleRate: 640.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-65", name: "Tissue Pack", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 75.0, wholesaleRate: 75.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-64", name: "Packing Poly", group: "Raw Material", category: "Packaging Item", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-63", name: "Dust Poly", group: "Raw Material", category: "Packaging Item", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00074", name: "Box Poly 15X15", group: "Raw Material", category: "Packaging Item", unit: "Kg", retailRate: 0.0, wholesaleRate: 260.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-61", name: "Costape", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-73", name: "Bag Medium", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 4.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-59", name: "Spoon", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Plastic Water Bati 500 Gm", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 7.8, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Plastic Water Bati 1 Kg", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 9.8, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-56", name: "Dalda", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-55", name: "Oil", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-54", name: "Ziku Powder", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-53", name: "Amul Powder", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-52", name: "Star Powder", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-51", name: "Sugar", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Chy Chomchom", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 0.0, wholesaleRate: 425.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Kachagolla", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 650.0, wholesaleRate: 650.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Kheer Chomchom", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-73", name: "Bag Big", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 5.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-46", name: "Special Cup", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Special Bati", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 20.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-44", name: "Plastic Cup", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Plastic White Bati 500 Gm", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 7.8, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Plastic White Bati 1 Kg", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 9.8, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-73", name: "Box Yogurt", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 15.0, wholesaleRate: 15.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-73", name: "Box 2 Kg", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 15.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-73", name: "Box  500 Gm", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 15.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-73", name: "Box 1 Kg", group: "Raw Material", category: "Packaging Item", unit: "Pcs", retailRate: 0.0, wholesaleRate: 15.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00078", name: "Chana", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 280.0, wholesaleRate: 0.0, purchaseRate: 280.0, openingQty: 0 },
-            { code: "ITEM-36", name: "Soda", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-35", name: "Kalijira", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-34", name: "Lakri", group: "Raw Material", category: "Energy", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-33", name: "Gas", group: "Raw Material", category: "Energy", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-32", name: "Suji", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-31", name: "Salt", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Moida B", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-29", name: "Moida A", group: "Raw Material", category: "Grocery", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-31", name: "Condense", group: "Raw Material", category: "Milk", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-52", name: "Marks Powder", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-66", name: "Liquid Milk", group: "Raw Material", category: "Milk", unit: "Kg", retailRate: 90.0, wholesaleRate: 85.0, purchaseRate: 70.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Cream Jam", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Laddu", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00078", name: "Nimki", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Malaikari", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-70", name: "Anondovog", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Yogurt Special", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00078", name: "Yogurt Standard", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 300.0, wholesaleRate: 290.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "P00081", name: "Chanar Sondesh", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 650.0, wholesaleRate: 640.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Katarivog", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Mawa Sponge", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "White Chomchom", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Lal Chomchom", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Sponge", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Malai Roll", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 540.0, wholesaleRate: 530.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Roshmalai", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 500.0, wholesaleRate: 490.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "ITEM-71", name: "Standard Mixed Sweet", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 0.0, openingQty: 0 }
+            { code: "P000185", name: "Toffy Bar", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 750.0, wholesaleRate: 740.0, purchaseRate: 0.0, openingQty: 3 },
+            { code: "P000184", name: "Sp Laddu", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 12 },
+            { code: "P000183", name: "Cylinder 45Kg", group: "Raw Material", category: "Energy", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 2 },
+            { code: "P000181", name: "ShanPapri 250GM", group: "Finish Goods", category: "Dry Items", unit: "Pcs", retailRate: 130.0, wholesaleRate: 125.0, purchaseRate: 0.0, openingQty: 20 },
+            { code: "P000151", name: "Sailage", group: "Agro", category: "Feed", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 4 }
         ];
 
         let agroProducts = [];
@@ -1061,11 +900,13 @@
             }
 
             const expRecord = {
-                id: "EXP-" + Math.floor(100000 + Math.random() * 900000),
+                refId: "EXP-" + Math.floor(100000 + Math.random() * 900000),
+                rawDate: dateVal,
                 date: dateVal,
                 title: title,
                 amount: amount,
-                notes: notes
+                notes: notes,
+                totalValue: amount
             };
 
             expenseHistory.unshift(expRecord);
@@ -1074,6 +915,7 @@
             saveSharedData();
             renderDashboardBalances();
             renderExpensesTable();
+            renderRecordsTable();
 
             if (titleInput) titleInput.value = '';
             if (amountInput) amountInput.value = '';
@@ -1132,6 +974,7 @@
                 saveSharedData();
                 renderDashboardBalances();
                 renderExpensesTable();
+                renderRecordsTable();
             }
         }
 
@@ -1517,18 +1360,26 @@
             currentRecordTab = tab;
             const btnP = document.getElementById('rec-tab-purchase');
             const btnS = document.getElementById('rec-tab-sales');
+            const btnE = document.getElementById('rec-tab-expenses');
             const titleEl = document.getElementById('recordTableTitle');
 
+            // Reset buttons
+            [btnP, btnS, btnE].forEach(b => {
+                if(b) b.className = "text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap";
+            });
+
             if (tab === 'purchase') {
-                btnP.className = "text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20";
-                btnS.className = "text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap";
+                if(btnP) btnP.className = "text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20";
                 titleEl.innerText = "Purchase History Logs (GRN)";
                 titleEl.className = "text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400";
-            } else {
-                btnS.className = "text-xs px-3.5 py-2.5 rounded-xl bg-indigo-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-indigo-500/20";
-                btnP.className = "text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap";
+            } else if (tab === 'sales') {
+                if(btnS) btnS.className = "text-xs px-3.5 py-2.5 rounded-xl bg-indigo-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-indigo-500/20";
                 titleEl.innerText = "Sales Invoices History";
                 titleEl.className = "text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400";
+            } else if (tab === 'expenses') {
+                if(btnE) btnE.className = "text-xs px-3.5 py-2.5 rounded-xl bg-rose-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-rose-500/20";
+                titleEl.innerText = "Operating Expenses History";
+                titleEl.className = "text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400";
             }
             renderRecordsTable();
         }
@@ -1561,8 +1412,17 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            let dataList = currentRecordTab === 'purchase' ? purchaseHistory : salesHistory;
-            if (partyHeader) partyHeader.innerText = currentRecordTab === 'purchase' ? 'Supplier / Vendor' : 'Customer';
+            let dataList = [];
+            if (currentRecordTab === 'purchase') {
+                dataList = purchaseHistory;
+                if (partyHeader) partyHeader.innerText = 'Supplier / Vendor';
+            } else if (currentRecordTab === 'sales') {
+                dataList = salesHistory;
+                if (partyHeader) partyHeader.innerText = 'Customer';
+            } else if (currentRecordTab === 'expenses') {
+                dataList = expenseHistory;
+                if (partyHeader) partyHeader.innerText = 'Category / Title';
+            }
 
             if (dateFilterVal) {
                 dataList = dataList.filter(item => item.rawDate === dateFilterVal);
@@ -1576,21 +1436,38 @@
             }
 
             dataList.forEach((rec, index) => {
-                const partyName = rec.supplier || rec.customer || 'N/A';
-                const deleteBtnHtml = isOwner ? `
-                    <button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
-                ` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
+                if (currentRecordTab === 'expenses') {
+                    const deleteBtnHtml = isOwner ? `
+                        <button onclick="deleteRecord('expenses', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
+                    ` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
 
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
-                        <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${rec.refId}</td>
-                        <td class="py-3 text-slate-300 font-mono text-[11px]">${rec.date}</td>
-                        <td class="py-3 font-semibold">${partyName}</td>
-                        <td class="py-3 text-slate-300 max-w-xs truncate" title="${rec.itemsSummary}">${rec.itemsSummary}</td>
-                        <td class="py-3 text-right font-bold text-emerald-400 font-mono">${rec.totalValue.toFixed(2)} TK.</td>
-                        <td class="py-3 text-center pr-3">${deleteBtnHtml}</td>
-                    </tr>
-                `;
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
+                            <td class="py-3 pl-3 font-bold text-rose-400 font-mono">${rec.refId}</td>
+                            <td class="py-3 text-slate-300 font-mono text-[11px]">${rec.date}</td>
+                            <td class="py-3 font-semibold text-rose-500">${rec.title}</td>
+                            <td class="py-3 text-slate-300 max-w-xs truncate" title="${rec.notes}">${rec.notes || '-'}</td>
+                            <td class="py-3 text-right font-bold text-rose-400 font-mono">${rec.amount.toFixed(2)} TK.</td>
+                            <td class="py-3 text-center pr-3">${deleteBtnHtml}</td>
+                        </tr>
+                    `;
+                } else {
+                    const partyName = rec.supplier || rec.customer || 'N/A';
+                    const deleteBtnHtml = isOwner ? `
+                        <button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
+                    ` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
+                            <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${rec.refId}</td>
+                            <td class="py-3 text-slate-300 font-mono text-[11px]">${rec.date}</td>
+                            <td class="py-3 font-semibold">${partyName}</td>
+                            <td class="py-3 text-slate-300 max-w-xs truncate" title="${rec.itemsSummary}">${rec.itemsSummary}</td>
+                            <td class="py-3 text-right font-bold text-emerald-400 font-mono">${rec.totalValue.toFixed(2)} TK.</td>
+                            <td class="py-3 text-center pr-3">${deleteBtnHtml}</td>
+                        </tr>
+                    `;
+                }
             });
         }
 
@@ -1600,14 +1477,22 @@
                 return;
             }
             if (confirm("Are you sure you want to delete this record?")) {
-                let deletedItem = type === 'purchase' ? purchaseHistory.splice(index, 1)[0] : salesHistory.splice(index, 1)[0];
-                if (deletedItem) {
-                    if (type === 'purchase') systemBalances.supplierDue -= deletedItem.totalValue;
-                    else systemBalances.cashInHand -= deletedItem.totalValue;
+                let deletedItem = null;
+                if (type === 'purchase') {
+                    deletedItem = purchaseHistory.splice(index, 1)[0];
+                    if (deletedItem) systemBalances.supplierDue -= deletedItem.totalValue;
+                } else if (type === 'sales') {
+                    deletedItem = salesHistory.splice(index, 1)[0];
+                    if (deletedItem) systemBalances.cashInHand -= deletedItem.totalValue;
+                } else if (type === 'expenses') {
+                    deletedItem = expenseHistory.splice(index, 1)[0];
+                    if (deletedItem) systemBalances.cashInHand += deletedItem.amount; // Refund cash
                 }
+
                 saveSharedData();
                 renderRecordsTable();
                 renderDashboardBalances();
+                renderExpensesTable();
             }
         }
     </script>
