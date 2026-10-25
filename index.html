@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.7</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.8</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -150,7 +150,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.7</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.8</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -181,7 +181,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.7</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.8</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -610,7 +610,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.7 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.8 • Full Catalog Synchronization (34 Items) • Real-Time Multi-Device Sync
         </footer>
     </div>
 
@@ -753,11 +753,40 @@
         };
 
         const defaultAgroProducts = [
-            { code: "P000185", name: "Toffy Bar", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 750.0, wholesaleRate: 740.0, purchaseRate: 0.0, openingQty: 3 },
-            { code: "P000184", name: "Sp Laddu", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 12 },
-            { code: "P000183", name: "Cylinder 45Kg", group: "Raw Material", category: "Energy", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 2 },
-            { code: "P000181", name: "ShanPapri 250GM", group: "Finish Goods", category: "Dry Items", unit: "Pcs", retailRate: 130.0, wholesaleRate: 125.0, purchaseRate: 0.0, openingQty: 20 },
-            { code: "P000151", name: "Sailage", group: "Agro", category: "Feed", unit: "Bundle", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 4 }
+            { code: "IT020037", name: "Gajorer Halua 400GmHSN:SKU:", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "PCS", retailRate: 250.0, wholesaleRate: 240.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020036", name: "Mixed sweetsHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020035", name: "Yogurt 500GmHSN:SKU:", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 150.0, wholesaleRate: 140.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020034", name: "Yogurt 1KgHSN:SKU:", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 350.0, wholesaleRate: 340.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020033", name: "Yogurt CupHSN:SKU:", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 40.0, wholesaleRate: 30.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020032", name: "LadduHSN:SKU:", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020031", name: "Mawa spongeHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020030", name: "MalaiRoll 500GmHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 270.0, wholesaleRate: 260.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020029", name: "MalaiRoll 1KgHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 540.0, wholesaleRate: 530.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020028", name: "Roshmalai 500GmHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 250.0, wholesaleRate: 240.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020027", name: "Roshmalai 1KgHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 500.0, wholesaleRate: 490.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020026", name: "MalaikariHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020025", name: "SondeshHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 650.0, wholesaleRate: 640.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020024", name: "BabySweetHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 420.0, wholesaleRate: 410.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020023", name: "BadshaVugHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 3 },
+            { code: "IT020022", name: "White ChomchomHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020021", name: "HafsiHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020020", name: "LaL ChomchomHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020019", name: "Liquid MilkHSN:SKU:", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 90.0, wholesaleRate: 80.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020018", name: "Guchi PeyeraHSN:SKU:", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020017", name: "Lemon BarfiHSN:SKU:", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 560.0, wholesaleRate: 550.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020016", name: "Balushah ChanaHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020015", name: "JilapiHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020014", name: "SourCurd 500GmHSN:SKU:", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 140.0, wholesaleRate: 130.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020013", name: "CreamJamHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 3 },
+            { code: "IT020012", name: "AnondoVugHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020011", name: "IlishPettyHSN:SKU:", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 800.0, wholesaleRate: 790.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020010", name: "KatariVugHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020009", name: "KashmiriVugHSN:SKU:", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020008", name: "SweetCakeHSN:HSN5SKU:5555", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020007", name: "Coconut PeyaraHSN:HSN4SKU:4444", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020006", name: "MilkBarfiHSN:HSN3SKU:3333", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020005", name: "NimkiHSN:HSN2SKU:2222", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT020004", name: "Water 500MLHSN:HSN1SKU:1111", group: "Finish Goods", category: "Others[ITEM]", unit: "PCS", retailRate: 20.0, wholesaleRate: 10.0, purchaseRate: 0.0, openingQty: 0 }
         ];
 
         let agroProducts = [];
