@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.21</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.22</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -187,7 +187,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.21</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.22</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -221,7 +221,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.21</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.22</p>
                     </div>
                 </div>
             </div>
@@ -1064,7 +1064,7 @@
 
                 <!-- Footer -->
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.21 • Inventory-Connected Supplier Provisions & Auto-Registration
+                    CHOWDHURY AGRO ERP CORE v4.22 • Clean Autocomplete Replacement Fix
                 </footer>
             </main>
         </div>
@@ -1832,13 +1832,17 @@
             } catch(e) {}
         }
 
-        // --- SUPPLIER MODULE & INVENTORY AUTO-SYNC ---
+        // --- SUPPLIER MODULE & INVENTORY AUTO-SYNC (GLITCH FIXED) ---
         function onSupplierProvidesInput(val) {
             try {
                 const dropdown = document.getElementById('supplierProvidesDropdown');
                 if (!dropdown) return;
-                const query = val.trim().toLowerCase();
-                if (!query) {
+                
+                // Get the current token being typed (after last comma)
+                const parts = val.split(',');
+                const currentQuery = parts[parts.length - 1].trim().toLowerCase();
+
+                if (!currentQuery) {
                     dropdown.classList.add('hidden');
                     return;
                 }
@@ -1846,7 +1850,7 @@
                 // Filter raw material and agro items from inventory
                 const matchingItems = agroProducts.filter(p => {
                     const g = (p.group || '').toLowerCase();
-                    return (g.includes('raw material') || g.includes('agro')) && p.name.toLowerCase().includes(query);
+                    return (g.includes('raw material') || g.includes('agro')) && p.name.toLowerCase().includes(currentQuery);
                 });
 
                 if (matchingItems.length === 0) {
@@ -1873,10 +1877,16 @@
                 const input = document.getElementById('suppProvidesInput');
                 const dropdown = document.getElementById('supplierProvidesDropdown');
                 if (input) {
-                    // Append or set
-                    let currentVal = input.value.trim();
-                    if (currentVal && !currentVal.endsWith(',')) currentVal += ', ';
-                    input.value = currentVal + itemName;
+                    let currentVal = input.value;
+                    const lastCommaIndex = currentVal.lastIndexOf(',');
+                    if (lastCommaIndex !== -1) {
+                        // Keep previous items intact and replace only the current typing token cleanly
+                        input.value = currentVal.substring(0, lastCommaIndex + 1) + ' ' + itemName;
+                    } else {
+                        // Single item or first item
+                        input.value = itemName;
+                    }
+                    input.focus();
                 }
                 if (dropdown) dropdown.classList.add('hidden');
             } catch(e) {}
@@ -1903,7 +1913,6 @@
                     return;
                 }
 
-                // If user entered items in provides and autoAdd is checked, check against inventory and add missing ones as Raw Material
                 if (provides && shouldAutoAdd) {
                     const itemsArr = provides.split(',').map(i => i.trim()).filter(Boolean);
                     itemsArr.forEach(rawItemName => {
