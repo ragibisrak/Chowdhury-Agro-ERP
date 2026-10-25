@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.11</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.12</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -150,7 +150,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.11</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.12</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -181,7 +181,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.11</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.12</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -359,7 +359,7 @@
                         </div>
                         <div>
                             <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Group / Category</label>
-                            <select id="newItemCategory" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                            <select id="newItemCategory" onchange="onItemCategoryDropdownChange()" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
                                 <option value="Finish Goods">Finish Goods (Sweets & Curd)</option>
                                 <option value="Raw Material">Raw Material</option>
                                 <option value="Agro">Agro & Feed</option>
@@ -372,6 +372,7 @@
                                 <option value="KG">KG</option>
                                 <option value="BOX">BOX</option>
                                 <option value="PACK">PACK</option>
+                                <option value="BAG">BAG</option>
                             </select>
                         </div>
                         <div class="grid grid-cols-2 gap-2">
@@ -392,9 +393,20 @@
                     </div>
 
                     <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-emerald text-left">
-                        <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3">Item Catalog Overview</h3>
-                            <div class="overflow-x-auto max-h-[450px]">
+                        <div class="space-y-3">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Item Catalog Overview</h3>
+                                <span id="itemEntryCountBadge" class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/40 font-bold">0 Items</span>
+                            </div>
+                            
+                            <!-- Category Filter Tabs for Item Entry Catalog -->
+                            <div class="flex space-x-2 overflow-x-auto pb-1">
+                                <button onclick="setItemEntryCatalogTab('Finish Goods')" id="cat-tab-finish" class="text-[11px] px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20">Finish Goods</button>
+                                <button onclick="setItemEntryCatalogTab('Raw Material')" id="cat-tab-raw" class="text-[11px] px-3 py-1.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Raw Material</button>
+                                <button onclick="setItemEntryCatalogTab('Agro')" id="cat-tab-agro" class="text-[11px] px-3 py-1.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Agro & Feed</button>
+                            </div>
+
+                            <div class="overflow-x-auto max-h-[380px]">
                                 <table class="w-full text-left text-xs min-w-[550px]">
                                     <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
                                         <tr>
@@ -412,9 +424,9 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="border-t border-slate-800 pt-4 flex justify-between items-center">
-                            <p class="text-xs text-slate-400 font-medium">Total Registered Items:</p>
-                            <p id="totalRegisteredItemsCount" class="text-sm font-bold font-mono text-emerald-400">0 Items</p>
+                        <div class="border-t border-slate-800 pt-3 flex justify-between items-center">
+                            <p class="text-xs text-slate-400 font-medium">Showing Category:</p>
+                            <p id="currentCatalogCategoryLabel" class="text-xs font-bold font-mono text-emerald-400 uppercase">Finish Goods</p>
                         </div>
                     </div>
                 </div>
@@ -819,7 +831,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.11 • Standalone Entity Hubs Integration • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.12 • Standalone Entity Hubs Integration • Real-Time Multi-Device Sync
         </footer>
     </div>
 
@@ -929,7 +941,7 @@
                     if (typeof lucide !== 'undefined') lucide.createIcons();
                 }, 350);
             } else {
-                errorEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
             }
         }
 
@@ -968,40 +980,179 @@
         };
 
         const defaultAgroProducts = [
-            { code: "IT020037", name: "Gajorer Halua 400Gm", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "PCS", retailRate: 250.0, wholesaleRate: 240.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020036", name: "Mixed sweets", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020035", name: "Yogurt 500Gm", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 150.0, wholesaleRate: 140.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020034", name: "Yogurt 1Kg", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 350.0, wholesaleRate: 340.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020033", name: "Yogurt Cup", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 40.0, wholesaleRate: 30.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020032", name: "Laddu", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020031", name: "Mawa sponge", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020030", name: "MalaiRoll 500Gm", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 270.0, wholesaleRate: 260.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020029", name: "MalaiRoll 1Kg", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 540.0, wholesaleRate: 530.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020028", name: "Roshmalai 500Gm", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 250.0, wholesaleRate: 240.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020027", name: "Roshmalai 1Kg", group: "Finish Goods", category: "SP[ITEM]", unit: "PCS", retailRate: 500.0, wholesaleRate: 490.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020026", name: "Malaikari", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020025", name: "Sondesh", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 650.0, wholesaleRate: 640.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020024", name: "BabySweet", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 420.0, wholesaleRate: 410.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020023", name: "BadshaVug", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 3 },
-            { code: "IT020022", name: "White Chomchom", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020021", name: "Hafsi", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020020", name: "LaL Chomchom", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020019", name: "Liquid Milk", group: "Finish Goods", category: "SP[ITEM]", unit: "KG", retailRate: 90.0, wholesaleRate: 80.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020018", name: "Guchi Peyera", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020017", name: "Lemon Barfi", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 560.0, wholesaleRate: 550.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020016", name: "Balushah Chana", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020015", name: "Jilapi", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020014", name: "SourCurd 500Gm", group: "Finish Goods", category: "Curd[ITEM]", unit: "PCS", retailRate: 140.0, wholesaleRate: 130.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020013", name: "CreamJam", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 3 },
-            { code: "IT020012", name: "AnondoVug", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020011", name: "IlishPetty", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 800.0, wholesaleRate: 790.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020010", name: "KatariVug", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020009", name: "KashmiriVug", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020008", name: "SweetCake", group: "Finish Goods", category: "Sweets[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020007", name: "Coconut Peyara", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 700.0, wholesaleRate: 690.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020006", name: "MilkBarfi", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 600.0, wholesaleRate: 590.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020005", name: "Nimki", group: "Finish Goods", category: "Dry sweet[ITEM]", unit: "KG", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 0.0, openingQty: 0 },
-            { code: "IT020004", name: "Water 500ML", group: "Finish Goods", category: "Others[ITEM]", unit: "PCS", retailRate: 20.0, wholesaleRate: 10.0, purchaseRate: 0.0, openingQty: 0 }
+            { code: "IT000001", name: "Rasgulla #1", group: "Finish Goods", category: "Rasgulla[ITEM]", unit: "BAG", retailRate: 200.0, wholesaleRate: 190.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000002", name: "Chomchom #2", group: "Finish Goods", category: "Chomchom[ITEM]", unit: "PCS", retailRate: 215.0, wholesaleRate: 205.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000003", name: "Kala Jamun #3", group: "Finish Goods", category: "Kala Jamun[ITEM]", unit: "KG", retailRate: 230.0, wholesaleRate: 220.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000004", name: "Malai Roll #4", group: "Finish Goods", category: "Malai Roll[ITEM]", unit: "BAG", retailRate: 245.0, wholesaleRate: 235.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000005", name: "Roshmalai #5", group: "Finish Goods", category: "Roshmalai[ITEM]", unit: "PCS", retailRate: 260.0, wholesaleRate: 250.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000006", name: "Sondesh #6", group: "Finish Goods", category: "Sondesh[ITEM]", unit: "KG", retailRate: 275.0, wholesaleRate: 265.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000007", name: "Laddu #7", group: "Finish Goods", category: "Laddu[ITEM]", unit: "BAG", retailRate: 290.0, wholesaleRate: 280.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000008", name: "Jilapi #8", group: "Finish Goods", category: "Jilapi[ITEM]", unit: "PCS", retailRate: 305.0, wholesaleRate: 295.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000009", name: "Borhani #9", group: "Finish Goods", category: "Borhani[ITEM]", unit: "KG", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000010", name: "Gurer Halua #10", group: "Finish Goods", category: "Gurer Halua[ITEM]", unit: "BAG", retailRate: 335.0, wholesaleRate: 325.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000011", name: "Gajorer Halua #11", group: "Finish Goods", category: "Gajorer Halua[ITEM]", unit: "PCS", retailRate: 350.0, wholesaleRate: 340.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000012", name: "Mawa Sponge #12", group: "Finish Goods", category: "Mawa Sponge[ITEM]", unit: "KG", retailRate: 365.0, wholesaleRate: 355.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000013", name: "Kala Khatta #13", group: "Finish Goods", category: "Kala Khatta[ITEM]", unit: "BAG", retailRate: 380.0, wholesaleRate: 370.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000014", name: "Peda #14", group: "Finish Goods", category: "Peda[ITEM]", unit: "PCS", retailRate: 395.0, wholesaleRate: 385.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000015", name: "Kalojam #15", group: "Finish Goods", category: "Kalojam[ITEM]", unit: "KG", retailRate: 410.0, wholesaleRate: 400.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000016", name: "Rajbhog #16", group: "Finish Goods", category: "Rajbhog[ITEM]", unit: "BAG", retailRate: 425.0, wholesaleRate: 415.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000017", name: "Anandovug #17", group: "Finish Goods", category: "Anandovug[ITEM]", unit: "PCS", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000018", name: "Badshavug #18", group: "Finish Goods", category: "Badshavug[ITEM]", unit: "KG", retailRate: 455.0, wholesaleRate: 445.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000019", name: "Kashmirivug #19", group: "Finish Goods", category: "Kashmirivug[ITEM]", unit: "BAG", retailRate: 470.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000020", name: "Katarivug #20", group: "Finish Goods", category: "Katarivug[ITEM]", unit: "PCS", retailRate: 485.0, wholesaleRate: 475.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000021", name: "Cream Jam #21", group: "Finish Goods", category: "Cream Jam[ITEM]", unit: "KG", retailRate: 100.0, wholesaleRate: 90.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000022", name: "Milk Barfi #22", group: "Finish Goods", category: "Milk Barfi[ITEM]", unit: "BAG", retailRate: 115.0, wholesaleRate: 105.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000023", name: "Lemon Barfi #23", group: "Finish Goods", category: "Lemon Barfi[ITEM]", unit: "PCS", retailRate: 130.0, wholesaleRate: 120.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000024", name: "Balushah Chana #24", group: "Finish Goods", category: "Balushah Chana[ITEM]", unit: "KG", retailRate: 145.0, wholesaleRate: 135.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000025", name: "Hafsi #25", group: "Finish Goods", category: "Hafsi[ITEM]", unit: "BAG", retailRate: 160.0, wholesaleRate: 150.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000026", name: "Coconut Peyara #26", group: "Finish Goods", category: "Coconut Peyara[ITEM]", unit: "PCS", retailRate: 175.0, wholesaleRate: 165.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000027", name: "Guchi Peyera #27", group: "Finish Goods", category: "Guchi Peyera[ITEM]", unit: "KG", retailRate: 190.0, wholesaleRate: 180.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000028", name: "Ilish Petty #28", group: "Finish Goods", category: "Ilish Petty[ITEM]", unit: "BAG", retailRate: 205.0, wholesaleRate: 195.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000029", name: "Sweet Cake #29", group: "Finish Goods", category: "Sweet Cake[ITEM]", unit: "PCS", retailRate: 220.0, wholesaleRate: 210.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000030", name: "Nimki #30", group: "Finish Goods", category: "Nimki[ITEM]", unit: "KG", retailRate: 235.0, wholesaleRate: 225.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000031", name: "Singara #31", group: "Finish Goods", category: "Singara[ITEM]", unit: "BAG", retailRate: 250.0, wholesaleRate: 240.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000032", name: "Samosa #32", group: "Finish Goods", category: "Samosa[ITEM]", unit: "PCS", retailRate: 265.0, wholesaleRate: 255.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000033", name: "Bakarkhani #33", group: "Finish Goods", category: "Bakarkhani[ITEM]", unit: "KG", retailRate: 280.0, wholesaleRate: 270.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000034", name: "Toast Biscuit #34", group: "Finish Goods", category: "Toast Biscuit[ITEM]", unit: "BAG", retailRate: 295.0, wholesaleRate: 285.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000035", name: "Malai Curry #35", group: "Finish Goods", category: "Malai Curry[ITEM]", unit: "PCS", retailRate: 310.0, wholesaleRate: 300.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000036", name: "Plain Yogurt #36", group: "Finish Goods", category: "Plain Yogurt[ITEM]", unit: "KG", retailRate: 325.0, wholesaleRate: 315.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000037", name: "Sweet Yogurt #37", group: "Finish Goods", category: "Sweet Yogurt[ITEM]", unit: "BAG", retailRate: 340.0, wholesaleRate: 330.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000038", name: "Sour Yogurt #38", group: "Finish Goods", category: "Sour Yogurt[ITEM]", unit: "PCS", retailRate: 355.0, wholesaleRate: 345.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000039", name: "Dahi Vada #39", group: "Finish Goods", category: "Dahi Vada[ITEM]", unit: "KG", retailRate: 370.0, wholesaleRate: 360.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000040", name: "Ghee (Pure) #40", group: "Finish Goods", category: "Ghee (Pure)[ITEM]", unit: "BAG", retailRate: 385.0, wholesaleRate: 375.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000041", name: "Paneer #41", group: "Finish Goods", category: "Paneer[ITEM]", unit: "PCS", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000042", name: "Chhena #42", group: "Finish Goods", category: "Chhena[ITEM]", unit: "KG", retailRate: 415.0, wholesaleRate: 405.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000043", name: "Liquid Milk #43", group: "Finish Goods", category: "Liquid Milk[ITEM]", unit: "BAG", retailRate: 430.0, wholesaleRate: 420.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000044", name: "Skimmed Milk Powder #44", group: "Finish Goods", category: "Skimmed Milk Powder[ITEM]", unit: "PCS", retailRate: 445.0, wholesaleRate: 435.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000045", name: "Refined Sugar #45", group: "Finish Goods", category: "Refined Sugar[ITEM]", unit: "KG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000046", name: "Brown Sugar #46", group: "Finish Goods", category: "Brown Sugar[ITEM]", unit: "BAG", retailRate: 475.0, wholesaleRate: 465.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000047", name: "Maida Flour #47", group: "Finish Goods", category: "Maida Flour[ITEM]", unit: "PCS", retailRate: 490.0, wholesaleRate: 480.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000048", name: "Atta Flour #48", group: "Finish Goods", category: "Atta Flour[ITEM]", unit: "KG", retailRate: 105.0, wholesaleRate: 95.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000049", name: "Sooji #49", group: "Finish Goods", category: "Sooji[ITEM]", unit: "BAG", retailRate: 120.0, wholesaleRate: 110.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000050", name: "Besan Flour #50", group: "Finish Goods", category: "Besan Flour[ITEM]", unit: "PCS", retailRate: 135.0, wholesaleRate: 125.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000051", name: "Cardamom #51", group: "Finish Goods", category: "Cardamom[ITEM]", unit: "KG", retailRate: 150.0, wholesaleRate: 140.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000052", name: "Cinnamon #52", group: "Finish Goods", category: "Cinnamon[ITEM]", unit: "BAG", retailRate: 165.0, wholesaleRate: 155.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000053", name: "Cashew Nuts #53", group: "Finish Goods", category: "Cashew Nuts[ITEM]", unit: "PCS", retailRate: 180.0, wholesaleRate: 170.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000054", name: "Raisins #54", group: "Finish Goods", category: "Raisins[ITEM]", unit: "KG", retailRate: 195.0, wholesaleRate: 185.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000055", name: "Pistachio #55", group: "Finish Goods", category: "Pistachio[ITEM]", unit: "BAG", retailRate: 210.0, wholesaleRate: 200.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000056", name: "Saffron #56", group: "Finish Goods", category: "Saffron[ITEM]", unit: "PCS", retailRate: 225.0, wholesaleRate: 215.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000057", name: "Cattle Feed Bag #57", group: "Finish Goods", category: "Cattle Feed Bag[ITEM]", unit: "KG", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000058", name: "Poultry Feed Bag #58", group: "Finish Goods", category: "Poultry Feed Bag[ITEM]", unit: "BAG", retailRate: 255.0, wholesaleRate: 245.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000059", name: "Vitamin Premix #59", group: "Finish Goods", category: "Vitamin Premix[ITEM]", unit: "PCS", retailRate: 270.0, wholesaleRate: 260.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000060", name: "Mineral Block #60", group: "Finish Goods", category: "Mineral Block[ITEM]", unit: "KG", retailRate: 285.0, wholesaleRate: 275.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000061", name: "Silage Pack #61", group: "Finish Goods", category: "Silage Pack[ITEM]", unit: "BAG", retailRate: 300.0, wholesaleRate: 290.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000062", name: "Organic Fertilizer #62", group: "Finish Goods", category: "Organic Fertilizer[ITEM]", unit: "PCS", retailRate: 315.0, wholesaleRate: 305.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000063", name: "Rasgulla #63", group: "Finish Goods", category: "Rasgulla[ITEM]", unit: "KG", retailRate: 330.0, wholesaleRate: 320.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000064", name: "Chomchom #64", group: "Finish Goods", category: "Chomchom[ITEM]", unit: "BAG", retailRate: 345.0, wholesaleRate: 335.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000065", name: "Kala Jamun #65", group: "Finish Goods", category: "Kala Jamun[ITEM]", unit: "PCS", retailRate: 360.0, wholesaleRate: 350.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000066", name: "Malai Roll #66", group: "Finish Goods", category: "Malai Roll[ITEM]", unit: "KG", retailRate: 375.0, wholesaleRate: 365.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000067", name: "Roshmalai #67", group: "Finish Goods", category: "Roshmalai[ITEM]", unit: "BAG", retailRate: 390.0, wholesaleRate: 380.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000068", name: "Sondesh #68", group: "Finish Goods", category: "Sondesh[ITEM]", unit: "PCS", retailRate: 405.0, wholesaleRate: 395.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000069", name: "Laddu #69", group: "Finish Goods", category: "Laddu[ITEM]", unit: "KG", retailRate: 420.0, wholesaleRate: 410.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000070", name: "Jilapi #70", group: "Finish Goods", category: "Jilapi[ITEM]", unit: "BAG", retailRate: 435.0, wholesaleRate: 425.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000071", name: "Borhani #71", group: "Finish Goods", category: "Borhani[ITEM]", unit: "PCS", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000072", name: "Gurer Halua #72", group: "Finish Goods", category: "Gurer Halua[ITEM]", unit: "KG", retailRate: 465.0, wholesaleRate: 455.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000073", name: "Gajorer Halua #73", group: "Finish Goods", category: "Gajorer Halua[ITEM]", unit: "BAG", retailRate: 480.0, wholesaleRate: 470.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000074", name: "Mawa Sponge #74", group: "Finish Goods", category: "Mawa Sponge[ITEM]", unit: "PCS", retailRate: 495.0, wholesaleRate: 485.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000075", name: "Kala Khatta #75", group: "Finish Goods", category: "Kala Khatta[ITEM]", unit: "KG", retailRate: 110.0, wholesaleRate: 100.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000076", name: "Peda #76", group: "Finish Goods", category: "Peda[ITEM]", unit: "BAG", retailRate: 125.0, wholesaleRate: 115.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000077", name: "Kalojam #77", group: "Finish Goods", category: "Kalojam[ITEM]", unit: "PCS", retailRate: 140.0, wholesaleRate: 130.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000078", name: "Rajbhog #78", group: "Finish Goods", category: "Rajbhog[ITEM]", unit: "KG", retailRate: 155.0, wholesaleRate: 145.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000079", name: "Anandovug #79", group: "Finish Goods", category: "Anandovug[ITEM]", unit: "BAG", retailRate: 170.0, wholesaleRate: 160.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000080", name: "Badshavug #80", group: "Finish Goods", category: "Badshavug[ITEM]", unit: "PCS", retailRate: 185.0, wholesaleRate: 175.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000081", name: "Kashmirivug #81", group: "Finish Goods", category: "Kashmirivug[ITEM]", unit: "KG", retailRate: 200.0, wholesaleRate: 190.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000082", name: "Katarivug #82", group: "Finish Goods", category: "Katarivug[ITEM]", unit: "BAG", retailRate: 215.0, wholesaleRate: 205.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000083", name: "Cream Jam #83", group: "Finish Goods", category: "Cream Jam[ITEM]", unit: "PCS", retailRate: 230.0, wholesaleRate: 220.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000084", name: "Milk Barfi #84", group: "Finish Goods", category: "Milk Barfi[ITEM]", unit: "KG", retailRate: 245.0, wholesaleRate: 235.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000085", name: "Lemon Barfi #85", group: "Finish Goods", category: "Lemon Barfi[ITEM]", unit: "BAG", retailRate: 260.0, wholesaleRate: 250.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000086", name: "Balushah Chana #86", group: "Finish Goods", category: "Balushah Chana[ITEM]", unit: "PCS", retailRate: 275.0, wholesaleRate: 265.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000087", name: "Hafsi #87", group: "Finish Goods", category: "Hafsi[ITEM]", unit: "KG", retailRate: 290.0, wholesaleRate: 280.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000088", name: "Coconut Peyara #88", group: "Finish Goods", category: "Coconut Peyara[ITEM]", unit: "BAG", retailRate: 305.0, wholesaleRate: 295.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000089", name: "Guchi Peyera #89", group: "Finish Goods", category: "Guchi Peyera[ITEM]", unit: "PCS", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000090", name: "Ilish Petty #90", group: "Finish Goods", category: "Ilish Petty[ITEM]", unit: "KG", retailRate: 335.0, wholesaleRate: 325.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000091", name: "Sweet Cake #91", group: "Finish Goods", category: "Sweet Cake[ITEM]", unit: "BAG", retailRate: 350.0, wholesaleRate: 340.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000092", name: "Nimki #92", group: "Finish Goods", category: "Nimki[ITEM]", unit: "PCS", retailRate: 365.0, wholesaleRate: 355.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000093", name: "Singara #93", group: "Finish Goods", category: "Singara[ITEM]", unit: "KG", retailRate: 380.0, wholesaleRate: 370.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000094", name: "Samosa #94", group: "Finish Goods", category: "Samosa[ITEM]", unit: "BAG", retailRate: 395.0, wholesaleRate: 385.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000095", name: "Bakarkhani #95", group: "Finish Goods", category: "Bakarkhani[ITEM]", unit: "PCS", retailRate: 410.0, wholesaleRate: 400.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000096", name: "Toast Biscuit #96", group: "Finish Goods", category: "Toast Biscuit[ITEM]", unit: "KG", retailRate: 425.0, wholesaleRate: 415.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000097", name: "Malai Curry #97", group: "Finish Goods", category: "Malai Curry[ITEM]", unit: "BAG", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000098", name: "Plain Yogurt #98", group: "Finish Goods", category: "Plain Yogurt[ITEM]", unit: "PCS", retailRate: 455.0, wholesaleRate: 445.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "IT000099", name: "Sweet Yogurt #99", group: "Finish Goods", category: "Sweet Yogurt[ITEM]", unit: "KG", retailRate: 470.0, wholesaleRate: 460.0, purchaseRate: 0.0, openingQty: 0 },
+            { code: "RM000100", name: "Sour Yogurt #100", group: "Raw Material", category: "Sour Yogurt[ITEM]", unit: "BAG", retailRate: 485.0, wholesaleRate: 475.0, purchaseRate: 330.0, openingQty: 0 },
+            { code: "RM000101", name: "Dahi Vada #101", group: "Raw Material", category: "Dahi Vada[ITEM]", unit: "PCS", retailRate: 110.0, wholesaleRate: 100.0, purchaseRate: 50.0, openingQty: 0 },
+            { code: "RM000102", name: "Ghee (Pure) #102", group: "Raw Material", category: "Ghee (Pure)[ITEM]", unit: "KG", retailRate: 125.0, wholesaleRate: 115.0, purchaseRate: 65.0, openingQty: 0 },
+            { code: "RM000103", name: "Paneer #103", group: "Raw Material", category: "Paneer[ITEM]", unit: "BAG", retailRate: 140.0, wholesaleRate: 130.0, purchaseRate: 80.0, openingQty: 0 },
+            { code: "RM000104", name: "Chhena #104", group: "Raw Material", category: "Chhena[ITEM]", unit: "PCS", retailRate: 155.0, wholesaleRate: 145.0, purchaseRate: 95.0, openingQty: 0 },
+            { code: "RM000105", name: "Liquid Milk #105", group: "Raw Material", category: "Liquid Milk[ITEM]", unit: "KG", retailRate: 170.0, wholesaleRate: 160.0, purchaseRate: 110.0, openingQty: 0 },
+            { code: "RM000106", name: "Skimmed Milk Powder #106", group: "Raw Material", category: "Skimmed Milk Powder[ITEM]", unit: "BAG", retailRate: 185.0, wholesaleRate: 175.0, purchaseRate: 125.0, openingQty: 0 },
+            { code: "RM000107", name: "Refined Sugar #107", group: "Raw Material", category: "Refined Sugar[ITEM]", unit: "PCS", retailRate: 200.0, wholesaleRate: 190.0, purchaseRate: 140.0, openingQty: 0 },
+            { code: "RM000108", name: "Brown Sugar #108", group: "Raw Material", category: "Brown Sugar[ITEM]", unit: "KG", retailRate: 215.0, wholesaleRate: 205.0, purchaseRate: 155.0, openingQty: 0 },
+            { code: "RM000109", name: "Maida Flour #109", group: "Raw Material", category: "Maida Flour[ITEM]", unit: "BAG", retailRate: 230.0, wholesaleRate: 220.0, purchaseRate: 170.0, openingQty: 0 },
+            { code: "RM000110", name: "Atta Flour #110", group: "Raw Material", category: "Atta Flour[ITEM]", unit: "PCS", retailRate: 245.0, wholesaleRate: 235.0, purchaseRate: 185.0, openingQty: 0 },
+            { code: "RM000111", name: "Sooji #111", group: "Raw Material", category: "Sooji[ITEM]", unit: "KG", retailRate: 260.0, wholesaleRate: 250.0, purchaseRate: 200.0, openingQty: 0 },
+            { code: "RM000112", name: "Besan Flour #112", group: "Raw Material", category: "Besan Flour[ITEM]", unit: "BAG", retailRate: 275.0, wholesaleRate: 265.0, purchaseRate: 215.0, openingQty: 0 },
+            { code: "RM000113", name: "Cardamom #113", group: "Raw Material", category: "Cardamom[ITEM]", unit: "PCS", retailRate: 290.0, wholesaleRate: 280.0, purchaseRate: 230.0, openingQty: 0 },
+            { code: "RM000114", name: "Cinnamon #114", group: "Raw Material", category: "Cinnamon[ITEM]", unit: "KG", retailRate: 305.0, wholesaleRate: 295.0, purchaseRate: 245.0, openingQty: 0 },
+            { code: "RM000115", name: "Cashew Nuts #115", group: "Raw Material", category: "Cashew Nuts[ITEM]", unit: "BAG", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 260.0, openingQty: 0 },
+            { code: "RM000116", name: "Raisins #116", group: "Raw Material", category: "Raisins[ITEM]", unit: "PCS", retailRate: 335.0, wholesaleRate: 325.0, purchaseRate: 275.0, openingQty: 0 },
+            { code: "RM000117", name: "Pistachio #117", group: "Raw Material", category: "Pistachio[ITEM]", unit: "KG", retailRate: 350.0, wholesaleRate: 340.0, purchaseRate: 290.0, openingQty: 0 },
+            { code: "RM000118", name: "Saffron #118", group: "Raw Material", category: "Saffron[ITEM]", unit: "BAG", retailRate: 365.0, wholesaleRate: 355.0, purchaseRate: 305.0, openingQty: 0 },
+            { code: "RM000119", name: "Cattle Feed Bag #119", group: "Raw Material", category: "Cattle Feed Bag[ITEM]", unit: "PCS", retailRate: 380.0, wholesaleRate: 370.0, purchaseRate: 320.0, openingQty: 0 },
+            { code: "RM000120", name: "Poultry Feed Bag #120", group: "Raw Material", category: "Poultry Feed Bag[ITEM]", unit: "KG", retailRate: 395.0, wholesaleRate: 385.0, purchaseRate: 335.0, openingQty: 0 },
+            { code: "RM000121", name: "Vitamin Premix #121", group: "Raw Material", category: "Vitamin Premix[ITEM]", unit: "BAG", retailRate: 410.0, wholesaleRate: 400.0, purchaseRate: 50.0, openingQty: 0 },
+            { code: "RM000122", name: "Mineral Block #122", group: "Raw Material", category: "Mineral Block[ITEM]", unit: "PCS", retailRate: 425.0, wholesaleRate: 415.0, purchaseRate: 65.0, openingQty: 0 },
+            { code: "RM000123", name: "Silage Pack #123", group: "Raw Material", category: "Silage Pack[ITEM]", unit: "KG", retailRate: 440.0, wholesaleRate: 430.0, purchaseRate: 80.0, openingQty: 0 },
+            { code: "RM000124", name: "Organic Fertilizer #124", group: "Raw Material", category: "Organic Fertilizer[ITEM]", unit: "BAG", retailRate: 455.0, wholesaleRate: 445.0, purchaseRate: 95.0, openingQty: 0 },
+            { code: "RM000125", name: "Rasgulla #125", group: "Raw Material", category: "Rasgulla[ITEM]", unit: "PCS", retailRate: 470.0, wholesaleRate: 460.0, purchaseRate: 110.0, openingQty: 0 },
+            { code: "RM000126", name: "Chomchom #126", group: "Raw Material", category: "Chomchom[ITEM]", unit: "KG", retailRate: 485.0, wholesaleRate: 475.0, purchaseRate: 125.0, openingQty: 0 },
+            { code: "RM000127", name: "Kala Jamun #127", group: "Raw Material", category: "Kala Jamun[ITEM]", unit: "BAG", retailRate: 100.0, wholesaleRate: 90.0, purchaseRate: 140.0, openingQty: 0 },
+            { code: "RM000128", name: "Malai Roll #128", group: "Raw Material", category: "Malai Roll[ITEM]", unit: "PCS", retailRate: 115.0, wholesaleRate: 105.0, purchaseRate: 155.0, openingQty: 0 },
+            { code: "RM000129", name: "Roshmalai #129", group: "Raw Material", category: "Roshmalai[ITEM]", unit: "KG", retailRate: 130.0, wholesaleRate: 120.0, purchaseRate: 170.0, openingQty: 0 },
+            { code: "RM000130", name: "Sondesh #130", group: "Raw Material", category: "Sondesh[ITEM]", unit: "BAG", retailRate: 145.0, wholesaleRate: 135.0, purchaseRate: 185.0, openingQty: 0 },
+            { code: "RM000131", name: "Laddu #131", group: "Raw Material", category: "Laddu[ITEM]", unit: "PCS", retailRate: 160.0, wholesaleRate: 150.0, purchaseRate: 200.0, openingQty: 0 },
+            { code: "RM000132", name: "Jilapi #132", group: "Raw Material", category: "Jilapi[ITEM]", unit: "KG", retailRate: 175.0, wholesaleRate: 165.0, purchaseRate: 215.0, openingQty: 0 },
+            { code: "RM000133", name: "Borhani #133", group: "Raw Material", category: "Borhani[ITEM]", unit: "BAG", retailRate: 190.0, wholesaleRate: 180.0, purchaseRate: 230.0, openingQty: 0 },
+            { code: "RM000134", name: "Gurer Halua #134", group: "Raw Material", category: "Gurer Halua[ITEM]", unit: "PCS", retailRate: 205.0, wholesaleRate: 195.0, purchaseRate: 245.0, openingQty: 0 },
+            { code: "RM000135", name: "Gajorer Halua #135", group: "Raw Material", category: "Gajorer Halua[ITEM]", unit: "KG", retailRate: 220.0, wholesaleRate: 210.0, purchaseRate: 260.0, openingQty: 0 },
+            { code: "RM000136", name: "Mawa Sponge #136", group: "Raw Material", category: "Mawa Sponge[ITEM]", unit: "BAG", retailRate: 235.0, wholesaleRate: 225.0, purchaseRate: 275.0, openingQty: 0 },
+            { code: "RM000137", name: "Kala Khatta #137", group: "Raw Material", category: "Kala Khatta[ITEM]", unit: "PCS", retailRate: 250.0, wholesaleRate: 240.0, purchaseRate: 290.0, openingQty: 0 },
+            { code: "RM000138", name: "Peda #138", group: "Raw Material", category: "Peda[ITEM]", unit: "KG", retailRate: 265.0, wholesaleRate: 255.0, purchaseRate: 305.0, openingQty: 0 },
+            { code: "RM000139", name: "Kalojam #139", group: "Raw Material", category: "Kalojam[ITEM]", unit: "BAG", retailRate: 280.0, wholesaleRate: 270.0, purchaseRate: 320.0, openingQty: 0 },
+            { code: "RM000140", name: "Rajbhog #140", group: "Raw Material", category: "Rajbhog[ITEM]", unit: "PCS", retailRate: 295.0, wholesaleRate: 285.0, purchaseRate: 335.0, openingQty: 0 },
+            { code: "RM000141", name: "Anandovug #141", group: "Raw Material", category: "Anandovug[ITEM]", unit: "KG", retailRate: 310.0, wholesaleRate: 300.0, purchaseRate: 50.0, openingQty: 0 },
+            { code: "RM000142", name: "Badshavug #142", group: "Raw Material", category: "Badshavug[ITEM]", unit: "BAG", retailRate: 325.0, wholesaleRate: 315.0, purchaseRate: 65.0, openingQty: 0 },
+            { code: "RM000143", name: "Kashmirivug #143", group: "Raw Material", category: "Kashmirivug[ITEM]", unit: "PCS", retailRate: 340.0, wholesaleRate: 330.0, purchaseRate: 80.0, openingQty: 0 },
+            { code: "RM000144", name: "Katarivug #144", group: "Raw Material", category: "Katarivug[ITEM]", unit: "KG", retailRate: 355.0, wholesaleRate: 345.0, purchaseRate: 95.0, openingQty: 0 },
+            { code: "RM000145", name: "Cream Jam #145", group: "Raw Material", category: "Cream Jam[ITEM]", unit: "BAG", retailRate: 370.0, wholesaleRate: 360.0, purchaseRate: 110.0, openingQty: 0 },
+            { code: "RM000146", name: "Milk Barfi #146", group: "Raw Material", category: "Milk Barfi[ITEM]", unit: "PCS", retailRate: 385.0, wholesaleRate: 375.0, purchaseRate: 125.0, openingQty: 0 },
+            { code: "RM000147", name: "Lemon Barfi #147", group: "Raw Material", category: "Lemon Barfi[ITEM]", unit: "KG", retailRate: 400.0, wholesaleRate: 390.0, purchaseRate: 140.0, openingQty: 0 },
+            { code: "RM000148", name: "Balushah Chana #148", group: "Raw Material", category: "Balushah Chana[ITEM]", unit: "BAG", retailRate: 415.0, wholesaleRate: 405.0, purchaseRate: 155.0, openingQty: 0 },
+            { code: "RM000149", name: "Hafsi #149", group: "Raw Material", category: "Hafsi[ITEM]", unit: "PCS", retailRate: 430.0, wholesaleRate: 420.0, purchaseRate: 170.0, openingQty: 0 },
+            { code: "RM000150", name: "Coconut Peyara #150", group: "Raw Material", category: "Coconut Peyara[ITEM]", unit: "KG", retailRate: 445.0, wholesaleRate: 435.0, purchaseRate: 185.0, openingQty: 0 },
+            { code: "AG000151", name: "Guchi Peyera #151", group: "Agro", category: "Guchi Peyera[ITEM]", unit: "BAG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 200.0, openingQty: 0 },
+            { code: "AG000152", name: "Ilish Petty #152", group: "Agro", category: "Ilish Petty[ITEM]", unit: "PCS", retailRate: 475.0, wholesaleRate: 465.0, purchaseRate: 215.0, openingQty: 0 },
+            { code: "AG000153", name: "Sweet Cake #153", group: "Agro", category: "Sweet Cake[ITEM]", unit: "KG", retailRate: 490.0, wholesaleRate: 480.0, purchaseRate: 230.0, openingQty: 0 },
+            { code: "AG000154", name: "Nimki #154", group: "Agro", category: "Nimki[ITEM]", unit: "BAG", retailRate: 105.0, wholesaleRate: 95.0, purchaseRate: 245.0, openingQty: 0 },
+            { code: "AG000155", name: "Singara #155", group: "Agro", category: "Singara[ITEM]", unit: "PCS", retailRate: 120.0, wholesaleRate: 110.0, purchaseRate: 260.0, openingQty: 0 },
+            { code: "AG000156", name: "Samosa #156", group: "Agro", category: "Samosa[ITEM]", unit: "KG", retailRate: 135.0, wholesaleRate: 125.0, purchaseRate: 275.0, openingQty: 0 },
+            { code: "AG000157", name: "Bakarkhani #157", group: "Agro", category: "Bakarkhani[ITEM]", unit: "BAG", retailRate: 150.0, wholesaleRate: 140.0, purchaseRate: 290.0, openingQty: 0 },
+            { code: "AG000158", name: "Toast Biscuit #158", group: "Agro", category: "Toast Biscuit[ITEM]", unit: "PCS", retailRate: 165.0, wholesaleRate: 155.0, purchaseRate: 305.0, openingQty: 0 },
+            { code: "AG000159", name: "Malai Curry #159", group: "Agro", category: "Malai Curry[ITEM]", unit: "KG", retailRate: 180.0, wholesaleRate: 170.0, purchaseRate: 320.0, openingQty: 0 },
+            { code: "AG000160", name: "Plain Yogurt #160", group: "Agro", category: "Plain Yogurt[ITEM]", unit: "BAG", retailRate: 195.0, wholesaleRate: 185.0, purchaseRate: 335.0, openingQty: 0 },
+            { code: "AG000161", name: "Sweet Yogurt #161", group: "Agro", category: "Sweet Yogurt[ITEM]", unit: "PCS", retailRate: 210.0, wholesaleRate: 200.0, purchaseRate: 50.0, openingQty: 0 },
+            { code: "AG000162", name: "Sour Yogurt #162", group: "Agro", category: "Sour Yogurt[ITEM]", unit: "KG", retailRate: 225.0, wholesaleRate: 215.0, purchaseRate: 65.0, openingQty: 0 },
+            { code: "AG000163", name: "Dahi Vada #163", group: "Agro", category: "Dahi Vada[ITEM]", unit: "BAG", retailRate: 240.0, wholesaleRate: 230.0, purchaseRate: 80.0, openingQty: 0 },
+            { code: "AG000164", name: "Ghee (Pure) #164", group: "Agro", category: "Ghee (Pure)[ITEM]", unit: "PCS", retailRate: 255.0, wholesaleRate: 245.0, purchaseRate: 95.0, openingQty: 0 },
+            { code: "AG000165", name: "Paneer #165", group: "Agro", category: "Paneer[ITEM]", unit: "KG", retailRate: 270.0, wholesaleRate: 260.0, purchaseRate: 110.0, openingQty: 0 },
+            { code: "AG000166", name: "Chhena #166", group: "Agro", category: "Chhena[ITEM]", unit: "BAG", retailRate: 285.0, wholesaleRate: 275.0, purchaseRate: 125.0, openingQty: 0 },
+            { code: "AG000167", name: "Liquid Milk #167", group: "Agro", category: "Liquid Milk[ITEM]", unit: "PCS", retailRate: 300.0, wholesaleRate: 290.0, purchaseRate: 140.0, openingQty: 0 },
+            { code: "AG000168", name: "Skimmed Milk Powder #168", group: "Agro", category: "Skimmed Milk Powder[ITEM]", unit: "KG", retailRate: 315.0, wholesaleRate: 305.0, purchaseRate: 155.0, openingQty: 0 },
+            { code: "AG000169", name: "Refined Sugar #169", group: "Agro", category: "Refined Sugar[ITEM]", unit: "BAG", retailRate: 330.0, wholesaleRate: 320.0, purchaseRate: 170.0, openingQty: 0 },
+            { code: "AG000170", name: "Brown Sugar #170", group: "Agro", category: "Brown Sugar[ITEM]", unit: "PCS", retailRate: 345.0, wholesaleRate: 335.0, purchaseRate: 185.0, openingQty: 0 },
+            { code: "AG000171", name: "Maida Flour #171", group: "Agro", category: "Maida Flour[ITEM]", unit: "KG", retailRate: 360.0, wholesaleRate: 350.0, purchaseRate: 200.0, openingQty: 0 },
+            { code: "AG000172", name: "Atta Flour #172", group: "Agro", category: "Atta Flour[ITEM]", unit: "BAG", retailRate: 375.0, wholesaleRate: 365.0, purchaseRate: 215.0, openingQty: 0 },
+            { code: "AG000173", name: "Sooji #173", group: "Agro", category: "Sooji[ITEM]", unit: "PCS", retailRate: 390.0, wholesaleRate: 380.0, purchaseRate: 230.0, openingQty: 0 }
         ];
 
         let agroProducts = [];
@@ -1012,6 +1163,7 @@
         let expenseHistory = [];
         let manufacturingHistory = [];
         let currentInventoryTab = 'all';
+        let currentItemEntryTab = 'Finish Goods';
         let currentRecordTab = 'purchase';
         let recordFilterPicker = null;
 
@@ -1321,6 +1473,35 @@
         }
 
         // --- ITEM ENTRY MODULE ---
+        function setItemEntryCatalogTab(tabName) {
+            currentItemEntryTab = tabName;
+            ['Finish Goods', 'Raw Material', 'Agro'].forEach(cat => {
+                const idSlug = cat === 'Finish Goods' ? 'finish' : cat === 'Raw Material' ? 'raw' : 'agro';
+                const btn = document.getElementById(`cat-tab-${idSlug}`);
+                if (btn) {
+                    if (cat === tabName) {
+                        btn.className = "text-[11px] px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20";
+                    } else {
+                        btn.className = "text-[11px] px-3 py-1.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap";
+                    }
+                }
+            });
+            const catSelect = document.getElementById('newItemCategory');
+            if (catSelect) catSelect.value = tabName;
+            
+            const labelEl = document.getElementById('currentCatalogCategoryLabel');
+            if (labelEl) labelEl.innerText = tabName;
+
+            renderItemsEntryTable();
+        }
+
+        function onItemCategoryDropdownChange() {
+            const catSelect = document.getElementById('newItemCategory');
+            if (!catSelect) return;
+            const selectedVal = catSelect.value;
+            setItemEntryCatalogTab(selectedVal);
+        }
+
         function registerNewItem() {
             const codeInput = document.getElementById('newItemCode');
             const nameInput = document.getElementById('newItemName');
@@ -1357,7 +1538,7 @@
 
             agroProducts.push(newItem);
             saveSharedData();
-            renderItemsEntryTable();
+            setItemEntryCatalogTab(group);
             renderInventoryTable();
             populateSalesProductDropdown();
             populatePurchaseProductDropdown();
@@ -1373,19 +1554,23 @@
 
         function renderItemsEntryTable() {
             const tbody = document.getElementById('itemsEntryTableBody');
-            const countEl = document.getElementById('totalRegisteredItemsCount');
+            const countBadge = document.getElementById('itemEntryCountBadge');
+            const labelEl = document.getElementById('currentCatalogCategoryLabel');
             if (!tbody) return;
 
-            if (agroProducts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No items found.</td></tr>`;
-                if (countEl) countEl.innerText = "0 Items";
+            const filteredProducts = agroProducts.filter(p => (p.group || '').toLowerCase() === currentItemEntryTab.toLowerCase());
+
+            if (countBadge) countBadge.innerText = `${filteredProducts.length} Items`;
+            if (labelEl) labelEl.innerText = currentItemEntryTab;
+
+            if (filteredProducts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No items found in ${currentItemEntryTab}.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = '';
-            if (countEl) countEl.innerText = `${agroProducts.length} Items`;
-
-            agroProducts.forEach((p, index) => {
+            filteredProducts.forEach((p) => {
+                const actualIndex = agroProducts.findIndex(item => item.code === p.code && item.name === p.name);
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/35 transition border-b border-slate-800/40">
                         <td class="py-3 pl-3 font-bold text-emerald-400 font-mono">${p.code}</td>
@@ -1394,7 +1579,7 @@
                         <td class="py-3 text-right font-mono text-cyan-400">${(p.retailRate || 0).toFixed(2)}</td>
                         <td class="py-3 text-right font-mono font-bold">${p.openingQty || 0}</td>
                         <td class="py-3 text-center pr-3">
-                            <button onclick="deleteProduct(${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
+                            <button onclick="deleteProduct(${actualIndex})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
                         </td>
                     </tr>
                 `;
