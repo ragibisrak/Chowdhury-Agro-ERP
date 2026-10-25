@@ -172,11 +172,11 @@
 
     <!-- MAIN APP CONTAINER (Hidden until explicit authentication) -->
     <div id="appContainer" class="flex-grow flex flex-col justify-between space-y-4 sm:space-y-6 fade-slide-enter">
-        <!-- Top Navigation -->
-        <header class="glass-card p-4 sm:px-6 sm:py-4 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center justify-between w-full md:w-auto">
-                <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg">Δ</div>
+        <!-- Top Navigation (Left Aligned) -->
+        <header class="glass-card p-4 sm:px-6 sm:py-4 rounded-2xl flex flex-col lg:flex-row justify-start items-start lg:items-center gap-4">
+            <div class="flex items-center justify-between w-full lg:w-auto">
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shrink-0">Δ</div>
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
@@ -186,7 +186,7 @@
                     </div>
                 </div>
                 <!-- Mobile right icons -->
-                <div class="flex items-center space-x-2 md:hidden">
+                <div class="flex items-center space-x-2 lg:hidden">
                     <div id="liveClockMobile" class="font-mono text-[11px] bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-700 text-cyan-600 dark:text-cyan-300 font-semibold">00:00</div>
                     <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-700 dark:text-slate-300">
                         <i data-lucide="moon" class="w-4 h-4" id="themeIconMobile"></i>
@@ -194,12 +194,12 @@
                 </div>
             </div>
 
-            <!-- Navigation Buttons & Controls -->
-            <div class="flex items-center justify-center space-x-1.5 sm:space-x-2 flex-wrap gap-y-2 w-full md:w-auto">
-                <div id="liveClock" class="hidden md:block font-mono text-xs bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700 text-cyan-600 dark:text-cyan-300 font-semibold">00:00:00 AM</div>
+            <!-- Navigation Buttons & Controls (Left Aligned) -->
+            <div class="flex items-center justify-start space-x-1.5 sm:space-x-2 flex-wrap gap-y-2 w-full lg:w-auto lg:pl-4 lg:border-l lg:border-slate-800/80">
+                <div id="liveClock" class="hidden lg:block font-mono text-xs bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700 text-cyan-600 dark:text-cyan-300 font-semibold">00:00:00 AM</div>
                 
                 <!-- Dark/Light Theme Toggle Button -->
-                <button onclick="toggleTheme()" id="themeToggleBtn" class="hidden md:flex p-2 rounded-lg bg-slate-800 hover:opacity-80 border border-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer transition items-center justify-center" title="Toggle Theme">
+                <button onclick="toggleTheme()" id="themeToggleBtn" class="hidden lg:flex p-2 rounded-lg bg-slate-800 hover:opacity-80 border border-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer transition items-center justify-center" title="Toggle Theme">
                     <i data-lucide="moon" class="w-4 h-4" id="themeIcon"></i>
                 </button>
 
@@ -272,7 +272,6 @@
 
             <!-- PURCHASE & SCM VIEW -->
             <div id="view-purchases" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
-                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                     <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Purchase & Supply Chain (SCM)</h2>
@@ -340,7 +339,6 @@
 
             <!-- SALES MATRIX VIEW -->
             <div id="view-sales" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
-                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
                     <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Sales Matrix & POS Billing</h2>
@@ -400,9 +398,8 @@
                 </div>
             </div>
 
-            <!-- OPERATING EXPENSES VIEW (STREAMLINED FOR LOGGING ONLY) -->
+            <!-- OPERATING EXPENSES VIEW -->
             <div id="view-expenses" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
-                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-rose">
                     <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Operating Expense Ledger (OpEx)</h2>
@@ -435,9 +432,8 @@
                 </div>
             </div>
 
-            <!-- TRANSACTION RECORDS HUB VIEW (INCLUDES FULL EXPENSE HISTORY) -->
+            <!-- TRANSACTION RECORDS HUB VIEW -->
             <div id="view-records" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
-                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
                     <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Transaction Records & Logs Hub</h2>
@@ -447,7 +443,7 @@
                 </div>
 
                 <!-- Hub Controls -->
-                <div class="glass-card p-4 rounded-2xl flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 hover-purple">
+                <div class="glass-card p-4 rounded-2xl flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 hover-purple text-left">
                     <div class="flex space-x-2 overflow-x-auto pb-1 lg:pb-0 shrink-0">
                         <button onclick="setRecordTab('purchase')" id="rec-tab-purchase" class="text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20">Purchase Records (GRN)</button>
                         <button onclick="setRecordTab('sales')" id="rec-tab-sales" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Sales Invoices</button>
@@ -495,7 +491,6 @@
 
             <!-- INVENTORY CATALOG VIEW -->
             <div id="view-inventory" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
-                <!-- Left-aligned Header -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
                     <div class="text-left">
                         <h2 class="text-lg sm:text-xl font-bold">Agro Product Catalog & Stock Alerts</h2>
@@ -505,7 +500,7 @@
                 </div>
 
                 <!-- Category Tabs & Counter -->
-                <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
+                <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald text-left">
                     <div class="flex space-x-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
                         <button onclick="setInventoryTab('all')" id="tab-all" class="text-xs px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20">All Items</button>
                         <button onclick="setInventoryTab('Finish Goods')" id="tab-finish" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Finish Goods</button>
