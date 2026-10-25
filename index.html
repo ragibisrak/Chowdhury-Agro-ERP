@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.2</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.3</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -150,7 +150,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.2</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.3</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -181,7 +181,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.2</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.3</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -205,6 +205,7 @@
                 </button>
 
                 <button onclick="switchView('dashboard')" class="text-xs px-3.5 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/40 text-cyan-700 dark:text-cyan-300 font-semibold cursor-pointer transition transform active:scale-95">Dashboard</button>
+                <button onclick="switchView('manufacturing')" class="text-xs px-3.5 py-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-semibold cursor-pointer transition transform active:scale-95">Manufacturing</button>
                 <button onclick="switchView('purchases')" class="text-xs px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-semibold cursor-pointer transition transform active:scale-95">Purchase</button>
                 <button onclick="switchView('sales')" class="text-xs px-3.5 py-2 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/40 text-indigo-700 dark:text-indigo-300 font-semibold cursor-pointer transition transform active:scale-95">Sales & POS</button>
                 <button onclick="switchView('expenses')" class="text-xs px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 text-rose-700 dark:text-rose-300 font-semibold cursor-pointer transition transform active:scale-95">Expenses</button>
@@ -252,6 +253,10 @@
 
                 <!-- Quick Navigation Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div onclick="switchView('manufacturing')" class="glass-card p-5 sm:p-6 rounded-2xl hover-purple cursor-pointer group text-left">
+                        <h3 class="text-sm sm:text-base font-bold group-hover:text-purple-400 transition">Manufacturing & Production</h3>
+                        <p class="text-xs text-slate-400 mt-1 font-medium">Produce sweets & add to finish goods stock.</p>
+                    </div>
                     <div onclick="switchView('purchases')" class="glass-card p-5 sm:p-6 rounded-2xl hover-amber cursor-pointer group text-left">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-amber-500 transition">Purchase & SCM</h3>
                         <p class="text-xs text-slate-400 mt-1 font-medium">Receive stock shipments and log GRNs.</p>
@@ -260,13 +265,70 @@
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-cyan-400 transition">Sales Matrix & POS</h3>
                         <p class="text-xs text-slate-400 mt-1 font-medium">Generate printable invoices & billing slips.</p>
                     </div>
-                    <div onclick="switchView('expenses')" class="glass-card p-5 sm:p-6 rounded-2xl hover-rose cursor-pointer group text-left">
-                        <h3 class="text-sm sm:text-base font-bold group-hover:text-rose-400 transition">Operating Expenses</h3>
-                        <p class="text-xs text-slate-400 mt-1 font-medium">Track electricity, utility, and labor costs.</p>
-                    </div>
                     <div onclick="switchView('inventory')" class="glass-card p-5 sm:p-6 rounded-2xl hover-emerald cursor-pointer group text-left">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-emerald-400 transition">Inventory & Alerts</h3>
                         <p class="text-xs text-slate-400 mt-1 font-medium">Monitor low stock and manage categories.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MANUFACTURING & PRODUCTION VIEW -->
+            <div id="view-manufacturing" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
+                    <div class="text-left">
+                        <h2 class="text-lg sm:text-xl font-bold">Manufacturing & Production Hub</h2>
+                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Record production batches of sweets and automatically credit finished goods inventory.</p>
+                    </div>
+                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-purple text-left">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">New Production Batch</h3>
+                        <div>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Production Date</label>
+                            <input type="text" id="mfgDateInput" class="custom-input custom-datepicker w-full border rounded-xl p-2.5 text-xs font-mono cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Select Sweet / Finish Good Item</label>
+                            <select id="mfgItemSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium"></select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Production Quantity Made</label>
+                            <input type="number" id="mfgQtyInput" value="10" min="1" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Production Rate / Cost (TK. per Unit)</label>
+                            <input type="number" id="mfgRateInput" placeholder="0.00" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
+                        </div>
+                        <button onclick="recordProduction()" class="w-full bg-purple-500 hover:bg-purple-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95 shadow-md shadow-purple-500/20">Record Production & Add Stock</button>
+                    </div>
+
+                    <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-purple text-left">
+                        <div>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-3">Recent Production Logs</h3>
+                            <div class="overflow-x-auto max-h-[420px]">
+                                <table class="w-full text-left text-xs min-w-[500px]">
+                                    <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
+                                        <tr>
+                                            <th class="pb-2.5 pl-3">Batch Ref</th>
+                                            <th class="pb-2.5">Date</th>
+                                            <th class="pb-2.5">Sweet / Item Name</th>
+                                            <th class="pb-2.5 text-center">Qty Made</th>
+                                            <th class="pb-2.5 text-right">Rate (TK.)</th>
+                                            <th class="pb-2.5 text-right pr-3">Total Value (TK.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="manufacturingTableBody" class="divide-y divide-slate-800/40">
+                                        <tr><td colspan="6" class="py-8 text-center text-slate-500 italic font-medium">No manufacturing production records found.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-800 pt-4 flex justify-between items-center">
+                            <p class="text-xs text-slate-400 font-medium">Total Batches Logged:</p>
+                            <p id="totalMfgCount" class="text-sm font-bold font-mono text-purple-400">0 Batches</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -543,7 +605,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.2 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.3 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
         </footer>
     </div>
 
@@ -640,11 +702,13 @@
                     loadSharedData();
                     renderInventoryTable();
                     renderRecordsTable();
+                    renderManufacturingTable();
+                    populateMfgProductDropdown();
 
                     if (typeof lucide !== 'undefined') lucide.createIcons();
                 }, 350);
             } else {
-                errorEl.classList.remove('hidden');
+                errorEl.classList.add('hidden');
             }
         }
 
@@ -694,6 +758,7 @@
         let purchaseHistory = [];
         let salesHistory = [];
         let expenseHistory = [];
+        let manufacturingHistory = [];
         let currentInventoryTab = 'all';
         let currentRecordTab = 'purchase';
         let recordFilterPicker = null;
@@ -704,6 +769,7 @@
             const savedPurchases = localStorage.getItem('chowdhury_purchases');
             const savedSales = localStorage.getItem('chowdhury_sales');
             const savedExpenses = localStorage.getItem('chowdhury_expenses');
+            const savedMfg = localStorage.getItem('chowdhury_manufacturing');
 
             systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
             
@@ -721,6 +787,7 @@
             purchaseHistory = savedPurchases ? JSON.parse(savedPurchases) : [];
             salesHistory = savedSales ? JSON.parse(savedSales) : [];
             expenseHistory = savedExpenses ? JSON.parse(savedExpenses) : [];
+            manufacturingHistory = savedMfg ? JSON.parse(savedMfg) : [];
         }
 
         function saveSharedData() {
@@ -729,16 +796,19 @@
             localStorage.setItem('chowdhury_purchases', JSON.stringify(purchaseHistory));
             localStorage.setItem('chowdhury_sales', JSON.stringify(salesHistory));
             localStorage.setItem('chowdhury_expenses', JSON.stringify(expenseHistory));
+            localStorage.setItem('chowdhury_manufacturing', JSON.stringify(manufacturingHistory));
         }
 
         window.addEventListener('storage', (event) => {
-            if (['chowdhury_balances', 'chowdhury_products', 'chowdhury_purchases', 'chowdhury_sales', 'chowdhury_expenses'].includes(event.key)) {
+            if (['chowdhury_balances', 'chowdhury_products', 'chowdhury_purchases', 'chowdhury_sales', 'chowdhury_expenses', 'chowdhury_manufacturing'].includes(event.key)) {
                 loadSharedData();
                 renderDashboardBalances();
                 renderInventoryTable();
                 renderRecordsTable();
+                renderManufacturingTable();
                 populateSalesProductDropdown();
                 populatePurchaseProductDropdown();
+                populateMfgProductDropdown();
             }
         });
 
@@ -806,8 +876,10 @@
             renderDashboardBalances();
             populateSalesProductDropdown();
             populatePurchaseProductDropdown();
+            populateMfgProductDropdown();
             renderInventoryTable();
             renderRecordsTable();
+            renderManufacturingTable();
             if (typeof lucide !== 'undefined') lucide.createIcons();
 
             const todayStr = new Date().toISOString().split('T')[0];
@@ -815,6 +887,7 @@
             flatpickr("#purchaseDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
             flatpickr("#salesDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
             flatpickr("#expenseDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
+            flatpickr("#mfgDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
             
             recordFilterPicker = flatpickr("#recordDateFilter", {
                 dateFormat: "Y-m-d",
@@ -844,7 +917,7 @@
         }
 
         function switchView(viewName) {
-            ['view-dashboard', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
+            ['view-dashboard', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
                 const el = document.getElementById(v);
                 if (el) {
                     el.classList.add('hidden');
@@ -860,8 +933,115 @@
                 if (viewName === 'inventory') renderInventoryTable();
                 if (viewName === 'sales') populateSalesProductDropdown();
                 if (viewName === 'purchases') populatePurchaseProductDropdown();
+                if (viewName === 'manufacturing') {
+                    populateMfgProductDropdown();
+                    renderManufacturingTable();
+                }
                 if (viewName === 'records') renderRecordsTable();
             }
+        }
+
+        // --- MANUFACTURING & PRODUCTION MODULE ---
+        function populateMfgProductDropdown() {
+            const select = document.getElementById('mfgItemSelect');
+            if (!select) return;
+            select.innerHTML = '';
+            // Filter finish goods (sweets, items made in production)
+            const finishGoods = agroProducts.filter(p => (p.group || '').toLowerCase().includes('finish goods'));
+            finishGoods.forEach(p => {
+                const rate = p.retailRate > 0 ? p.retailRate : p.wholesaleRate;
+                select.innerHTML += `<option value="${p.code}" data-rate="${rate}">${p.name} (${p.unit})</option>`;
+            });
+            select.onchange = function() {
+                const selectedOpt = select.options[select.selectedIndex];
+                const rate = selectedOpt ? selectedOpt.getAttribute('data-rate') : 0;
+                const rateInput = document.getElementById('mfgRateInput');
+                if (rateInput) rateInput.value = rate;
+            };
+            if (finishGoods.length > 0) {
+                const initialRate = finishGoods[0].retailRate > 0 ? finishGoods[0].retailRate : finishGoods[0].wholesaleRate;
+                const rateInput = document.getElementById('mfgRateInput');
+                if (rateInput) rateInput.value = initialRate;
+            }
+        }
+
+        function recordProduction() {
+            const dateVal = document.getElementById('mfgDateInput').value || new Date().toISOString().split('T')[0];
+            const select = document.getElementById('mfgItemSelect');
+            const qtyInput = document.getElementById('mfgQtyInput');
+            const rateInput = document.getElementById('mfgRateInput');
+
+            if (!select || !select.value) {
+                alert("Please select a valid sweet or finish good item.");
+                return;
+            }
+
+            const productCode = select.value;
+            const qtyMade = parseInt(qtyInput ? qtyInput.value : 0) || 0;
+            const rate = parseFloat(rateInput ? rateInput.value : 0) || 0;
+
+            if (qtyMade <= 0 || rate < 0) {
+                alert("Please enter a valid production quantity and rate.");
+                return;
+            }
+
+            const product = agroProducts.find(p => p.code === productCode);
+            if (!product) {
+                alert("Selected product not found in inventory catalog.");
+                return;
+            }
+
+            // Increase product quantity in inventory
+            product.openingQty = (product.openingQty || 0) + qtyMade;
+
+            const mfgRecord = {
+                refId: "MFG-" + Math.floor(100000 + Math.random() * 900000),
+                rawDate: dateVal,
+                date: dateVal,
+                itemName: product.name,
+                unit: product.unit,
+                qty: qtyMade,
+                rate: rate,
+                totalValue: qtyMade * rate
+            };
+
+            manufacturingHistory.unshift(mfgRecord);
+            saveSharedData();
+
+            renderManufacturingTable();
+            renderInventoryTable();
+            renderDashboardBalances();
+
+            if (qtyInput) qtyInput.value = '10';
+            alert(`Production batch successfully logged! Added ${qtyMade} ${product.unit} of ${product.name} to Finish Goods inventory.`);
+        }
+
+        function renderManufacturingTable() {
+            const tbody = document.getElementById('manufacturingTableBody');
+            const countEl = document.getElementById('totalMfgCount');
+            if (!tbody) return;
+
+            if (manufacturingHistory.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic font-medium">No manufacturing production records found.</td></tr>`;
+                if (countEl) countEl.innerText = "0 Batches";
+                return;
+            }
+
+            tbody.innerHTML = '';
+            if (countEl) countEl.innerText = `${manufacturingHistory.length} Batches`;
+
+            manufacturingHistory.forEach((m) => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
+                        <td class="py-3 pl-3 font-bold text-purple-400 font-mono">${m.refId}</td>
+                        <td class="py-3 text-slate-300 font-mono text-[11px]">${m.date}</td>
+                        <td class="py-3 font-semibold">${m.itemName} <span class="text-[10px] text-slate-400">(${m.unit})</span></td>
+                        <td class="py-3 text-center font-bold text-emerald-400 font-mono">+${m.qty}</td>
+                        <td class="py-3 text-right font-mono text-slate-300">${m.rate.toFixed(2)}</td>
+                        <td class="py-3 text-right font-bold text-purple-400 font-mono pr-3">${m.totalValue.toFixed(2)} TK.</td>
+                    </tr>
+                `;
+            });
         }
 
         // --- EXPENSES MODULE LOGIC ---
@@ -995,6 +1175,7 @@
             saveSharedData();
             renderInventoryTable();
             populateSalesProductDropdown();
+            populateMfgProductDropdown();
             alert("Product updated successfully!");
         }
 
@@ -1008,6 +1189,7 @@
                 saveSharedData();
                 renderInventoryTable();
                 populateSalesProductDropdown();
+                populateMfgProductDropdown();
             }
         }
 
