@@ -73,9 +73,8 @@
         }
     </style>
     <script>
-        // Instant check to determine login state before body renders to avoid flashes or blank screens
-        const isLoggedIn = localStorage.getItem('chowdhury_logged_in') === 'true';
-        if (isLoggedIn) {
+        // Check session storage immediately on load to prevent blank screen glitch during refresh
+        if (sessionStorage.getItem('chowdhury_logged_in') === 'true') {
             document.write('<style>#view-login { display: none !important; } #appContainer { display: flex !important; }</style>');
         }
     </script>
@@ -442,7 +441,7 @@
             const errorEl = document.getElementById('loginError');
 
             if (user === 'admin' && pass === '1234') {
-                localStorage.setItem('chowdhury_logged_in', 'true');
+                sessionStorage.setItem('chowdhury_logged_in', 'true');
                 
                 const loginView = document.getElementById('view-login');
                 loginView.classList.add('fade-slide-exit-active');
@@ -478,7 +477,7 @@
                 loginView.classList.remove('hidden');
                 loginView.classList.add('fade-slide-enter-active');
 
-                localStorage.removeItem('chowdhury_logged_in');
+                sessionStorage.removeItem('chowdhury_logged_in');
             }, 300);
         }
 
@@ -730,7 +729,7 @@
                 if (flatpickrTheme) flatpickrTheme.href = "https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css";
             }
 
-            if (localStorage.getItem('chowdhury_logged_in') === 'true') {
+            if (sessionStorage.getItem('chowdhury_logged_in') === 'true') {
                 document.getElementById('view-login').classList.add('hidden');
                 document.getElementById('appContainer').classList.remove('hidden');
             }
