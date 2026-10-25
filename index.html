@@ -18,22 +18,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css" id="flatpickrTheme">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
-    <!-- Strict Pre-Render Auth Check (Fixes Auto-Login & Blank Screen Glitch) -->
+    <!-- Strict Startup Auth Check: Always require login on fresh entry -->
     <script>
-        (function() {
-            const isLoggedIn = localStorage.getItem('chowdhury_logged_in') === 'true';
-            const role = localStorage.getItem('chowdhury_role');
-            if (isLoggedIn && role) {
-                document.documentElement.classList.add('user-authenticated');
-            } else {
-                localStorage.removeItem('chowdhury_logged_in');
-                localStorage.removeItem('chowdhury_role');
-            }
-        })();
+        // Clear auth state on initial script parse so it always boots to login
+        document.documentElement.classList.remove('user-authenticated');
+        localStorage.removeItem('chowdhury_logged_in');
+        localStorage.removeItem('chowdhury_role');
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-        body { font-family: 'Inter', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+        
+        /* Ultra-Smooth Typography Rendering */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            transition: background-color 0.4s ease, color 0.4s ease; 
+            -webkit-tap-highlight-color: transparent; 
+            overflow-x: hidden; 
+        }
         
         /* Floating Animated Background Orbs (Liquid Vibe) */
         .ambient-bg {
@@ -46,43 +50,43 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.35;
-            animation: floatOrb 18s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: floatOrb 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
         }
-        .orb-1 { width: 450px; height: 450px; background: radial-gradient(circle, #06b6d4, #0284c7); top: -10%; left: -10%; }
-        .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #a855f7, #6366f1); bottom: -15%; right: -10%; animation-delay: -6s; }
-        .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, #10b981, #059669); top: 40%; left: 35%; animation-delay: -12s; }
+        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #06b6d4, #0284c7); top: -10%; left: -10%; }
+        .orb-2 { width: 550px; height: 550px; background: radial-gradient(circle, #a855f7, #6366f1); bottom: -15%; right: -10%; animation-delay: -7s; }
+        .orb-3 { width: 450px; height: 450px; background: radial-gradient(circle, #10b981, #059669); top: 35%; left: 30%; animation-delay: -14s; }
 
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(60px, 40px) scale(1.1); }
-            100% { transform: translate(-40px, 80px) scale(0.95); }
+            50% { transform: translate(70px, 50px) scale(1.12); }
+            100% { transform: translate(-50px, 90px) scale(0.92); }
         }
 
         /* Dark Mode Liquid Glassmorphism */
         .dark body { background-color: #030712; color: #f3f4f6; }
         .dark .glass-card { 
-            background: rgba(15, 23, 42, 0.65); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.6); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.07); 
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); 
         }
-        .dark .custom-input { background-color: rgba(15, 23, 42, 0.8); border-color: rgba(255, 255, 255, 0.12); color: #ffffff; transition: all 0.2s ease; }
+        .dark .custom-input { background-color: rgba(15, 23, 42, 0.75); border-color: rgba(255, 255, 255, 0.1); color: #ffffff; transition: all 0.2s ease; }
 
         /* Light Mode Liquid Glassmorphism */
         html:not(.dark) body { background-color: #f1f5f9; color: #0f172a; }
         html:not(.dark) .glass-card { 
-            background: rgba(255, 255, 255, 0.75); 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8) !important; 
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9); 
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.85) !important; 
+            box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95); 
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        html:not(.dark) .custom-input { background-color: rgba(248, 250, 252, 0.9); border-color: #cbd5e1; color: #0f172a; transition: all 0.2s ease; }
+        html:not(.dark) .custom-input { background-color: rgba(248, 250, 252, 0.85); border-color: #cbd5e1; color: #0f172a; transition: all 0.2s ease; }
         html:not(.dark) .custom-input:focus { background-color: #ffffff; border-color: #0284c7; }
         html:not(.dark) .text-slate-400 { color: #64748b !important; }
         html:not(.dark) .text-slate-300 { color: #334155 !important; }
@@ -92,19 +96,19 @@
         html:not(.dark) .bg-slate-800 { background-color: #e2e8f0 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
 
         /* Dynamic Liquid Hover Animations & Glow Outlines */
-        .glass-card:hover { transform: translateY(-4px) scale(1.005); }
-        .dark .hover-amber:hover { border-color: rgba(245, 158, 11, 0.5) !important; box-shadow: 0 12px 35px -10px rgba(245, 158, 11, 0.25); }
-        .dark .hover-cyan:hover { border-color: rgba(6, 182, 212, 0.5) !important; box-shadow: 0 12px 35px -10px rgba(6, 182, 212, 0.25); }
-        .dark .hover-emerald:hover { border-color: rgba(16, 185, 129, 0.5) !important; box-shadow: 0 12px 35px -10px rgba(16, 185, 129, 0.25); }
-        .dark .hover-purple:hover { border-color: rgba(168, 85, 247, 0.5) !important; box-shadow: 0 12px 35px -10px rgba(168, 85, 247, 0.25); }
+        .glass-card:hover { transform: translateY(-4px) scale(1.004); }
+        .dark .hover-amber:hover { border-color: rgba(245, 158, 11, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(245, 158, 11, 0.22); }
+        .dark .hover-cyan:hover { border-color: rgba(6, 182, 212, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(6, 182, 212, 0.22); }
+        .dark .hover-emerald:hover { border-color: rgba(16, 185, 129, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(16, 185, 129, 0.22); }
+        .dark .hover-purple:hover { border-color: rgba(168, 85, 247, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(168, 85, 247, 0.22); }
 
-        html:not(.dark) .hover-amber:hover { border-color: #f59e0b !important; box-shadow: 0 12px 30px -5px rgba(245, 158, 11, 0.25); }
-        html:not(.dark) .hover-cyan:hover { border-color: #06b6d4 !important; box-shadow: 0 12px 30px -5px rgba(6, 182, 212, 0.25); }
-        html:not(.dark) .hover-emerald:hover { border-color: #10b981 !important; box-shadow: 0 12px 30px -5px rgba(16, 185, 129, 0.25); }
-        html:not(.dark) .hover-purple:hover { border-color: #a855f7 !important; box-shadow: 0 12px 30px -5px rgba(168, 85, 247, 0.25); }
+        html:not(.dark) .hover-amber:hover { border-color: #f59e0b !important; box-shadow: 0 14px 35px -5px rgba(245, 158, 11, 0.22); }
+        html:not(.dark) .hover-cyan:hover { border-color: #06b6d4 !important; box-shadow: 0 14px 35px -5px rgba(6, 182, 212, 0.22); }
+        html:not(.dark) .hover-emerald:hover { border-color: #10b981 !important; box-shadow: 0 14px 35px -5px rgba(16, 185, 129, 0.22); }
+        html:not(.dark) .hover-purple:hover { border-color: #a855f7 !important; box-shadow: 0 14px 35px -5px rgba(168, 85, 247, 0.22); }
 
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .flatpickr-calendar { box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        .font-mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.025em; }
+        .flatpickr-calendar { box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.45); border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.1); }
 
         /* Pre-Render Auth Rules (Zero Blank Screen / Zero Glitch) */
         #appContainer { display: none; }
@@ -141,12 +145,12 @@
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider">Username ID</label>
-                    <input type="text" id="loginUser" required placeholder="Enter username..." autocomplete="off" class="custom-input w-full border rounded-xl p-3 text-sm">
+                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider font-semibold">Username ID</label>
+                    <input type="text" id="loginUser" required placeholder="Enter username..." autocomplete="off" class="custom-input w-full border rounded-xl p-3 text-sm font-medium">
                 </div>
                 <div>
-                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider">Access PIN / Password</label>
-                    <input type="password" id="loginPass" required placeholder="Enter PIN..." autocomplete="current-password" class="custom-input w-full border rounded-xl p-3 text-sm font-mono">
+                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider font-semibold">Access PIN / Password</label>
+                    <input type="password" id="loginPass" required placeholder="Enter PIN..." autocomplete="current-password" class="custom-input w-full border rounded-xl p-3 text-sm font-mono font-medium">
                 </div>
                 <div id="loginError" class="text-rose-500 text-xs text-center font-medium hidden">Invalid Credentials. Please check username & password.</div>
                 <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition transform active:scale-95 shadow-lg shadow-cyan-500/30">Authenticate & Unlock ERP</button>
@@ -167,7 +171,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono">AUTONOMOUS ERP CORE V3.0</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V3.0</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -207,7 +211,7 @@
                     <div>
                         <span class="text-[10px] bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 px-3 py-1 rounded-full font-mono border border-cyan-500/40 font-bold tracking-wider">SYSTEM ONLINE (REAL-TIME SYNC)</span>
                         <h2 id="welcomeGreeting" class="text-xl sm:text-2xl font-bold mt-3">Welcome back</h2>
-                        <p class="text-xs text-slate-400 mt-1">Multi-device synchronization active across active browser instances.</p>
+                        <p class="text-xs text-slate-400 mt-1 font-medium">Multi-device synchronization active across active browser instances.</p>
                     </div>
                     <div id="managerRestrictionNote" class="hidden bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 max-w-xs text-left">
                         <p class="text-xs font-bold text-amber-500">Manager Mode Active</p>
@@ -217,19 +221,19 @@
 
                 <!-- Balances Grid (Hidden for Manager role) -->
                 <div id="ownerBalancesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                    <div class="glass-card p-4 sm:p-5 rounded-xl border-l-4 border-l-cyan-500 dark:border-l-cyan-400 hover-cyan">
+                    <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-cyan-500 dark:border-l-cyan-400 hover-cyan">
                         <p class="text-xs text-slate-400 font-medium">Cash In Hand</p>
                         <p id="cashInHand" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                     </div>
-                    <div class="glass-card p-4 sm:p-5 rounded-xl border-l-4 border-l-emerald-500 dark:border-l-emerald-400 hover-emerald">
+                    <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-emerald-500 dark:border-l-emerald-400 hover-emerald">
                         <p class="text-xs text-slate-400 font-medium">Bank Accounts</p>
                         <p id="bankAccounts" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                     </div>
-                    <div class="glass-card p-4 sm:p-5 rounded-xl border-l-4 border-l-amber-500 dark:border-l-amber-400 hover-amber">
+                    <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-amber-500 dark:border-l-amber-400 hover-amber">
                         <p class="text-xs text-slate-400 font-medium">Customer Due</p>
                         <p id="customerDue" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                     </div>
-                    <div class="glass-card p-4 sm:p-5 rounded-xl border-l-4 border-l-indigo-500 dark:border-l-indigo-400 hover-purple">
+                    <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-indigo-500 dark:border-l-indigo-400 hover-purple">
                         <p class="text-xs text-slate-400 font-medium">Supplier Due</p>
                         <p id="supplierDue" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                     </div>
@@ -239,19 +243,19 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     <div onclick="switchView('purchases')" class="glass-card p-5 sm:p-6 rounded-2xl hover-amber cursor-pointer group">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-amber-500 transition">Purchase & SCM</h3>
-                        <p class="text-xs text-slate-400 mt-1">Receive stock shipments and log GRNs.</p>
+                        <p class="text-xs text-slate-400 mt-1 font-medium">Receive stock shipments and log GRNs.</p>
                     </div>
                     <div onclick="switchView('sales')" class="glass-card p-5 sm:p-6 rounded-2xl hover-cyan cursor-pointer group">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-cyan-400 transition">Sales Matrix</h3>
-                        <p class="text-xs text-slate-400 mt-1">Generate invoices and process billing.</p>
+                        <p class="text-xs text-slate-400 mt-1 font-medium">Generate invoices and process billing.</p>
                     </div>
                     <div onclick="switchView('inventory')" class="glass-card p-5 sm:p-6 rounded-2xl hover-emerald cursor-pointer group">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-emerald-400 transition">Inventory Catalog</h3>
-                        <p class="text-xs text-slate-400 mt-1">Manage categorized items and filter groups.</p>
+                        <p class="text-xs text-slate-400 mt-1 font-medium">Manage categorized items and filter groups.</p>
                     </div>
                     <div onclick="switchView('records')" class="glass-card p-5 sm:p-6 rounded-2xl hover-purple cursor-pointer group">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-purple-400 transition">Transaction Logs</h3>
-                        <p class="text-xs text-slate-400 mt-1">Search past purchase & sales records by date.</p>
+                        <p class="text-xs text-slate-400 mt-1 font-medium">Search past purchase & sales records by date.</p>
                     </div>
                 </div>
             </div>
@@ -261,33 +265,33 @@
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Purchase & Supply Chain (SCM)</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Restock Raw Materials & Agro/Feed inventory via verified GRN entries.</p>
+                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Restock Raw Materials & Agro/Feed inventory via verified GRN entries.</p>
                     </div>
-                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                     <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-amber">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">New Purchase / GRN Entry</h3>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Purchase Date</label>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Purchase Date</label>
                             <input type="text" id="purchaseDateInput" class="custom-input custom-datepicker w-full border rounded-xl p-2.5 text-xs font-mono cursor-pointer">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Supplier Name / Vendor</label>
-                            <input type="text" id="supplierName" placeholder="e.g. Agro Feed Corp" class="custom-input w-full border rounded-xl p-2.5 text-xs">
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Supplier Name / Vendor</label>
+                            <input type="text" id="supplierName" placeholder="e.g. Agro Feed Corp" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Restock Item (Raw Materials & Agro Only)</label>
-                            <select id="purchaseItemSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs"></select>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Restock Item (Raw Materials & Agro Only)</label>
+                            <select id="purchaseItemSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium"></select>
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Purchase Rate (TK. per Unit)</label>
-                            <input type="number" id="purchaseRateInput" class="custom-input w-full border rounded-xl p-2.5 text-xs">
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Purchase Rate (TK. per Unit)</label>
+                            <input type="number" id="purchaseRateInput" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Received Quantity</label>
-                            <input type="number" id="purchaseQtyInput" value="10" min="1" class="custom-input w-full border rounded-xl p-2.5 text-xs">
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Received Quantity</label>
+                            <input type="number" id="purchaseQtyInput" value="10" min="1" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
                         </div>
                         <button onclick="addPurchaseItem()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95 shadow-md shadow-amber-500/20">Add to Purchase Manifest</button>
                     </div>
@@ -297,7 +301,7 @@
                             <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3">Incoming Shipment Manifest</h3>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-xs min-w-[400px]">
-                                    <thead class="border-b border-slate-800 text-slate-400">
+                                    <thead class="border-b border-slate-800 text-slate-400 font-semibold">
                                         <tr>
                                             <th class="pb-2">Item Name</th>
                                             <th class="pb-2 text-center">Qty</th>
@@ -307,14 +311,14 @@
                                         </tr>
                                     </thead>
                                     <tbody id="purchaseTableBody" class="divide-y divide-slate-800/40">
-                                        <tr><td colspan="5" class="py-6 text-center text-slate-500 italic">No items added to current manifest.</td></tr>
+                                        <tr><td colspan="5" class="py-6 text-center text-slate-500 italic font-medium">No items added to current manifest.</td></tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="border-t border-slate-800 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                             <div>
-                                <p class="text-xs text-slate-400">Current Manifest Value:</p>
+                                <p class="text-xs text-slate-400 font-medium">Current Manifest Value:</p>
                                 <p id="purchaseGrandTotal" class="text-lg sm:text-xl font-bold font-mono text-amber-600 dark:text-amber-400">0.00 TK.</p>
                             </div>
                             <button onclick="finalizePurchase()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95 shadow-md shadow-emerald-500/20">Confirm GRN & Save Record</button>
@@ -328,28 +332,28 @@
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Sales Matrix & Billing</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Process customer orders and billing for Finish Goods inventory.</p>
+                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Process customer orders and billing for Finish Goods inventory.</p>
                     </div>
-                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                     <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-cyan">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Add Item to Cart</h3>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Invoice / Sale Date</label>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Invoice / Sale Date</label>
                             <input type="text" id="salesDateInput" class="custom-input custom-datepicker w-full border rounded-xl p-2.5 text-xs font-mono cursor-pointer">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Select Finish Good Product</label>
-                            <select id="itemSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs"></select>
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Select Finish Good Product</label>
+                            <select id="itemSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium"></select>
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Price (TK.)</label>
-                            <input type="number" id="itemPrice" class="custom-input w-full border rounded-xl p-2.5 text-xs">
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Price (TK.)</label>
+                            <input type="number" id="itemPrice" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Quantity</label>
-                            <input type="number" id="itemQty" value="1" min="1" class="custom-input w-full border rounded-xl p-2.5 text-xs">
+                            <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Quantity</label>
+                            <input type="number" id="itemQty" value="1" min="1" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
                         </div>
                         <button onclick="addToCart()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95 shadow-md shadow-cyan-500/20">Add to Cart</button>
                     </div>
@@ -358,7 +362,7 @@
                             <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-3">Current Cart Items</h3>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-xs min-w-[400px]">
-                                    <thead class="border-b border-slate-800 text-slate-400">
+                                    <thead class="border-b border-slate-800 text-slate-400 font-semibold">
                                         <tr class="pb-2">
                                             <th class="pb-2">Item Name</th>
                                             <th class="pb-2 text-center">Qty</th>
@@ -368,14 +372,14 @@
                                         </tr>
                                     </thead>
                                     <tbody id="cartTableBody" class="divide-y divide-slate-800/40">
-                                        <tr><td colspan="5" class="py-8 text-center text-slate-500 italic">Cart is currently empty.</td></tr>
+                                        <tr><td colspan="5" class="py-8 text-center text-slate-500 italic font-medium">Cart is currently empty.</td></tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="border-t border-slate-800 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                             <div>
-                                <p class="text-xs text-slate-400">Grand Total:</p>
+                                <p class="text-xs text-slate-400 font-medium">Grand Total:</p>
                                 <p id="cartGrandTotal" class="text-lg sm:text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400">0.00 TK.</p>
                             </div>
                             <button onclick="checkoutSale()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition transform active:scale-95 shadow-md shadow-emerald-500/20">Complete Sale & Sync</button>
@@ -384,35 +388,33 @@
                 </div>
             </div>
 
-            <!-- TRANSACTION RECORDS HUB VIEW (Fixed Layout Overlap) -->
+            <!-- TRANSACTION RECORDS HUB VIEW -->
             <div id="view-records" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Transaction Records Hub</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Search and filter historical purchase and sales logs by date.</p>
+                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Search and filter historical purchase and sales logs by date.</p>
                     </div>
-                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                 </div>
 
-                <!-- Hub Controls: FIXED Flex Responsiveness -->
+                <!-- Hub Controls -->
                 <div class="glass-card p-4 rounded-2xl flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 hover-purple">
-                    <!-- Tabs Segmented Control -->
                     <div class="flex space-x-2 overflow-x-auto pb-1 lg:pb-0 shrink-0">
                         <button onclick="setRecordTab('purchase')" id="rec-tab-purchase" class="text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20">Purchase Records (GRN)</button>
-                        <button onclick="setRecordTab('sales')" id="rec-tab-sales" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Sales Invoices</button>
+                        <button onclick="setRecordTab('sales')" id="rec-tab-sales" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Sales Invoices</button>
                     </div>
                     
-                    <!-- Date Filters Toolbar -->
                     <div class="flex items-center space-x-2 flex-wrap sm:flex-nowrap gap-2">
                         <span class="text-xs text-slate-400 font-medium whitespace-nowrap">Filter:</span>
-                        <button onclick="setQuickFilterDate('today')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 border border-slate-700 cursor-pointer whitespace-nowrap">Today</button>
-                        <button onclick="setQuickFilterDate('yesterday')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 border border-slate-700 cursor-pointer whitespace-nowrap">Yesterday</button>
+                        <button onclick="setQuickFilterDate('today')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 border border-slate-700 cursor-pointer whitespace-nowrap font-medium">Today</button>
+                        <button onclick="setQuickFilterDate('yesterday')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 border border-slate-700 cursor-pointer whitespace-nowrap font-medium">Yesterday</button>
                         
                         <div class="relative flex-grow min-w-[140px]">
-                            <input type="text" id="recordDateFilter" placeholder="Select Date..." class="custom-input border rounded-xl px-3 py-2 text-xs font-mono focus:outline-none cursor-pointer w-full">
+                            <input type="text" id="recordDateFilter" placeholder="Select Date..." class="custom-input border rounded-xl px-3 py-2 text-xs font-mono font-medium focus:outline-none cursor-pointer w-full">
                         </div>
                         
-                        <button onclick="clearDateFilter()" class="text-xs px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 cursor-pointer whitespace-nowrap">Clear</button>
+                        <button onclick="clearDateFilter()" class="text-xs px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 cursor-pointer whitespace-nowrap font-medium">Clear</button>
                     </div>
                 </div>
 
@@ -424,7 +426,7 @@
                     </div>
                     <div class="overflow-x-auto max-h-[500px]">
                         <table class="w-full text-left text-xs min-w-[650px]">
-                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400">
+                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
                                 <tr>
                                     <th class="pb-2.5 pl-3">Ref ID</th>
                                     <th class="pb-2.5">Date</th>
@@ -435,7 +437,7 @@
                                 </tr>
                             </thead>
                             <tbody id="recordsTableBody" class="divide-y divide-slate-800/50">
-                                <tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No records found.</td></tr>
+                                <tr><td colspan="6" class="py-8 text-center text-slate-500 italic font-medium">No records found.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -447,18 +449,18 @@
                 <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold">Agro Product Catalog & Categories</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Filter items by Finish Goods, Raw Materials, or Agro/Feed.</p>
+                        <p class="text-xs text-slate-400 mt-0.5 font-medium">Filter items by Finish Goods, Raw Materials, or Agro/Feed.</p>
                     </div>
-                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                    <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                 </div>
 
                 <!-- Category Tabs & Counter -->
                 <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
                     <div class="flex space-x-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
                         <button onclick="setInventoryTab('all')" id="tab-all" class="text-xs px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20">All</button>
-                        <button onclick="setInventoryTab('Finish Goods')" id="tab-finish" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Finish Goods</button>
-                        <button onclick="setInventoryTab('Raw Material')" id="tab-raw" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Raw Materials</button>
-                        <button onclick="setInventoryTab('Agro')" id="tab-agro" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Agro & Feed</button>
+                        <button onclick="setInventoryTab('Finish Goods')" id="tab-finish" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Finish Goods</button>
+                        <button onclick="setInventoryTab('Raw Material')" id="tab-raw" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Raw Materials</button>
+                        <button onclick="setInventoryTab('Agro')" id="tab-agro" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Agro & Feed</button>
                     </div>
                     <span id="productCountBadge" class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 rounded-full border border-emerald-500/40 font-bold whitespace-nowrap">0 Items</span>
                 </div>
@@ -467,7 +469,7 @@
                 <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 hover-emerald">
                     <div class="overflow-x-auto max-h-[550px]">
                         <table class="w-full text-left text-xs min-w-[700px]">
-                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400">
+                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
                                 <tr>
                                     <th class="pb-2.5 pl-3">Code</th>
                                     <th class="pb-2.5">Item Name</th>
@@ -487,7 +489,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2">
+        <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
             CHOWDHURY AGRO ERP CORE • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
         </footer>
     </div>
@@ -875,16 +877,6 @@
 
             loadSharedData();
 
-            const isLoggedIn = localStorage.getItem('chowdhury_logged_in') === 'true';
-            const role = localStorage.getItem('chowdhury_role');
-
-            if (isLoggedIn && role) {
-                document.documentElement.classList.add('user-authenticated');
-                applyRolePermissions();
-            } else {
-                document.documentElement.classList.remove('user-authenticated');
-            }
-
             updateClock();
             renderDashboardBalances();
             populateSalesProductDropdown();
@@ -967,7 +959,7 @@
             if (badge) badge.innerText = `${filteredProducts.length} Items`;
 
             if (filteredProducts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-500 italic">No items found in this category.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-500 italic font-medium">No items found in this category.</td></tr>`;
                 return;
             }
             
@@ -975,20 +967,20 @@
                 const actualIndex = agroProducts.findIndex(item => item.code === p.code && item.name === p.name);
                 
                 const actionButtonsHtml = isOwner ? `
-                    <button onclick="editProduct(${actualIndex})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30 px-2 py-1 rounded text-[10px] font-semibold cursor-pointer mr-1">Edit</button>
-                    <button onclick="deleteProduct(${actualIndex})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 px-2 py-1 rounded text-[10px] font-semibold cursor-pointer">Delete</button>
+                    <button onclick="editProduct(${actualIndex})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer mr-1">Edit</button>
+                    <button onclick="deleteProduct(${actualIndex})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
                 ` : `
-                    <span class="text-[10px] text-slate-500 italic font-mono">View Only</span>
+                    <span class="text-[10px] text-slate-500 italic font-mono font-medium">View Only</span>
                 `;
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
                         <td class="py-3 pl-3 font-bold text-cyan-600 dark:text-cyan-400 font-mono">${p.code || ''}</td>
                         <td class="py-3 font-medium">${p.name || ''}</td>
-                        <td class="py-3 text-slate-300">
-                            <span class="bg-slate-800/80 px-2.5 py-1 rounded-lg text-[10px] text-cyan-300 border border-slate-700/60">${p.group || 'General'} / ${p.category || 'General'}</span>
+                        <td class="py-3 text-slate-300 font-medium">
+                            <span class="bg-slate-800/80 px-2.5 py-1 rounded-lg text-[10px] text-cyan-300 border border-slate-700/60 font-semibold">${p.group || 'General'} / ${p.category || 'General'}</span>
                         </td>
-                        <td class="py-3 text-slate-300">${p.unit || 'Pcs'}</td>
+                        <td class="py-3 text-slate-300 font-medium">${p.unit || 'Pcs'}</td>
                         <td class="py-3 text-right font-semibold text-cyan-600 dark:text-cyan-300 font-mono">${(p.retailRate || 0).toFixed(2)}</td>
                         <td class="py-3 text-right font-semibold text-indigo-600 dark:text-indigo-300 font-mono">${(p.wholesaleRate || 0).toFixed(2)}</td>
                         <td class="py-3 text-right font-bold text-emerald-600 dark:text-emerald-400 font-mono">${p.openingQty || 0}</td>
@@ -1088,7 +1080,7 @@
             const grandTotalEl = document.getElementById('cartGrandTotal');
             if (!tbody) return;
             if (cartList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500 italic">Cart is currently empty.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500 italic font-medium">Cart is currently empty.</td></tr>`;
                 if (grandTotalEl) grandTotalEl.innerText = "0.00 TK.";
                 return;
             }
@@ -1099,12 +1091,12 @@
                 grandTotal += total;
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/30">
-                        <td class="py-2.5 font-medium">${item.name} <span class="text-[10px] text-slate-400">(${item.unit})</span></td>
+                        <td class="py-2.5 font-medium">${item.name} <span class="text-[10px] text-slate-400 font-semibold">(${item.unit})</span></td>
                         <td class="py-2.5 text-center text-cyan-600 dark:text-cyan-300 font-bold">${item.qty}</td>
-                        <td class="py-2.5 text-right text-slate-300">${item.price.toFixed(2)}</td>
-                        <td class="py-2.5 text-right font-semibold text-emerald-600 dark:text-emerald-400">${total.toFixed(2)}</td>
+                        <td class="py-2.5 text-right text-slate-300 font-mono font-medium">${item.price.toFixed(2)}</td>
+                        <td class="py-2.5 text-right font-semibold text-emerald-600 dark:text-emerald-400 font-mono">${total.toFixed(2)}</td>
                         <td class="py-2.5 text-center">
-                            <button onclick="removeFromCart(${index})" class="text-rose-500 dark:text-rose-400 hover:opacity-80 font-bold px-2 py-1 rounded bg-rose-500/10 border border-rose-500/20 text-[10px] cursor-pointer">X</button>
+                            <button onclick="removeFromCart(${index})" class="text-rose-500 dark:text-rose-400 hover:opacity-80 font-bold px-2.5 py-1 rounded-lg bg-rose-500/10 border border-rose-500/20 text-[10px] cursor-pointer">X</button>
                         </td>
                     </tr>
                 `;
@@ -1197,7 +1189,7 @@
             const grandTotalEl = document.getElementById('purchaseGrandTotal');
             if (!tbody) return;
             if (purchaseList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500 italic">No items added to current manifest.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500 italic font-medium">No items added to current manifest.</td></tr>`;
                 if (grandTotalEl) grandTotalEl.innerText = "0.00 TK.";
                 return;
             }
@@ -1208,12 +1200,12 @@
                 grandTotal += total;
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/30">
-                        <td class="py-2.5 font-medium">${item.name} <span class="text-[10px] text-slate-400">(${item.unit})</span></td>
+                        <td class="py-2.5 font-medium">${item.name} <span class="text-[10px] text-slate-400 font-semibold">(${item.unit})</span></td>
                         <td class="py-2.5 text-center text-amber-600 dark:text-amber-300 font-bold">${item.qty}</td>
-                        <td class="py-2.5 text-right text-slate-300">${item.rate.toFixed(2)}</td>
-                        <td class="py-2.5 text-right font-semibold text-emerald-600 dark:text-emerald-400">${total.toFixed(2)}</td>
+                        <td class="py-2.5 text-right text-slate-300 font-mono font-medium">${item.rate.toFixed(2)}</td>
+                        <td class="py-2.5 text-right font-semibold text-emerald-600 dark:text-emerald-400 font-mono">${total.toFixed(2)}</td>
                         <td class="py-2.5 text-center">
-                            <button onclick="removePurchaseItem(${index})" class="text-rose-500 dark:text-rose-400 hover:opacity-80 font-bold px-2 py-1 rounded bg-rose-500/10 border border-rose-500/20 text-[10px] cursor-pointer">X</button>
+                            <button onclick="removePurchaseItem(${index})" class="text-rose-500 dark:text-rose-400 hover:opacity-80 font-bold px-2.5 py-1 rounded-lg bg-rose-500/10 border border-rose-500/20 text-[10px] cursor-pointer">X</button>
                         </td>
                     </tr>
                 `;
@@ -1326,7 +1318,7 @@
             if (badge) badge.innerText = `${dataList.length} Records`;
 
             if (dataList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No transaction records found for this criteria.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic font-medium">No transaction records found for this criteria.</td></tr>`;
                 return;
             }
 
@@ -1336,15 +1328,15 @@
                 const deleteBtnHtml = isOwner ? `
                     <button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer transition transform active:scale-95">Delete</button>
                 ` : `
-                    <span class="text-[10px] text-slate-500 italic font-mono">Protected</span>
+                    <span class="text-[10px] text-slate-500 italic font-mono font-medium">Protected</span>
                 `;
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
                         <td class="py-3 pl-3 font-bold text-cyan-600 dark:text-cyan-400 font-mono">${rec.refId}</td>
-                        <td class="py-3 text-slate-300 font-mono text-[11px]">${rec.date}</td>
+                        <td class="py-3 text-slate-300 font-mono text-[11px] font-medium">${rec.date}</td>
                         <td class="py-3 font-semibold">${partyName}</td>
-                        <td class="py-3 text-slate-300 max-w-xs truncate" title="${rec.itemsSummary}">${rec.itemsSummary}</td>
+                        <td class="py-3 text-slate-300 max-w-xs truncate font-medium" title="${rec.itemsSummary}">${rec.itemsSummary}</td>
                         <td class="py-3 text-right font-bold text-emerald-600 dark:text-emerald-400 font-mono">${rec.totalValue.toFixed(2)} TK.</td>
                         <td class="py-3 text-center pr-3">${deleteBtnHtml}</td>
                     </tr>
