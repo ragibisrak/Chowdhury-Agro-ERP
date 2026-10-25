@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.29</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.30</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -174,7 +174,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.29</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.30</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -207,7 +207,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.29</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.30</p>
                     </div>
                 </div>
             </div>
@@ -1121,7 +1121,7 @@
                 </div>
 
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.29 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.30 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
@@ -1357,7 +1357,7 @@
             { code: "RM000100", name: "Sour Yogurt #100", group: "Raw Material", category: "Sour Yogurt[ITEM]", unit: "BAG", retailRate: 485.0, wholesaleRate: 475.0, purchaseRate: 330.0, openingQty: 100 },
             { code: "RM000101", name: "Dahi Vada #101", group: "Raw Material", category: "Dahi Vada[ITEM]", unit: "PCS", retailRate: 110.0, wholesaleRate: 100.0, purchaseRate: 50.0, openingQty: 80 },
             { code: "AG000151", name: "Guchi Peyera #151", group: "Agro", category: "Guchi Peyera[ITEM]", unit: "BAG", retailRate: 460.0, wholesaleRate: 450.0, purchaseRate: 200.0, openingQty: 60 },
-            { code: "RM000102", name: "45 kg Cylinder", group: "Raw Material", category: "Raw Material[ITEM]", unit: "PCS", retailRate: 2500.0, wholesaleRate: 2400.0, purchaseRate: 2200.0, openingQty: 20 }
+            { code: "RM000102", name: "45 kg Cylinder", group: "Raw Material", category: "Raw Material[ITEM]", unit: "PCS", retailRate: 2500.0, wholesaleRate: 2400.0, purchaseRate: 2200.0, openingQty: 0 }
         ];
 
         let agroProducts = [];
@@ -1428,7 +1428,7 @@
 
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.29",
+                version: "4.30",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
