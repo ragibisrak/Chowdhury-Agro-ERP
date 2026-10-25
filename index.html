@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.17</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.18</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -121,7 +121,6 @@
         html.user-authenticated #appContainer { display: flex !important; }
 
         /* Sidebar Styling based on Mode */
-        /* WEBSITE MODE: Sidebar is part of the layout flow on desktop, or collapsible drawer */
         .sidebar-website {
             width: 260px;
             shrink: 0;
@@ -144,7 +143,6 @@
             }
         }
 
-        /* ANDROID APK MODE: Drawer overlay mode across all viewports */
         .sidebar-apk {
             position: fixed;
             top: 0; left: 0; bottom: 0;
@@ -158,7 +156,6 @@
             transform: translateX(0);
         }
 
-        /* Smooth Entry Animation */
         @keyframes fadeSlideIn {
             0% { opacity: 0; transform: translateY(16px) scale(0.98); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -190,7 +187,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.17</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.18</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -214,7 +211,7 @@
     <!-- MAIN APP CONTAINER (Hidden until explicit authentication) -->
     <div id="appContainer" class="flex-grow flex flex-col gap-4 sm:gap-6 fade-slide-enter">
         
-        <!-- YOUTUBE-STYLE TOP HEADER BAR -->
+        <!-- TOP HEADER BAR -->
         <header class="glass-card px-4 py-3 rounded-2xl flex items-center justify-between sticky top-0 z-40">
             <div class="flex items-center space-x-3">
                 <button onclick="toggleSidebar()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-cyan-400 cursor-pointer transition flex items-center justify-center" title="Toggle Navigation Sidebar">
@@ -224,7 +221,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.17</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.18</p>
                     </div>
                 </div>
             </div>
@@ -252,17 +249,14 @@
             <!-- BACKDROP FOR SIDEBAR DRAWER -->
             <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
 
-            <!-- SIDEBAR NAVIGATION (Dynamic class via mode switcher) -->
+            <!-- SIDEBAR NAVIGATION (Cross button removed) -->
             <aside id="appSidebar" class="sidebar-website glass-card p-4 overflow-y-auto">
-                <!-- Drawer Header -->
+                <!-- Drawer Header (Clean branding header without cross button) -->
                 <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
                     <div class="flex items-center space-x-2">
                         <div class="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold">Δ</div>
                         <span class="text-xs font-bold text-cyan-400 tracking-wider">CHOWDHURY AGRO</span>
                     </div>
-                    <button onclick="toggleSidebar()" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white cursor-pointer transition">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
                 </div>
 
                 <!-- Navigation Menu Sections -->
@@ -367,23 +361,74 @@
                             </div>
                         </div>
 
-                        <!-- Quick Navigation Cards (Standalone Entities + Modules) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                            <div onclick="switchView('customers')" class="glass-card p-5 rounded-2xl hover-cyan cursor-pointer group text-left">
-                                <h3 class="text-sm font-bold group-hover:text-cyan-400 transition">Customer Directory</h3>
-                                <p class="text-[11px] text-slate-400 mt-1 font-medium">Add and manage client profiles & credit limits.</p>
-                            </div>
-                            <div onclick="switchView('items')" class="glass-card p-5 rounded-2xl hover-emerald cursor-pointer group text-left">
-                                <h3 class="text-sm font-bold group-hover:text-emerald-400 transition">Item Entry & Catalog</h3>
-                                <p class="text-[11px] text-slate-400 mt-1 font-medium">Register new sweets, raw materials, and agro items.</p>
-                            </div>
-                            <div onclick="switchView('suppliers')" class="glass-card p-5 rounded-2xl hover-amber cursor-pointer group text-left">
-                                <h3 class="text-sm font-bold group-hover:text-amber-400 transition">Supplier Directory</h3>
-                                <p class="text-[11px] text-slate-400 mt-1 font-medium">Manage vendors, suppliers, and contact lists.</p>
-                            </div>
-                            <div onclick="switchView('inventory')" class="glass-card p-5 rounded-2xl hover-purple cursor-pointer group text-left">
-                                <h3 class="text-sm font-bold group-hover:text-purple-400 transition">Inventory & Stock</h3>
-                                <p class="text-[11px] text-slate-400 mt-1 font-medium">Monitor stock levels, batches, and low stock alerts.</p>
+                        <!-- 8 SIDEBAR MODULE CARDS QUICK ACCESS GRID -->
+                        <div class="space-y-3">
+                            <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest text-left px-1">Quick Access Hub (8 Core Modules)</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                                <!-- 1. Customers -->
+                                <div onclick="switchView('customers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-cyan-400 transition">Customers</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Manage clients & credits.</p>
+                                    </div>
+                                </div>
+                                <!-- 2. Item Entry -->
+                                <div onclick="switchView('items')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0"><i data-lucide="package-plus" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-emerald-400 transition">Item Entry</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Register sweets & agro items.</p>
+                                    </div>
+                                </div>
+                                <!-- 3. Suppliers -->
+                                <div onclick="switchView('suppliers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="truck" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Suppliers</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Vendors & contact lists.</p>
+                                    </div>
+                                </div>
+                                <!-- 4. Inventory -->
+                                <div onclick="switchView('inventory')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0"><i data-lucide="boxes" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-emerald-400 transition">Inventory</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Monitor stock & low alerts.</p>
+                                    </div>
+                                </div>
+                                <!-- 5. Manufacturing -->
+                                <div onclick="switchView('manufacturing')" class="glass-card p-4 sm:p-5 rounded-2xl hover-purple cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/40 shrink-0"><i data-lucide="factory" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-purple-400 transition">Manufacturing</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Record production batches.</p>
+                                    </div>
+                                </div>
+                                <!-- 6. Purchase -->
+                                <div onclick="switchView('purchases')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Purchase</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Raw material GRN entries.</p>
+                                    </div>
+                                </div>
+                                <!-- 7. Sales & POS -->
+                                <div onclick="switchView('sales')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/40 shrink-0"><i data-lucide="receipt" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-indigo-400 transition">Sales & POS</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Process orders & print slips.</p>
+                                    </div>
+                                </div>
+                                <!-- 8. Expenses -->
+                                <div onclick="switchView('expenses')" class="glass-card p-4 sm:p-5 rounded-2xl hover-rose cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 shrink-0"><i data-lucide="wallet" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-rose-400 transition">Expenses</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Track utility & store costs.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -944,7 +989,7 @@
 
                 <!-- Footer -->
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.17 • Website & Android APK Mode Switcher
+                    CHOWDHURY AGRO ERP CORE v4.18 • Clean Sidebar & Dashboard Quick Access Grid
                 </footer>
             </main>
         </div>
