@@ -73,8 +73,9 @@
         }
     </style>
     <script>
-        // Check session storage immediately on load to prevent black screen glitch
-        if (sessionStorage.getItem('chowdhury_logged_in') === 'true') {
+        // Instant check to determine login state before body renders to avoid flashes or blank screens
+        const isLoggedIn = localStorage.getItem('chowdhury_logged_in') === 'true';
+        if (isLoggedIn) {
             document.write('<style>#view-login { display: none !important; } #appContainer { display: flex !important; }</style>');
         }
     </script>
@@ -157,7 +158,7 @@
                     <p class="text-xs text-slate-400 mt-1">Head Office Financial & Inventory telemetry operating at 100% efficiency.</p>
                 </div>
 
-                <!-- Balances Grid (Responsive: 1 col on mobile, 2 on tablet, 4 on desktop) -->
+                <!-- Balances Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     <div class="glass-card p-4 sm:p-5 rounded-xl border-l-4 border-l-cyan-500 dark:border-l-cyan-400 hover-cyan">
                         <p class="text-xs text-slate-400 font-medium">Cash In Hand</p>
@@ -177,7 +178,7 @@
                     </div>
                 </div>
 
-                <!-- Quick Navigation Cards (Responsive: 1 col on mobile, 2 on tablet, 4 on desktop) -->
+                <!-- Quick Navigation Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     <div onclick="switchView('purchases')" class="glass-card p-5 sm:p-6 rounded-2xl hover:border-amber-500 hover-amber transition cursor-pointer group">
                         <h3 class="text-sm sm:text-base font-bold group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">Purchase & SCM</h3>
@@ -209,7 +210,6 @@
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-                    <!-- Purchase Form -->
                     <div class="glass-card p-4 sm:p-5 rounded-xl space-y-4 col-span-1 hover-amber">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">New Purchase / GRN Entry</h3>
                         <div>
@@ -235,7 +235,6 @@
                         <button onclick="addPurchaseItem()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-lg text-xs cursor-pointer transition">Add to Purchase Manifest</button>
                     </div>
 
-                    <!-- Purchase Manifest Table -->
                     <div class="glass-card p-4 sm:p-5 rounded-xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-amber">
                         <div>
                             <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3">Incoming Shipment Manifest</h3>
@@ -443,7 +442,7 @@
             const errorEl = document.getElementById('loginError');
 
             if (user === 'admin' && pass === '1234') {
-                sessionStorage.setItem('chowdhury_logged_in', 'true');
+                localStorage.setItem('chowdhury_logged_in', 'true');
                 
                 const loginView = document.getElementById('view-login');
                 loginView.classList.add('fade-slide-exit-active');
@@ -479,7 +478,7 @@
                 loginView.classList.remove('hidden');
                 loginView.classList.add('fade-slide-enter-active');
 
-                sessionStorage.removeItem('chowdhury_logged_in');
+                localStorage.removeItem('chowdhury_logged_in');
             }, 300);
         }
 
@@ -731,7 +730,7 @@
                 if (flatpickrTheme) flatpickrTheme.href = "https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css";
             }
 
-            if (sessionStorage.getItem('chowdhury_logged_in') === 'true') {
+            if (localStorage.getItem('chowdhury_logged_in') === 'true') {
                 document.getElementById('view-login').classList.add('hidden');
                 document.getElementById('appContainer').classList.remove('hidden');
             }
