@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.3</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.4</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -150,7 +150,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.3</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.4</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -181,7 +181,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.3</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.4</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -605,7 +605,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.3 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.4 • Ultra Liquid Glassmorphism • Real-Time Multi-Device Sync
         </footer>
     </div>
 
@@ -946,7 +946,6 @@
             const select = document.getElementById('mfgItemSelect');
             if (!select) return;
             select.innerHTML = '';
-            // Filter finish goods (sweets, items made in production)
             const finishGoods = agroProducts.filter(p => (p.group || '').toLowerCase().includes('finish goods'));
             finishGoods.forEach(p => {
                 const rate = p.retailRate > 0 ? p.retailRate : p.wholesaleRate;
@@ -991,7 +990,6 @@
                 return;
             }
 
-            // Increase product quantity in inventory
             product.openingQty = (product.openingQty || 0) + qtyMade;
 
             const mfgRecord = {
@@ -1292,11 +1290,13 @@
                 }
             });
 
+            // Save full cart items array inside the sale record for accurate inventory stock restoration on delete
             const record = {
                 refId: "INV-" + Math.floor(100000 + Math.random() * 900000),
                 rawDate: dateVal,
                 date: dateVal,
                 customer: "Walk-in Customer",
+                cartSnapshot: JSON.parse(JSON.stringify(cartList)),
                 itemsSummary: cartList.map(i => `${i.name} (${i.qty} ${i.unit})`).join(', '),
                 totalValue: saleTotal
             };
@@ -1606,7 +1606,18 @@
                     if (deletedItem) systemBalances.supplierDue -= deletedItem.totalValue;
                 } else if (type === 'sales') {
                     deletedItem = salesHistory.splice(index, 1)[0];
-                    if (deletedItem) systemBalances.cashInHand -= deletedItem.totalValue;
+                    if (deletedItem) {
+                        systemBalances.cashInHand -= deletedItem.totalValue;
+                        // Restores sold items back to inventory stock!
+                        if (deletedItem.cartSnapshot && Array.isArray(deletedItem.cartSnapshot)) {
+                            deletedItem.cartSnapshot.forEach(soldItem => {
+                                const targetProduct = agroProducts.find(p => p.code === soldItem.code);
+                                if (targetProduct) {
+                                    targetProduct.openingQty = (targetProduct.openingQty || 0) + soldItem.qty;
+                                }
+                            });
+                        }
+                    }
                 } else if (type === 'expenses') {
                     deletedItem = expenseHistory.splice(index, 1)[0];
                     if (deletedItem) systemBalances.cashInHand += deletedItem.amount; // Refund cash
@@ -1615,6 +1626,9 @@
                 saveSharedData();
                 renderRecordsTable();
                 renderDashboardBalances();
+                renderInventoryTable();
+                populateSalesProductDropdown();
+                populateMfgProductDropdown();
             }
         }
     </script>
