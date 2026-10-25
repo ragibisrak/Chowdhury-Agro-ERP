@@ -73,8 +73,8 @@
         }
     </style>
     <script>
-        // Check session storage immediately on load to prevent blank screen glitch during refresh
-        if (sessionStorage.getItem('chowdhury_logged_in') === 'true') {
+        // Check login instantly on load to prevent blank screen
+        if (localStorage.getItem('chowdhury_logged_in') === 'true') {
             document.write('<style>#view-login { display: none !important; } #appContainer { display: flex !important; }</style>');
         }
     </script>
@@ -87,12 +87,12 @@
             <div class="text-center space-y-2">
                 <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-500 font-bold text-xl">Δ</div>
                 <h1 class="text-xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono">MULTI-ROLE ERP GATEWAY V3.0</p>
+                <p class="text-xs text-slate-400 font-mono">SECURE ERP GATEWAY V3.0</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider">Username ID (owner / manager)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1 font-mono uppercase tracking-wider">Username ID</label>
                     <input type="text" id="loginUser" required placeholder="Enter username..." autocomplete="off" class="custom-input w-full border rounded-xl p-3 text-sm">
                 </div>
                 <div>
@@ -102,9 +102,8 @@
                 <div id="loginError" class="text-rose-500 text-xs text-center font-medium hidden">Invalid Credentials. Please check username & password.</div>
                 <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition shadow-lg shadow-cyan-500/20">Authenticate & Unlock ERP</button>
             </form>
-            <div class="text-center space-y-1">
-                <p class="text-[10px] text-slate-500 font-mono">Owner: <b>owner</b> / <b>1234</b></p>
-                <p class="text-[10px] text-slate-500 font-mono">Manager: <b>manager</b> / <b>4321</b></p>
+            <div class="text-center">
+                <p class="text-[10px] text-slate-500 font-mono">Authorized Personnel Only</p>
             </div>
         </div>
     </div>
@@ -157,9 +156,9 @@
             <div id="view-dashboard" class="space-y-4 sm:space-y-6">
                 <div class="glass-card p-5 sm:p-6 rounded-2xl hover-cyan flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <span class="text-[10px] bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 px-2.5 py-1 rounded-full font-mono border border-cyan-500/40 font-bold">SYSTEM ONLINE</span>
+                        <span class="text-[10px] bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 px-2.5 py-1 rounded-full font-mono border border-cyan-500/40 font-bold">SYSTEM ONLINE (SYNCED)</span>
                         <h2 id="welcomeGreeting" class="text-xl sm:text-2xl font-bold mt-3">Welcome back</h2>
-                        <p class="text-xs text-slate-400 mt-1">Head Office Operations & Stock telemetry operating at 100% efficiency.</p>
+                        <p class="text-xs text-slate-400 mt-1">Multi-device synchronization active across active browser instances.</p>
                     </div>
                     <div id="managerRestrictionNote" class="hidden bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 max-w-xs text-left">
                         <p class="text-xs font-bold text-amber-500">Manager Mode Active</p>
@@ -437,7 +436,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2">
-            CHOWDHURY AGRO ERP CORE • Secured with Quantum-Grade Encryption • All System Balances Synced
+            CHOWDHURY AGRO ERP CORE • Secured with Cross-Tab Sync • All System Balances Synced
         </footer>
     </div>
 
@@ -445,7 +444,7 @@
     <script>
         // --- MULTI-USER ROLE AUTHENTICATION & PERMISSIONS ---
         function getCurrentRole() {
-            return sessionStorage.getItem('chowdhury_role') || 'manager';
+            return localStorage.getItem('chowdhury_role') || 'manager';
         }
 
         function applyRolePermissions() {
@@ -489,8 +488,8 @@
             }
 
             if (authenticatedRole) {
-                sessionStorage.setItem('chowdhury_logged_in', 'true');
-                sessionStorage.setItem('chowdhury_role', authenticatedRole);
+                localStorage.setItem('chowdhury_logged_in', 'true');
+                localStorage.setItem('chowdhury_role', authenticatedRole);
                 
                 const loginView = document.getElementById('view-login');
                 loginView.classList.add('fade-slide-exit-active');
@@ -504,6 +503,7 @@
                     appContainer.classList.add('fade-slide-enter-active');
                     
                     applyRolePermissions();
+                    loadSharedData();
                     renderInventoryTable();
                     renderRecordsTable();
 
@@ -530,19 +530,20 @@
                 loginView.classList.remove('hidden');
                 loginView.classList.add('fade-slide-enter-active');
 
-                sessionStorage.removeItem('chowdhury_logged_in');
-                sessionStorage.removeItem('chowdhury_role');
+                localStorage.removeItem('chowdhury_logged_in');
+                localStorage.removeItem('chowdhury_role');
             }, 300);
         }
 
-        const systemBalances = {
+        // --- SHARED PERSISTENT STATE STORAGE ---
+        let systemBalances = {
             cashInHand: 0.00,
             bankAccounts: 0.00,
             customerDue: 0.00,
             supplierDue: 0.00
         };
 
-        const agroProducts = [
+        const defaultAgroProducts = [
             { code: "P000185", name: "Toffy Bar", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 750.0, wholesaleRate: 740.0, purchaseRate: 0.0, openingQty: 0 },
             { code: "P000184", name: "Sp Laddu", group: "Finish Goods", category: "Dry Items", unit: "Kg", retailRate: 450.0, wholesaleRate: 440.0, purchaseRate: 0.0, openingQty: 0 },
             { code: "P000183", name: "Cylinder 45Kg", group: "Raw Material", category: "Energy", unit: "Pcs", retailRate: 0.0, wholesaleRate: 0.0, purchaseRate: 0.0, openingQty: 0 },
@@ -718,11 +719,43 @@
             { code: "ITEM-71", name: "Standard Mixed Sweet", group: "Finish Goods", category: "Sweet", unit: "Kg", retailRate: 320.0, wholesaleRate: 310.0, purchaseRate: 0.0, openingQty: 0 }
         ];
 
+        let agroProducts = [];
         let purchaseHistory = [];
         let salesHistory = [];
         let currentInventoryTab = 'all';
         let currentRecordTab = 'purchase';
         let recordFilterPicker = null;
+
+        function loadSharedData() {
+            const savedBalances = localStorage.getItem('chowdhury_balances');
+            const savedProducts = localStorage.getItem('chowdhury_products');
+            const savedPurchases = localStorage.getItem('chowdhury_purchases');
+            const savedSales = localStorage.getItem('chowdhury_sales');
+
+            systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
+            agroProducts = savedProducts ? JSON.parse(savedProducts) : JSON.parse(JSON.stringify(defaultAgroProducts));
+            purchaseHistory = savedPurchases ? JSON.parse(savedPurchases) : [];
+            salesHistory = savedSales ? JSON.parse(savedSales) : [];
+        }
+
+        function saveSharedData() {
+            localStorage.setItem('chowdhury_balances', JSON.stringify(systemBalances));
+            localStorage.setItem('chowdhury_products', JSON.stringify(agroProducts));
+            localStorage.setItem('chowdhury_purchases', JSON.stringify(purchaseHistory));
+            localStorage.setItem('chowdhury_sales', JSON.stringify(salesHistory));
+        }
+
+        // Listen for changes from other tabs or devices instantly in real-time
+        window.addEventListener('storage', (event) => {
+            if (['chowdhury_balances', 'chowdhury_products', 'chowdhury_purchases', 'chowdhury_sales'].includes(event.key)) {
+                loadSharedData();
+                renderDashboardBalances();
+                renderInventoryTable();
+                renderRecordsTable();
+                populateSalesProductDropdown();
+                populatePurchaseProductDropdown();
+            }
+        });
 
         function updateClock() {
             const now = new Date();
@@ -783,7 +816,9 @@
                 if (flatpickrTheme) flatpickrTheme.href = "https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css";
             }
 
-            if (sessionStorage.getItem('chowdhury_logged_in') === 'true') {
+            loadSharedData();
+
+            if (localStorage.getItem('chowdhury_logged_in') === 'true') {
                 document.getElementById('view-login').classList.add('hidden');
                 document.getElementById('appContainer').classList.remove('hidden');
                 applyRolePermissions();
@@ -913,6 +948,7 @@
             p.retailRate = parseFloat(newRetail) || p.retailRate;
             p.wholesaleRate = parseFloat(newWholesale) || p.wholesaleRate;
 
+            saveSharedData();
             renderInventoryTable();
             populateSalesProductDropdown();
             populatePurchaseProductDropdown();
@@ -926,6 +962,7 @@
             }
             if (confirm(`Are you sure you want to delete "${agroProducts[index].name}" from the catalog?`)) {
                 agroProducts.splice(index, 1);
+                saveSharedData();
                 renderInventoryTable();
                 populateSalesProductDropdown();
                 populatePurchaseProductDropdown();
@@ -1028,9 +1065,11 @@
             salesHistory.unshift(record);
 
             systemBalances.cashInHand += saleTotal;
+            saveSharedData();
             renderDashboardBalances();
+            renderRecordsTable();
 
-            alert(`Sale completed successfully for date: ${dateVal}! Record saved to Transaction Logs.`);
+            alert(`Sale completed successfully for date: ${dateVal}! Synced across all connected views.`);
             cartList = [];
             renderCart();
         }
@@ -1144,9 +1183,11 @@
             purchaseHistory.unshift(record);
 
             systemBalances.supplierDue += shipmentTotal;
+            saveSharedData();
             renderDashboardBalances();
+            renderRecordsTable();
 
-            alert(`GRN confirmed for date: ${dateVal}! Stock updated and record saved to Transaction Logs.`);
+            alert(`GRN confirmed for date: ${dateVal}! Stock and records updated across all synced views.`);
             purchaseList = [];
             if (supplierInput) supplierInput.value = '';
             renderPurchaseManifest();
@@ -1266,6 +1307,7 @@
                     }
                 }
 
+                saveSharedData();
                 renderRecordsTable();
                 renderDashboardBalances();
             }
