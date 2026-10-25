@@ -18,9 +18,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css" id="flatpickrTheme">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
-    <!-- Strict Startup Auth Check: Always require login on fresh entry -->
+    <!-- Strict Startup Auth Check: Clears session on refresh/load so it always boots to login -->
     <script>
-        // Clear auth state on initial script parse so it always boots to login
         document.documentElement.classList.remove('user-authenticated');
         localStorage.removeItem('chowdhury_logged_in');
         localStorage.removeItem('chowdhury_role');
@@ -110,8 +109,10 @@
         .font-mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.025em; }
         .flatpickr-calendar { box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.45); border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.1); }
 
-        /* Pre-Render Auth Rules (Zero Blank Screen / Zero Glitch) */
-        #appContainer { display: none; }
+        /* Pre-Render Auth Rules: Default show login, hide app */
+        #appContainer { display: none !important; }
+        #view-login { display: flex !important; }
+
         html.user-authenticated #view-login { display: none !important; }
         html.user-authenticated #appContainer { display: flex !important; }
 
@@ -498,7 +499,7 @@
     <script>
         // --- MULTI-USER ROLE AUTHENTICATION & PERMISSIONS ---
         function getCurrentRole() {
-            return localStorage.getItem('chowdhury_role');
+            return sessionStorage.getItem('chowdhury_role');
         }
 
         function applyRolePermissions() {
@@ -542,8 +543,9 @@
             }
 
             if (authenticatedRole) {
-                localStorage.setItem('chowdhury_logged_in', 'true');
-                localStorage.setItem('chowdhury_role', authenticatedRole);
+                // Use sessionStorage so refreshing or closing the tab instantly clears login
+                sessionStorage.setItem('chowdhury_logged_in', 'true');
+                sessionStorage.setItem('chowdhury_role', authenticatedRole);
                 document.documentElement.classList.add('user-authenticated');
                 
                 const loginView = document.getElementById('view-login');
@@ -588,8 +590,8 @@
                 loginView.style.opacity = '1';
                 loginView.style.transform = 'translateY(0) scale(1)';
 
-                localStorage.removeItem('chowdhury_logged_in');
-                localStorage.removeItem('chowdhury_role');
+                sessionStorage.removeItem('chowdhury_logged_in');
+                sessionStorage.removeItem('chowdhury_role');
                 document.documentElement.classList.remove('user-authenticated');
             }, 350);
         }
@@ -804,7 +806,7 @@
             localStorage.setItem('chowdhury_sales', JSON.stringify(salesHistory));
         }
 
-        // Listen for changes from other tabs or devices instantly in real-time
+        // Listen for changes from other tabs instantly in real-time
         window.addEventListener('storage', (event) => {
             if (['chowdhury_balances', 'chowdhury_products', 'chowdhury_purchases', 'chowdhury_sales'].includes(event.key)) {
                 loadSharedData();
