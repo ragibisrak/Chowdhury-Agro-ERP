@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.20</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.21</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -187,7 +187,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.20</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.21</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -221,7 +221,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.20</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.21</p>
                     </div>
                 </div>
             </div>
@@ -595,7 +595,7 @@
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                             <div class="text-left">
                                 <h2 class="text-lg sm:text-xl font-bold">Staff & Supplier Manager Hub</h2>
-                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage raw material suppliers, vendor provisions, and staff member profiles & salaries in one place.</p>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage raw material suppliers, vendor provisions (connected to inventory), and staff profiles.</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <div class="flex space-x-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700">
@@ -614,10 +614,19 @@
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Supplier / Company Name</label>
                                     <input type="text" id="suppNameInput" placeholder="e.g. Agro Feed Corp" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
                                 </div>
-                                <div>
-                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">What Supplier Provides (Items / Materials)</label>
-                                    <input type="text" id="suppProvidesInput" placeholder="e.g. Maize, Soybean Meal, Sugar" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                                <div class="relative">
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">What Supplier Provides (Linked to Inventory)</label>
+                                    <input type="text" id="suppProvidesInput" oninput="onSupplierProvidesInput(this.value)" placeholder="e.g. Maize, Soybean Meal, Sugar" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium" autocomplete="off">
+                                    <!-- Autocomplete suggestions dropdown -->
+                                    <div id="supplierProvidesDropdown" class="absolute left-0 right-0 top-full mt-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-30 hidden max-h-40 overflow-y-auto"></div>
                                 </div>
+                                
+                                <!-- AUTO-REGISTER TO INVENTORY CHECKBOX -->
+                                <div class="flex items-center space-x-2 pt-1 bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20">
+                                    <input type="checkbox" id="autoAddInventoryCheck" checked class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-slate-900 border-slate-700 cursor-pointer">
+                                    <label for="autoAddInventoryCheck" class="text-[11px] text-amber-300 font-medium cursor-pointer">Automatically add unlisted items to Raw Material Inventory</label>
+                                </div>
+
                                 <div>
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Contact Person</label>
                                     <input type="text" id="suppContactPerson" placeholder="e.g. Mr. Kamal" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
@@ -630,7 +639,7 @@
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Address</label>
                                     <input type="text" id="suppAddressInput" placeholder="e.g. Tejgaon Industrial Area" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
                                 </div>
-                                <button onclick="addSupplier()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition shadow-md shadow-amber-500/20">Save Supplier Profile</button>
+                                <button onclick="addSupplier()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition shadow-md shadow-amber-500/20">Save Supplier & Sync Inventory</button>
                             </div>
 
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-amber text-left">
@@ -661,7 +670,7 @@
                             </div>
                         </div>
 
-                        <!-- STAFF SUB-VIEW CONTAINER (Hidden by default until tab switch) -->
+                        <!-- STAFF SUB-VIEW CONTAINER -->
                         <div id="subview-staff" class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 hidden">
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-amber text-left">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Add New Staff Member</h3>
@@ -1055,7 +1064,7 @@
 
                 <!-- Footer -->
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.20 • Unified Staff & Supplier Manager
+                    CHOWDHURY AGRO ERP CORE v4.21 • Inventory-Connected Supplier Provisions & Auto-Registration
                 </footer>
             </main>
         </div>
@@ -1823,7 +1832,56 @@
             } catch(e) {}
         }
 
-        // --- SUPPLIER MODULE ---
+        // --- SUPPLIER MODULE & INVENTORY AUTO-SYNC ---
+        function onSupplierProvidesInput(val) {
+            try {
+                const dropdown = document.getElementById('supplierProvidesDropdown');
+                if (!dropdown) return;
+                const query = val.trim().toLowerCase();
+                if (!query) {
+                    dropdown.classList.add('hidden');
+                    return;
+                }
+
+                // Filter raw material and agro items from inventory
+                const matchingItems = agroProducts.filter(p => {
+                    const g = (p.group || '').toLowerCase();
+                    return (g.includes('raw material') || g.includes('agro')) && p.name.toLowerCase().includes(query);
+                });
+
+                if (matchingItems.length === 0) {
+                    dropdown.innerHTML = `<div class="p-2.5 text-[11px] text-slate-400 italic">New item (will auto-register if enabled)</div>`;
+                    dropdown.classList.remove('hidden');
+                    return;
+                }
+
+                dropdown.innerHTML = '';
+                matchingItems.forEach(item => {
+                    dropdown.innerHTML += `
+                        <div onclick="selectInventoryItemForSupplier('${item.name}')" class="p-2.5 hover:bg-slate-800 text-xs text-slate-200 cursor-pointer flex justify-between items-center border-b border-slate-800 last:border-b-0">
+                            <span class="font-bold text-amber-400">${item.name}</span>
+                            <span class="text-[10px] text-slate-400 font-mono">[${item.group}]</span>
+                        </div>
+                    `;
+                });
+                dropdown.classList.remove('hidden');
+            } catch(e) {}
+        }
+
+        function selectInventoryItemForSupplier(itemName) {
+            try {
+                const input = document.getElementById('suppProvidesInput');
+                const dropdown = document.getElementById('supplierProvidesDropdown');
+                if (input) {
+                    // Append or set
+                    let currentVal = input.value.trim();
+                    if (currentVal && !currentVal.endsWith(',')) currentVal += ', ';
+                    input.value = currentVal + itemName;
+                }
+                if (dropdown) dropdown.classList.add('hidden');
+            } catch(e) {}
+        }
+
         function addSupplier() {
             try {
                 const nameInput = document.getElementById('suppNameInput');
@@ -1831,16 +1889,43 @@
                 const contactInput = document.getElementById('suppContactPerson');
                 const phoneInput = document.getElementById('suppPhoneInput');
                 const addressInput = document.getElementById('suppAddressInput');
+                const autoAddCheck = document.getElementById('autoAddInventoryCheck');
 
                 const name = nameInput ? nameInput.value.trim() : '';
                 const provides = providesInput ? providesInput.value.trim() : '';
                 const contact = contactInput ? contactInput.value.trim() : '';
                 const phone = phoneInput ? phoneInput.value.trim() : '';
                 const address = addressInput ? addressInput.value.trim() : '';
+                const shouldAutoAdd = autoAddCheck ? autoAddCheck.checked : true;
 
                 if (!name) {
                     alert("Please enter a supplier company name.");
                     return;
+                }
+
+                // If user entered items in provides and autoAdd is checked, check against inventory and add missing ones as Raw Material
+                if (provides && shouldAutoAdd) {
+                    const itemsArr = provides.split(',').map(i => i.trim()).filter(Boolean);
+                    itemsArr.forEach(rawItemName => {
+                        const exists = agroProducts.some(p => p.name.toLowerCase() === rawItemName.toLowerCase());
+                        if (!exists) {
+                            const newRM = {
+                                code: "RM-" + Math.floor(10000 + Math.random() * 90000),
+                                name: rawItemName,
+                                group: "Raw Material",
+                                category: "Raw Material[ITEM]",
+                                unit: "BAG",
+                                retailRate: 0.0,
+                                wholesaleRate: 0.0,
+                                purchaseRate: 100.0,
+                                openingQty: 0
+                            };
+                            agroProducts.push(newRM);
+                        }
+                    });
+                    saveSharedData();
+                    renderInventoryTable();
+                    populatePurchaseProductDropdown();
                 }
 
                 const newSupp = {
@@ -1862,7 +1947,7 @@
                 if (contactInput) contactInput.value = '';
                 if (phoneInput) phoneInput.value = '';
                 if (addressInput) addressInput.value = '';
-                alert("Supplier registered successfully with item provisions!");
+                alert("Supplier registered and inventory auto-synced successfully!");
             } catch(e) {}
         }
 
