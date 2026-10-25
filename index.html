@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.25</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.26</title>
     <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css" id="flatpickrTheme">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
-    <!-- Strict Startup Auth Check: Clears session on refresh/load so it always boots to login -->
+    <!-- Strict Startup Auth Check -->
     <script>
         try {
             document.documentElement.classList.remove('user-authenticated');
@@ -29,7 +30,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
         
-        /* Ultra-Smooth Typography Rendering */
         body { 
             font-family: 'Inter', sans-serif; 
             -webkit-font-smoothing: antialiased;
@@ -40,7 +40,6 @@
             overflow-x: hidden; 
         }
         
-        /* Floating Animated Background Orbs (Liquid Vibe) */
         .ambient-bg {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -65,7 +64,6 @@
             100% { transform: translate(-50px, 90px) scale(0.92); }
         }
 
-        /* Dark Mode Liquid Glassmorphism */
         .dark body { background-color: #030712; color: #f3f4f6; }
         .dark .glass-card { 
             background: rgba(15, 23, 42, 0.6); 
@@ -77,7 +75,6 @@
         }
         .dark .custom-input { background-color: rgba(15, 23, 42, 0.75); border-color: rgba(255, 255, 255, 0.1); color: #ffffff; transition: all 0.2s ease; }
 
-        /* Light Mode Liquid Glassmorphism */
         html:not(.dark) body { background-color: #f1f5f9; color: #0f172a; }
         html:not(.dark) .glass-card { 
             background: rgba(255, 255, 255, 0.7); 
@@ -96,7 +93,6 @@
         html:not(.dark) .bg-slate-900 { background-color: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; }
         html:not(.dark) .bg-slate-800 { background-color: #e2e8f0 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
 
-        /* Dynamic Liquid Hover Animations & Glow Outlines */
         .glass-card:hover { transform: translateY(-4px) scale(1.004); }
         .dark .hover-amber:hover { border-color: rgba(245, 158, 11, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(245, 158, 11, 0.22); }
         .dark .hover-cyan:hover { border-color: rgba(6, 182, 212, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(6, 182, 212, 0.22); }
@@ -104,23 +100,15 @@
         .dark .hover-purple:hover { border-color: rgba(168, 85, 247, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(168, 85, 247, 0.22); }
         .dark .hover-rose:hover { border-color: rgba(244, 63, 94, 0.45) !important; box-shadow: 0 14px 40px -10px rgba(244, 63, 94, 0.22); }
 
-        html:not(.dark) .hover-amber:hover { border-color: #f59e0b !important; box-shadow: 0 14px 35px -5px rgba(245, 158, 11, 0.22); }
-        html:not(.dark) .hover-cyan:hover { border-color: #06b6d4 !important; box-shadow: 0 14px 35px -5px rgba(6, 182, 212, 0.22); }
-        html:not(.dark) .hover-emerald:hover { border-color: #10b981 !important; box-shadow: 0 14px 35px -5px rgba(16, 185, 129, 0.22); }
-        html:not(.dark) .hover-purple:hover { border-color: #a855f7 !important; box-shadow: 0 14px 35px -5px rgba(168, 85, 247, 0.22); }
-        html:not(.dark) .hover-rose:hover { border-color: #f43f5e !important; box-shadow: 0 14px 35px -5px rgba(244, 63, 94, 0.22); }
-
         .font-mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.025em; }
         .flatpickr-calendar { box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.45); border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.1); }
 
-        /* Pre-Render Auth Rules */
         #appContainer { display: none !important; }
         #view-login { display: flex !important; }
 
         html.user-authenticated #view-login { display: none !important; }
         html.user-authenticated #appContainer { display: flex !important; }
 
-        /* Sidebar Styling based on Mode */
         .sidebar-website {
             width: 260px;
             shrink: 0;
@@ -174,20 +162,19 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 relative">
 
-    <!-- Floating Liquid Ambient Background -->
     <div class="ambient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
 
-    <!-- LOGIN SCREEN VIEW -->
+    <!-- LOGIN SCREEN -->
     <div id="view-login" class="flex-grow flex items-center justify-center transition-all duration-300">
         <div class="glass-card p-6 sm:p-8 rounded-3xl w-full max-w-md space-y-6 shadow-2xl hover-cyan fade-slide-enter" id="loginCard">
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.25</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.26</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -208,27 +195,25 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER (Hidden until explicit authentication) -->
+    <!-- MAIN APP CONTAINER -->
     <div id="appContainer" class="flex-grow flex flex-col gap-4 sm:gap-6 fade-slide-enter">
         
-        <!-- TOP HEADER BAR -->
         <header class="glass-card px-4 py-3 rounded-2xl flex items-center justify-between sticky top-0 z-40">
             <div class="flex items-center space-x-3">
-                <button onclick="toggleSidebar()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-cyan-400 cursor-pointer transition flex items-center justify-center" title="Toggle Navigation Sidebar">
+                <button onclick="toggleSidebar()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-cyan-400 cursor-pointer transition flex items-center justify-center">
                     <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
                 <div class="flex items-center space-x-2.5">
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.25</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.26</p>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-center space-x-2 sm:space-x-3">
-                <!-- MODE SWITCHER BUTTON -->
-                <button onclick="toggleAppMode()" id="modeSwitchBtn" class="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 text-[11px] font-mono font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-sm" title="Switch between Website and Android APK Mode">
+                <button onclick="toggleAppMode()" id="modeSwitchBtn" class="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 text-[11px] font-mono font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-sm">
                     <i data-lucide="monitor" class="w-3.5 h-3.5" id="modeIcon"></i>
                     <span id="modeText">Website Mode</span>
                 </button>
@@ -237,21 +222,17 @@
                     <span id="roleBadge" class="px-2.5 py-1 rounded-full font-mono font-bold uppercase border"></span>
                     <div id="liveClock" class="text-cyan-600 dark:text-cyan-300 font-semibold px-2 py-1 bg-slate-800/50 rounded-lg border border-slate-700/60">00:00:00</div>
                 </div>
-                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer transition flex items-center justify-center" title="Toggle Theme">
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer transition flex items-center justify-center">
                     <i data-lucide="moon" class="w-4 h-4" id="themeIcon"></i>
                 </button>
             </div>
         </header>
 
-        <!-- LAYOUT WRAPPER (Sidebar + Backdrop + Main Workspace) -->
         <div class="flex flex-row gap-4 sm:gap-6 relative">
             
-            <!-- BACKDROP FOR SIDEBAR DRAWER -->
             <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
 
-            <!-- SIDEBAR NAVIGATION -->
             <aside id="appSidebar" class="sidebar-website glass-card p-4 overflow-y-auto">
-                <!-- Drawer Header -->
                 <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
                     <div class="flex items-center space-x-2">
                         <div class="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold">Δ</div>
@@ -259,7 +240,6 @@
                     </div>
                 </div>
 
-                <!-- Navigation Menu Sections -->
                 <nav class="flex flex-col space-y-1.5 pt-1">
                     <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest px-3 py-1 font-bold">Main Feed</p>
                     <button onclick="switchView('dashboard')" id="nav-btn-dashboard" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 font-bold border border-cyan-500/40 cursor-pointer transition flex items-center space-x-3 shadow-md shadow-cyan-500/10">
@@ -270,19 +250,19 @@
                     <div class="pt-2 pb-1 border-t border-slate-800/80">
                         <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest px-3 py-1 font-bold">Directories & Catalog</p>
                     </div>
-                    <button onclick="switchView('customers')" id="nav-btn-customers" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-teal-500/10 text-slate-300 hover:text-teal-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-teal-500/30">
+                    <button onclick="switchView('customers')" id="nav-btn-customers" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-teal-500/10 text-slate-300 hover:text-teal-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="users" class="w-4 h-4 shrink-0"></i>
                         <span>Customers</span>
                     </button>
-                    <button onclick="switchView('items')" id="nav-btn-items" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-emerald-500/30">
+                    <button onclick="switchView('items')" id="nav-btn-items" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="package-plus" class="w-4 h-4 shrink-0"></i>
                         <span>Item Entry</span>
                     </button>
-                    <button onclick="switchView('staffsuppliers')" id="nav-btn-staffsuppliers" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-amber-500/30">
+                    <button onclick="switchView('staffsuppliers')" id="nav-btn-staffsuppliers" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="briefcase" class="w-4 h-4 shrink-0"></i>
                         <span>Staff & Supplier Manager</span>
                     </button>
-                    <button onclick="switchView('inventory')" id="nav-btn-inventory" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-emerald-500/30">
+                    <button onclick="switchView('inventory')" id="nav-btn-inventory" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="boxes" class="w-4 h-4 shrink-0"></i>
                         <span>Inventory</span>
                     </button>
@@ -290,19 +270,19 @@
                     <div class="pt-2 pb-1 border-t border-slate-800/80">
                         <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest px-3 py-1 font-bold">Operations & POS</p>
                     </div>
-                    <button onclick="switchView('manufacturing')" id="nav-btn-manufacturing" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-purple-500/10 text-slate-300 hover:text-purple-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-purple-500/30">
+                    <button onclick="switchView('manufacturing')" id="nav-btn-manufacturing" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-purple-500/10 text-slate-300 hover:text-purple-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="factory" class="w-4 h-4 shrink-0"></i>
                         <span>Manufacturing</span>
                     </button>
-                    <button onclick="switchView('purchases')" id="nav-btn-purchases" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-amber-500/30">
+                    <button onclick="switchView('purchases')" id="nav-btn-purchases" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="shopping-bag" class="w-4 h-4 shrink-0"></i>
                         <span>Purchase</span>
                     </button>
-                    <button onclick="switchView('sales')" id="nav-btn-sales" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-indigo-500/10 text-slate-300 hover:text-indigo-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-indigo-500/30">
+                    <button onclick="switchView('sales')" id="nav-btn-sales" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-indigo-500/10 text-slate-300 hover:text-indigo-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i>
                         <span>Sales & POS</span>
                     </button>
-                    <button onclick="switchView('expenses')" id="nav-btn-expenses" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-rose-500/10 text-slate-300 hover:text-rose-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-rose-500/30">
+                    <button onclick="switchView('expenses')" id="nav-btn-expenses" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-rose-500/10 text-slate-300 hover:text-rose-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="wallet" class="w-4 h-4 shrink-0"></i>
                         <span>Expenses</span>
                     </button>
@@ -310,7 +290,7 @@
                     <div class="pt-2 pb-1 border-t border-slate-800/80">
                         <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest px-3 py-1 font-bold">System Hub</p>
                     </div>
-                    <button onclick="switchView('records')" id="nav-btn-records" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-purple-500/10 text-slate-300 hover:text-purple-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent hover:border-purple-500/30">
+                    <button onclick="switchView('records')" id="nav-btn-records" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-purple-500/10 text-slate-300 hover:text-purple-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="file-text" class="w-4 h-4 shrink-0"></i>
                         <span>Logs & Sync Hub</span>
                     </button>
@@ -324,7 +304,6 @@
                 </nav>
             </aside>
 
-            <!-- Main Content Area -->
             <main class="flex-grow flex flex-col justify-between space-y-4 sm:space-y-6 pt-2 min-w-0">
                 <div>
                     <!-- DASHBOARD VIEW -->
@@ -341,7 +320,6 @@
                             </div>
                         </div>
 
-                        <!-- Balances Grid (Hidden for Manager role) -->
                         <div id="ownerBalancesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                             <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-cyan-500 dark:border-l-cyan-400 hover-cyan text-left">
                                 <p class="text-xs text-slate-400 font-medium">Cash In Hand</p>
@@ -361,11 +339,9 @@
                             </div>
                         </div>
 
-                        <!-- QUICK ACCESS GRID -->
                         <div class="space-y-3">
                             <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest text-left px-1">Quick Access Hub (Core Modules)</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                                <!-- 1. Customers -->
                                 <div onclick="switchView('customers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
                                     <div>
@@ -373,7 +349,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Manage clients & credits.</p>
                                     </div>
                                 </div>
-                                <!-- 2. Item Entry -->
                                 <div onclick="switchView('items')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0"><i data-lucide="package-plus" class="w-5 h-5"></i></div>
                                     <div>
@@ -381,7 +356,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Register sweets & agro items.</p>
                                     </div>
                                 </div>
-                                <!-- 3. Staff & Supplier Manager -->
                                 <div onclick="switchView('staffsuppliers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="briefcase" class="w-5 h-5"></i></div>
                                     <div>
@@ -389,7 +363,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Vendors, items & salaries.</p>
                                     </div>
                                 </div>
-                                <!-- 4. Inventory -->
                                 <div onclick="switchView('inventory')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0"><i data-lucide="boxes" class="w-5 h-5"></i></div>
                                     <div>
@@ -397,7 +370,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Monitor stock & low alerts.</p>
                                     </div>
                                 </div>
-                                <!-- 5. Manufacturing -->
                                 <div onclick="switchView('manufacturing')" class="glass-card p-4 sm:p-5 rounded-2xl hover-purple cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/40 shrink-0"><i data-lucide="factory" class="w-5 h-5"></i></div>
                                     <div>
@@ -405,7 +377,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Record production batches.</p>
                                     </div>
                                 </div>
-                                <!-- 6. Purchase -->
                                 <div onclick="switchView('purchases')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
                                     <div>
@@ -413,7 +384,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Raw material GRN entries.</p>
                                     </div>
                                 </div>
-                                <!-- 7. Sales & POS -->
                                 <div onclick="switchView('sales')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/40 shrink-0"><i data-lucide="receipt" class="w-5 h-5"></i></div>
                                     <div>
@@ -421,7 +391,6 @@
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Process orders & print slips.</p>
                                     </div>
                                 </div>
-                                <!-- 8. Expenses -->
                                 <div onclick="switchView('expenses')" class="glass-card p-4 sm:p-5 rounded-2xl hover-rose cursor-pointer group text-left flex items-start space-x-3.5">
                                     <div class="p-2.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 shrink-0"><i data-lucide="wallet" class="w-5 h-5"></i></div>
                                     <div>
@@ -557,7 +526,6 @@
                                         <span id="itemEntryCountBadge" class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/40 font-bold">0 Items</span>
                                     </div>
                                     
-                                    <!-- Category Filter Tabs for Item Entry Catalog -->
                                     <div class="flex space-x-2 overflow-x-auto pb-1">
                                         <button onclick="setItemEntryCatalogTab('Finish Goods')" id="cat-tab-finish" class="text-[11px] px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20">Finish Goods</button>
                                         <button onclick="setItemEntryCatalogTab('Raw Material')" id="cat-tab-raw" class="text-[11px] px-3 py-1.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Raw Material</button>
@@ -590,23 +558,23 @@
                         </div>
                     </div>
 
-                    <!-- STAFF & SUPPLIER MANAGER VIEW (Combined) -->
+                    <!-- STAFF & SUPPLIER MANAGER VIEW -->
                     <div id="view-staffsuppliers" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                             <div class="text-left">
                                 <h2 class="text-lg sm:text-xl font-bold">Staff & Supplier Manager Hub</h2>
-                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage raw material suppliers, vendor provisions (connected to inventory), and staff profiles.</p>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage vendors, staff work locations, and daily attendance tracking.</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <div class="flex space-x-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700">
                                     <button onclick="setStaffSupplierTab('suppliers')" id="ss-tab-suppliers" class="text-xs px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold cursor-pointer transition">Suppliers</button>
-                                    <button onclick="setStaffSupplierTab('staff')" id="ss-tab-staff" class="text-xs px-3 py-1.5 rounded-lg text-slate-300 font-semibold cursor-pointer transition">Staff Members</button>
+                                    <button onclick="setStaffSupplierTab('staff')" id="ss-tab-staff" class="text-xs px-3 py-1.5 rounded-lg text-slate-300 font-semibold cursor-pointer transition">Staff & Attendance</button>
                                 </div>
                                 <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                             </div>
                         </div>
 
-                        <!-- SUPPLIERS SUB-VIEW CONTAINER -->
+                        <!-- SUPPLIERS SUB-VIEW -->
                         <div id="subview-suppliers" class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-amber text-left">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Add New Supplier / Vendor</h3>
@@ -616,12 +584,10 @@
                                 </div>
                                 <div class="relative">
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">What Supplier Provides (Linked to Inventory)</label>
-                                    <input type="text" id="suppProvidesInput" oninput="onSupplierProvidesInput(this.value)" placeholder="e.g. Maize, Soybean Meal, Sugar" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium" autocomplete="off">
-                                    <!-- Autocomplete suggestions dropdown -->
+                                    <input type="text" id="suppProvidesInput" oninput="onSupplierProvidesInput(this.value)" placeholder="e.g. Maize, Soybean Meal" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium" autocomplete="off">
                                     <div id="supplierProvidesDropdown" class="absolute left-0 right-0 top-full mt-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-30 hidden max-h-40 overflow-y-auto"></div>
                                 </div>
                                 
-                                <!-- AUTO-REGISTER TO INVENTORY CHECKBOX -->
                                 <div class="flex items-center space-x-2 pt-1 bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20">
                                     <input type="checkbox" id="autoAddInventoryCheck" checked class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-slate-900 border-slate-700 cursor-pointer">
                                     <label for="autoAddInventoryCheck" class="text-[11px] text-amber-300 font-medium cursor-pointer">Automatically add unlisted items to Raw Material Inventory</label>
@@ -670,7 +636,7 @@
                             </div>
                         </div>
 
-                        <!-- STAFF SUB-VIEW CONTAINER -->
+                        <!-- STAFF & ATTENDANCE SUB-VIEW -->
                         <div id="subview-staff" class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 hidden">
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-amber text-left">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Add New Staff Member</h3>
@@ -681,6 +647,10 @@
                                 <div>
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Role / Designation</label>
                                     <input type="text" id="staffRoleInput" placeholder="e.g. Store Keeper / Sweet Maker" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Work Location / Branch Assignment</label>
+                                    <input type="text" id="staffLocationInput" placeholder="e.g. Dhanmondi Branch / Factory Unit 1" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
                                 </div>
                                 <div>
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Phone Number</label>
@@ -695,16 +665,19 @@
 
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-amber text-left">
                                 <div>
-                                    <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3">Registered Staff Directory</h3>
+                                    <div class="flex justify-between items-center mb-3">
+                                        <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Staff Directory & Attendance Log</h3>
+                                        <span class="text-[10px] text-slate-400 font-mono">Click status buttons to toggle Daily Attendance</span>
+                                    </div>
                                     <div class="overflow-x-auto max-h-[450px]">
-                                        <table class="w-full text-left text-xs min-w-[550px]">
+                                        <table class="w-full text-left text-xs min-w-[650px]">
                                             <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
                                                 <tr>
-                                                    <th class="pb-2.5 pl-3">Staff ID</th>
-                                                    <th class="pb-2.5">Name</th>
-                                                    <th class="pb-2.5">Role / Designation</th>
-                                                    <th class="pb-2.5">Phone</th>
-                                                    <th class="pb-2.5 text-right">Monthly Salary</th>
+                                                    <th class="pb-2.5 pl-3">Staff ID & Name</th>
+                                                    <th class="pb-2.5">Role</th>
+                                                    <th class="pb-2.5">Work Location</th>
+                                                    <th class="pb-2.5 text-center">Today's Attendance</th>
+                                                    <th class="pb-2.5 text-right">Salary</th>
                                                     <th class="pb-2.5 text-center pr-3">Actions</th>
                                                 </tr>
                                             </thead>
@@ -722,7 +695,7 @@
                         </div>
                     </div>
 
-                    <!-- MANUFACTURING & PRODUCTION VIEW -->
+                    <!-- MANUFACTURING VIEW -->
                     <div id="view-manufacturing" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
                             <div class="text-left">
@@ -783,7 +756,7 @@
                         </div>
                     </div>
 
-                    <!-- PURCHASE & SCM VIEW -->
+                    <!-- PURCHASE VIEW -->
                     <div id="view-purchases" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                             <div class="text-left">
@@ -803,7 +776,6 @@
                                 <div>
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Supplier Name / Vendor</label>
                                     <select id="purchaseSupplierSelect" onchange="onSupplierDropdownChange()" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium"></select>
-                                    <!-- Auto-popup display for what supplier provides -->
                                     <div id="supplierProvidesPopup" class="mt-2 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-300 font-medium hidden">
                                         📦 <span class="font-bold">Provides:</span> <span id="supplierProvidesText">None specified</span>
                                     </div>
@@ -854,7 +826,7 @@
                         </div>
                     </div>
 
-                    <!-- SALES MATRIX VIEW -->
+                    <!-- SALES VIEW -->
                     <div id="view-sales" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
                             <div class="text-left">
@@ -925,7 +897,7 @@
                         </div>
                     </div>
 
-                    <!-- OPERATING EXPENSES VIEW -->
+                    <!-- EXPENSES VIEW -->
                     <div id="view-expenses" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-rose">
                             <div class="text-left">
@@ -959,7 +931,7 @@
                         </div>
                     </div>
 
-                    <!-- TRANSACTION RECORDS HUB VIEW -->
+                    <!-- RECORDS VIEW -->
                     <div id="view-records" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-purple">
                             <div class="text-left">
@@ -969,7 +941,6 @@
                             <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                         </div>
 
-                        <!-- WEBVIEW-SAFE BACKUP & RESTORE PANEL -->
                         <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-4 border border-cyan-500/30 bg-cyan-500/5">
                             <div class="text-left">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400">🔄 Cross-Device Database Sync (APK & Web Safe)</h3>
@@ -991,7 +962,6 @@
                             </div>
                         </div>
 
-                        <!-- Hub Controls -->
                         <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-4 hover-purple text-left">
                             <div class="flex space-x-2 overflow-x-auto pb-1">
                                 <button onclick="setRecordTab('purchase')" id="rec-tab-purchase" class="text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20">Purchase (GRN)</button>
@@ -1013,7 +983,6 @@
                             </div>
                         </div>
 
-                        <!-- Records Table Container -->
                         <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 hover-purple text-left">
                             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                                 <h3 id="recordTableTitle" class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Purchase History Logs</h3>
@@ -1039,7 +1008,7 @@
                         </div>
                     </div>
 
-                    <!-- INVENTORY CATALOG VIEW -->
+                    <!-- INVENTORY VIEW -->
                     <div id="view-inventory" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald">
                             <div class="text-left">
@@ -1049,7 +1018,6 @@
                             <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                         </div>
 
-                        <!-- Category Tabs & Counter -->
                         <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald text-left">
                             <div class="flex space-x-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
                                 <button onclick="setInventoryTab('all')" id="tab-all" class="text-xs px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20">All Items</button>
@@ -1061,7 +1029,6 @@
                             <span id="productCountBadge" class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 rounded-full border border-emerald-500/40 font-bold whitespace-nowrap">0 Items</span>
                         </div>
 
-                        <!-- Inventory Table -->
                         <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 hover-emerald text-left">
                             <div class="overflow-x-auto max-h-[550px]">
                                 <table class="w-full text-left text-xs min-w-[700px]">
@@ -1084,15 +1051,14 @@
                     </div>
                 </div>
 
-                <!-- Footer -->
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.25 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.26 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
     </div>
 
-    <!-- IMPORT DATABASE MODAL (APK SAFE TEXT PASTE OR FILE UPLOAD) -->
+    <!-- IMPORT DATABASE MODAL -->
     <div id="importModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card p-6 rounded-2xl max-w-lg w-full space-y-4 shadow-2xl relative text-left border border-emerald-500/40">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -1116,7 +1082,7 @@
         </div>
     </div>
 
-    <!-- PRINTABLE RECEIPT MODAL AREA -->
+    <!-- RECEIPT MODAL -->
     <div id="receiptModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white text-slate-900 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl relative text-left">
             <div id="printReceiptContent" class="space-y-3 font-mono text-xs">
@@ -1145,8 +1111,7 @@
 
     <!-- APP LOGIC & STABILIZED CONTROLLERS -->
     <script>
-        // --- MODE SWITCHER LOGIC (Website Mode vs Android APK Mode) ---
-        let currentAppMode = 'website'; // 'website' or 'apk'
+        let currentAppMode = 'website';
 
         function toggleAppMode() {
             try {
@@ -1183,15 +1148,10 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('appSidebar');
             const backdrop = document.getElementById('sidebarBackdrop');
-            if (sidebar) {
-                sidebar.classList.toggle('open');
-            }
-            if (backdrop) {
-                backdrop.classList.toggle('hidden');
-            }
+            if (sidebar) sidebar.classList.toggle('open');
+            if (backdrop) backdrop.classList.toggle('hidden');
         }
 
-        // --- MULTI-USER ROLE AUTHENTICATION & PERMISSIONS ---
         function getCurrentRole() {
             try {
                 return sessionStorage.getItem('chowdhury_role');
@@ -1225,9 +1185,7 @@
                     if (ownerBalancesGrid) ownerBalancesGrid.classList.add('hidden');
                     if (managerRestrictionNote) managerRestrictionNote.classList.remove('hidden');
                 }
-            } catch(e) {
-                console.error("Role permission error:", e);
-            }
+            } catch(e) {}
         }
 
         function handleLogin(event) {
@@ -1237,12 +1195,8 @@
             const errorEl = document.getElementById('loginError');
 
             let authenticatedRole = null;
-
-            if (user === 'owner' && pass === '1234') {
-                authenticatedRole = 'owner';
-            } else if (user === 'manager' && pass === '4321') {
-                authenticatedRole = 'manager';
-            }
+            if (user === 'owner' && pass === '1234') authenticatedRole = 'owner';
+            else if (user === 'manager' && pass === '4321') authenticatedRole = 'manager';
 
             if (authenticatedRole) {
                 try {
@@ -1279,9 +1233,7 @@
                             if (typeof lucide !== 'undefined') lucide.createIcons();
                         }, 350);
                     }
-                } catch(e) {
-                    console.error("Login transition error:", e);
-                }
+                } catch(e) {}
             } else {
                 if (errorEl) errorEl.classList.remove('hidden');
             }
@@ -1324,13 +1276,7 @@
             }
         }
 
-        // --- SHARED PERSISTENT STATE STORAGE ---
-        let systemBalances = {
-            cashInHand: 0.00,
-            bankAccounts: 0.00,
-            customerDue: 0.00,
-            supplierDue: 0.00
-        };
+        let systemBalances = { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
 
         const defaultAgroProducts = [
             { code: "IT000001", name: "Rasgulla #1", group: "Finish Goods", category: "Rasgulla[ITEM]", unit: "BAG", retailRate: 200.0, wholesaleRate: 190.0, purchaseRate: 0.0, openingQty: 50 },
@@ -1368,28 +1314,12 @@
                 const savedMfg = localStorage.getItem('chowdhury_manufacturing');
 
                 systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
+                agroProducts = savedProducts ? JSON.parse(savedProducts) : JSON.parse(JSON.stringify(defaultAgroProducts));
+                customerDirectory = savedCustomers ? JSON.parse(savedCustomers) : [{ id: "CUST-1001", name: "Walk-in Customer", phone: "N/A", address: "General Counter", creditLimit: 0 }];
+                supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
                 
-                if (savedProducts) {
-                    try {
-                        const parsed = JSON.parse(savedProducts);
-                        agroProducts = (Array.isArray(parsed) && parsed.length > 0) ? parsed : JSON.parse(JSON.stringify(defaultAgroProducts));
-                    } catch(e) {
-                        agroProducts = JSON.parse(JSON.stringify(defaultAgroProducts));
-                    }
-                } else {
-                    agroProducts = JSON.parse(JSON.stringify(defaultAgroProducts));
-                }
-
-                customerDirectory = savedCustomers ? JSON.parse(savedCustomers) : [
-                    { id: "CUST-1001", name: "Walk-in Customer", phone: "N/A", address: "General Counter", creditLimit: 0 }
-                ];
-
-                supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [
-                    { id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal, Feed", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon Industrial Area" }
-                ];
-
                 staffDirectory = savedStaff ? JSON.parse(savedStaff) : [
-                    { id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", phone: "01799887766", salary: 14000 }
+                    { id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Central Branch", phone: "01799887766", salary: 14000, attendance: "Present" }
                 ];
 
                 purchaseHistory = savedPurchases ? JSON.parse(savedPurchases) : [];
@@ -1397,7 +1327,6 @@
                 expenseHistory = savedExpenses ? JSON.parse(savedExpenses) : [];
                 manufacturingHistory = savedMfg ? JSON.parse(savedMfg) : [];
             } catch(e) {
-                console.error("Error loading shared data:", e);
                 agroProducts = JSON.parse(JSON.stringify(defaultAgroProducts));
             }
         }
@@ -1413,15 +1342,12 @@
                 localStorage.setItem('chowdhury_sales', JSON.stringify(salesHistory));
                 localStorage.setItem('chowdhury_expenses', JSON.stringify(expenseHistory));
                 localStorage.setItem('chowdhury_manufacturing', JSON.stringify(manufacturingHistory));
-            } catch(e) {
-                console.error("Error saving shared data:", e);
-            }
+            } catch(e) {}
         }
 
-        // --- WEBVIEW-SAFE DATABASE EXPORT & IMPORT ---
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.25",
+                version: "4.26",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
@@ -1441,7 +1367,6 @@
                 const jsonStr = getDatabaseJSONString();
                 const blob = new Blob([jsonStr], { type: "application/json" });
                 const url = URL.createObjectURL(blob);
-                
                 const downloadAnchor = document.createElement('a');
                 downloadAnchor.href = url;
                 downloadAnchor.download = `ChowdhuryAgro_DB_Backup_${new Date().toISOString().split('T')[0]}.json`;
@@ -1460,7 +1385,7 @@
             try {
                 const jsonStr = getDatabaseJSONString();
                 navigator.clipboard.writeText(jsonStr).then(() => {
-                    alert("Database backup copied to clipboard! You can now paste this JSON text into the Import box on your website or other device.");
+                    alert("Database backup copied to clipboard successfully!");
                 }).catch(() => {
                     prompt("Copy your database JSON backup below:", jsonStr);
                 });
@@ -1470,20 +1395,14 @@
         }
 
         function openImportModal() {
-            try {
-                const modal = document.getElementById('importModal');
-                if (modal) modal.classList.remove('hidden');
-            } catch(e) {}
+            try { document.getElementById('importModal').classList.remove('hidden'); } catch(e) {}
         }
 
         function closeImportModal() {
             try {
-                const modal = document.getElementById('importModal');
-                const area = document.getElementById('importTextArea');
-                const fileIn = document.getElementById('importFileField');
-                if (modal) modal.classList.add('hidden');
-                if (area) area.value = '';
-                if (fileIn) fileIn.value = '';
+                document.getElementById('importModal').classList.add('hidden');
+                document.getElementById('importTextArea').value = '';
+                document.getElementById('importFileField').value = '';
             } catch(e) {}
         }
 
@@ -1491,22 +1410,17 @@
             try {
                 const area = document.getElementById('importTextArea');
                 const fileIn = document.getElementById('importFileField');
-                
-                let jsonText = '';
                 if (area && area.value.trim()) {
-                    jsonText = area.value.trim();
-                    executeImportJSON(jsonText);
+                    executeImportJSON(area.value.trim());
                 } else if (fileIn && fileIn.files[0]) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
-                        executeImportJSON(e.target.result);
-                    };
+                    reader.onload = function(e) { executeImportJSON(e.target.result); };
                     reader.readAsText(fileIn.files[0]);
                 } else {
-                    alert("Please select a JSON file or paste backup text into the textarea.");
+                    alert("Please select a JSON file or paste backup text.");
                 }
             } catch(e) {
-                alert("Error processing import: " + e.message);
+                alert("Error: " + e.message);
             }
         }
 
@@ -1517,7 +1431,6 @@
                     alert("Invalid backup JSON format!");
                     return;
                 }
-
                 if (confirm(`Restore database? This will load ${parsedDB.products.length} products and all records.`)) {
                     systemBalances = parsedDB.balances || systemBalances;
                     agroProducts = parsedDB.products || agroProducts;
@@ -1530,7 +1443,6 @@
                     manufacturingHistory = parsedDB.manufacturing || manufacturingHistory;
 
                     saveSharedData();
-
                     renderDashboardBalances();
                     renderInventoryTable();
                     renderRecordsTable();
@@ -1539,36 +1451,13 @@
                     renderSuppliersTable();
                     renderStaffTable();
                     renderItemsEntryTable();
-                    populateSalesProductDropdown();
-                    populateSalesCustomerDropdown();
-                    populatePurchaseSupplierDropdown();
-                    populateMfgProductDropdown();
-
                     closeImportModal();
-                    alert(`Database successfully restored! Loaded ${agroProducts.length} total products.`);
+                    alert("Database successfully restored!");
                 }
             } catch(err) {
                 alert("Failed to parse JSON backup: " + err.message);
             }
         }
-
-        window.addEventListener('storage', (event) => {
-            if (['chowdhury_balances', 'chowdhury_products', 'chowdhury_customers', 'chowdhury_suppliers', 'chowdhury_staff', 'chowdhury_purchases', 'chowdhury_sales', 'chowdhury_expenses', 'chowdhury_manufacturing'].includes(event.key)) {
-                loadSharedData();
-                renderDashboardBalances();
-                renderInventoryTable();
-                renderRecordsTable();
-                renderManufacturingTable();
-                renderCustomersTable();
-                renderSuppliersTable();
-                renderStaffTable();
-                renderItemsEntryTable();
-                populateSalesProductDropdown();
-                populateSalesCustomerDropdown();
-                populatePurchaseSupplierDropdown();
-                populateMfgProductDropdown();
-            }
-        });
 
         function updateClock() {
             try {
@@ -1579,7 +1468,6 @@
                 const ampm = hours >= 12 ? 'PM' : 'AM';
                 hours = hours % 12 || 12;
                 const timeStr = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
-
                 const clockEl = document.getElementById('liveClock');
                 if (clockEl) clockEl.innerText = timeStr;
             } catch(e) {}
@@ -1623,7 +1511,6 @@
                 }
 
                 loadSharedData();
-
                 const savedMode = localStorage.getItem('chowdhury_app_mode');
                 if (savedMode === 'apk') {
                     currentAppMode = 'apk';
@@ -1651,7 +1538,6 @@
                 if (typeof lucide !== 'undefined') lucide.createIcons();
 
                 const todayStr = new Date().toISOString().split('T')[0];
-                
                 flatpickr("#purchaseDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
                 flatpickr("#salesDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
                 flatpickr("#expenseDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
@@ -1663,14 +1549,10 @@
                     altInput: true,
                     altFormat: "M j, Y",
                     onChange: function(selectedDates) {
-                        if (selectedDates.length <= 2) {
-                            renderRecordsTable();
-                        }
+                        if (selectedDates.length <= 2) renderRecordsTable();
                     }
                 });
-            } catch(e) {
-                console.error("DOM initialization error:", e);
-            }
+            } catch(e) {}
         });
 
         function renderDashboardBalances() {
@@ -1748,21 +1630,16 @@
                         populateSalesProductDropdown();
                         populateSalesCustomerDropdown();
                     }
-                    if (viewName === 'purchases') {
-                        populatePurchaseSupplierDropdown();
-                    }
+                    if (viewName === 'purchases') populatePurchaseSupplierDropdown();
                     if (viewName === 'manufacturing') {
                         populateMfgProductDropdown();
                         renderManufacturingTable();
                     }
                     if (viewName === 'records') renderRecordsTable();
                 }
-            } catch(e) {
-                console.error("switchView error:", e);
-            }
+            } catch(e) {}
         }
 
-        // --- STAFF & SUPPLIER TAB SWITCHING ---
         function setStaffSupplierTab(tab) {
             try {
                 const subSupp = document.getElementById('subview-suppliers');
@@ -1786,7 +1663,6 @@
             } catch(e) {}
         }
 
-        // --- CUSTOMER MODULE ---
         function addCustomer() {
             try {
                 const nameInput = document.getElementById('custNameInput');
@@ -1804,15 +1680,13 @@
                     return;
                 }
 
-                const newCust = {
+                customerDirectory.push({
                     id: "CUST-" + Math.floor(1000 + Math.random() * 9000),
                     name: name,
                     phone: phone || 'N/A',
                     address: address || 'N/A',
                     creditLimit: creditLimit
-                };
-
-                customerDirectory.push(newCust);
+                });
                 saveSharedData();
                 renderCustomersTable();
                 populateSalesCustomerDropdown();
@@ -1887,7 +1761,6 @@
             } catch(e) {}
         }
 
-        // --- ITEM ENTRY MODULE ---
         function setItemEntryCatalogTab(tabName) {
             try {
                 currentItemEntryTab = tabName;
@@ -1895,19 +1768,14 @@
                     const idSlug = cat === 'Finish Goods' ? 'finish' : cat === 'Raw Material' ? 'raw' : 'agro';
                     const btn = document.getElementById(`cat-tab-${idSlug}`);
                     if (btn) {
-                        if (cat === tabName) {
-                            btn.className = "text-[11px] px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20";
-                        } else {
-                            btn.className = "text-[11px] px-3 py-1.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap";
-                        }
+                        if (cat === tabName) btn.className = "text-[11px] px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20";
+                        else btn.className = "text-[11px] px-3 py-1.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap";
                     }
                 });
                 const catSelect = document.getElementById('newItemCategory');
                 if (catSelect) catSelect.value = tabName;
-                
                 const labelEl = document.getElementById('currentCatalogCategoryLabel');
                 if (labelEl) labelEl.innerText = tabName;
-
                 renderItemsEntryTable();
             } catch(e) {}
         }
@@ -1915,8 +1783,7 @@
         function onItemCategoryDropdownChange() {
             try {
                 const catSelect = document.getElementById('newItemCategory');
-                if (!catSelect) return;
-                setItemEntryCatalogTab(catSelect.value);
+                if (catSelect) setItemEntryCatalogTab(catSelect.value);
             } catch(e) {}
         }
 
@@ -1943,7 +1810,7 @@
                     return;
                 }
 
-                const newItem = {
+                agroProducts.push({
                     code: code,
                     name: name,
                     group: group,
@@ -1953,9 +1820,7 @@
                     wholesaleRate: wholesaleRate,
                     purchaseRate: 0.0,
                     openingQty: openingQty
-                };
-
-                agroProducts.push(newItem);
+                });
                 saveSharedData();
                 setItemEntryCatalogTab(group);
                 renderInventoryTable();
@@ -1968,7 +1833,7 @@
                 if (retailInput) retailInput.value = '';
                 if (wholesaleInput) wholesaleInput.value = '';
                 if (qtyInput) qtyInput.value = '0';
-                alert("New item successfully added to catalog and inventory!");
+                alert("New item added to inventory successfully!");
             } catch(e) {}
         }
 
@@ -1980,7 +1845,6 @@
                 if (!tbody) return;
 
                 const filteredProducts = agroProducts.filter(p => (p.group || '').toLowerCase() === currentItemEntryTab.toLowerCase());
-
                 if (countBadge) countBadge.innerText = `${filteredProducts.length} Items`;
                 if (labelEl) labelEl.innerText = currentItemEntryTab;
 
@@ -2008,31 +1872,25 @@
             } catch(e) {}
         }
 
-        // --- SUPPLIER MODULE & INVENTORY AUTO-SYNC ---
         function onSupplierProvidesInput(val) {
             try {
                 const dropdown = document.getElementById('supplierProvidesDropdown');
                 if (!dropdown) return;
-                
                 const parts = val.split(',');
                 const currentQuery = parts[parts.length - 1].trim().toLowerCase();
-
                 if (!currentQuery) {
                     dropdown.classList.add('hidden');
                     return;
                 }
-
                 const matchingItems = agroProducts.filter(p => {
                     const g = (p.group || '').toLowerCase();
                     return (g.includes('raw material') || g.includes('agro')) && p.name.toLowerCase().includes(currentQuery);
                 });
-
                 if (matchingItems.length === 0) {
                     dropdown.innerHTML = `<div class="p-2.5 text-[11px] text-slate-400 italic">New item (will auto-register if enabled)</div>`;
                     dropdown.classList.remove('hidden');
                     return;
                 }
-
                 dropdown.innerHTML = '';
                 matchingItems.forEach(item => {
                     dropdown.innerHTML += `
@@ -2053,11 +1911,8 @@
                 if (input) {
                     let currentVal = input.value;
                     const lastCommaIndex = currentVal.lastIndexOf(',');
-                    if (lastCommaIndex !== -1) {
-                        input.value = currentVal.substring(0, lastCommaIndex + 1) + ' ' + itemName;
-                    } else {
-                        input.value = itemName;
-                    }
+                    if (lastCommaIndex !== -1) input.value = currentVal.substring(0, lastCommaIndex + 1) + ' ' + itemName;
+                    else input.value = itemName;
                     input.focus();
                 }
                 if (dropdown) dropdown.classList.add('hidden');
@@ -2086,11 +1941,10 @@
                 }
 
                 if (provides && shouldAutoAdd) {
-                    const itemsArr = provides.split(',').map(i => i.trim()).filter(Boolean);
-                    itemsArr.forEach(rawItemName => {
+                    provides.split(',').map(i => i.trim()).filter(Boolean).forEach(rawItemName => {
                         const exists = agroProducts.some(p => p.name.toLowerCase() === rawItemName.toLowerCase());
                         if (!exists) {
-                            const newRM = {
+                            agroProducts.push({
                                 code: "RM-" + Math.floor(10000 + Math.random() * 90000),
                                 name: rawItemName,
                                 group: "Raw Material",
@@ -2100,8 +1954,7 @@
                                 wholesaleRate: 0.0,
                                 purchaseRate: 100.0,
                                 openingQty: 0
-                            };
-                            agroProducts.push(newRM);
+                            });
                         }
                     });
                     saveSharedData();
@@ -2109,16 +1962,14 @@
                     populatePurchaseSupplierDropdown();
                 }
 
-                const newSupp = {
+                supplierDirectory.push({
                     id: "SUP-" + Math.floor(2000 + Math.random() * 9000),
                     name: name,
                     provides: provides || 'General Materials',
                     contact: contact || 'N/A',
                     phone: phone || 'N/A',
                     address: address || 'N/A'
-                };
-
-                supplierDirectory.push(newSupp);
+                });
                 saveSharedData();
                 renderSuppliersTable();
                 populatePurchaseSupplierDropdown();
@@ -2128,7 +1979,7 @@
                 if (contactInput) contactInput.value = '';
                 if (phoneInput) phoneInput.value = '';
                 if (addressInput) addressInput.value = '';
-                alert("Supplier registered and inventory auto-synced successfully!");
+                alert("Supplier registered successfully!");
             } catch(e) {}
         }
 
@@ -2207,8 +2058,6 @@
                     const provides = selectedOpt.getAttribute('data-provides') || 'General Materials';
                     textEl.innerText = provides;
                     popup.classList.remove('hidden');
-                    
-                    // Filter Restock Item Dropdown to ONLY show items this supplier provides
                     populatePurchaseProductDropdown(provides);
                 } else {
                     popup.classList.add('hidden');
@@ -2217,16 +2066,18 @@
             } catch(e) {}
         }
 
-        // --- STAFF MEMBERS MODULE ---
+        // --- STAFF MEMBERS & ATTENDANCE MODULE ---
         function addStaffMember() {
             try {
                 const nameInput = document.getElementById('staffNameInput');
                 const roleInput = document.getElementById('staffRoleInput');
+                const locationInput = document.getElementById('staffLocationInput');
                 const phoneInput = document.getElementById('staffPhoneInput');
                 const salaryInput = document.getElementById('staffSalaryInput');
 
                 const name = nameInput ? nameInput.value.trim() : '';
                 const role = roleInput ? roleInput.value.trim() : '';
+                const location = locationInput ? locationInput.value.trim() : '';
                 const phone = phoneInput ? phoneInput.value.trim() : '';
                 const salary = parseFloat(salaryInput ? salaryInput.value : 0) || 0;
 
@@ -2235,23 +2086,39 @@
                     return;
                 }
 
-                const newStaff = {
+                staffDirectory.push({
                     id: "STAFF-" + Math.floor(3000 + Math.random() * 9000),
                     name: name,
                     role: role || 'Staff Employee',
+                    location: location || 'Main Branch',
                     phone: phone || 'N/A',
-                    salary: salary
-                };
-
-                staffDirectory.push(newStaff);
+                    salary: salary,
+                    attendance: 'Present' // Default attendance
+                });
                 saveSharedData();
                 renderStaffTable();
 
                 if (nameInput) nameInput.value = '';
                 if (roleInput) roleInput.value = '';
+                if (locationInput) locationInput.value = '';
                 if (phoneInput) phoneInput.value = '';
                 if (salaryInput) salaryInput.value = '12000';
-                alert("Staff member registered successfully!");
+                alert("Staff member and work location registered successfully!");
+            } catch(e) {}
+        }
+
+        function toggleStaffAttendance(index) {
+            try {
+                const staff = staffDirectory[index];
+                if (!staff) return;
+                
+                // Cycle through: Present -> Absent -> On Leave -> Present
+                if (staff.attendance === 'Present') staff.attendance = 'Absent';
+                else if (staff.attendance === 'Absent') staff.attendance = 'On Leave';
+                else staff.attendance = 'Present';
+
+                saveSharedData();
+                renderStaffTable();
             } catch(e) {}
         }
 
@@ -2271,12 +2138,27 @@
                 if (countEl) countEl.innerText = `${staffDirectory.length} Staff Members`;
 
                 staffDirectory.forEach((st, index) => {
+                    let badgeClass = "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
+                    if (st.attendance === 'Absent') badgeClass = "bg-rose-500/20 text-rose-400 border-rose-500/40";
+                    else if (st.attendance === 'On Leave') badgeClass = "bg-amber-500/20 text-amber-400 border-amber-500/40";
+
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/35 transition border-b border-slate-800/40">
-                            <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${st.id}</td>
-                            <td class="py-3 font-medium">${st.name}</td>
-                            <td class="py-3 text-slate-300 font-semibold"><span class="bg-cyan-500/10 px-2 py-0.5 rounded text-[11px] text-cyan-300">${st.role}</span></td>
-                            <td class="py-3 text-slate-300 font-mono">${st.phone}</td>
+                            <td class="py-3 pl-3">
+                                <div class="font-bold text-cyan-400 font-mono">${st.id}</div>
+                                <div class="font-medium text-slate-200">${st.name}</div>
+                            </td>
+                            <td class="py-3 text-slate-300">
+                                <span class="bg-cyan-500/10 px-2 py-0.5 rounded text-[11px] text-cyan-300">${st.role}</span>
+                            </td>
+                            <td class="py-3 font-semibold text-amber-300">
+                                📍 ${st.location || 'Main Branch'}
+                            </td>
+                            <td class="py-3 text-center">
+                                <button onclick="toggleStaffAttendance(${index})" class="px-3 py-1 rounded-full text-[11px] font-bold border ${badgeClass} cursor-pointer transition shadow-sm" title="Click to toggle attendance status">
+                                    ${st.attendance || 'Present'} 🔄
+                                </button>
+                            </td>
                             <td class="py-3 text-right font-mono text-emerald-400 font-bold">${(st.salary || 0).toFixed(2)} TK.</td>
                             <td class="py-3 text-center pr-3">
                                 <button onclick="deleteStaff(${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
@@ -2290,7 +2172,7 @@
         function deleteStaff(index) {
             try {
                 if (getCurrentRole() !== 'owner') {
-                    alert("Permission Denied: Only Owner can delete staff members.");
+                    alert("Permission Denied: Only Owner can delete staff profiles.");
                     return;
                 }
                 if (confirm("Are you sure you want to delete this staff profile?")) {
@@ -2301,7 +2183,7 @@
             } catch(e) {}
         }
 
-        // --- MANUFACTURING & PRODUCTION MODULE ---
+        // --- MANUFACTURING MODULE ---
         function populateMfgProductDropdown() {
             try {
                 const select = document.getElementById('mfgItemSelect');
@@ -2334,7 +2216,7 @@
                 const rateInput = document.getElementById('mfgRateInput');
 
                 if (!select || !select.value) {
-                    alert("Please select a valid sweet or finish good item.");
+                    alert("Please select a valid finish good item.");
                     return;
                 }
 
@@ -2343,19 +2225,16 @@
                 const rate = parseFloat(rateInput ? rateInput.value : 0) || 0;
 
                 if (qtyMade <= 0 || rate < 0) {
-                    alert("Please enter a valid production quantity and rate.");
+                    alert("Please enter a valid quantity and rate.");
                     return;
                 }
 
                 const product = agroProducts.find(p => p.code === productCode);
-                if (!product) {
-                    alert("Selected product not found in inventory catalog.");
-                    return;
-                }
+                if (!product) return;
 
                 product.openingQty = (product.openingQty || 0) + qtyMade;
 
-                const mfgRecord = {
+                manufacturingHistory.unshift({
                     refId: "MFG-" + Math.floor(100000 + Math.random() * 900000),
                     rawDate: dateVal,
                     date: dateVal,
@@ -2365,9 +2244,7 @@
                     qty: qtyMade,
                     rate: rate,
                     totalValue: qtyMade * rate
-                };
-
-                manufacturingHistory.unshift(mfgRecord);
+                });
                 saveSharedData();
 
                 renderManufacturingTable();
@@ -2376,7 +2253,7 @@
                 renderDashboardBalances();
 
                 if (qtyInput) qtyInput.value = '10';
-                alert(`Production batch successfully logged! Added ${qtyMade} ${product.unit} of ${product.name} to Finish Goods inventory.`);
+                alert(`Production batch logged! Added ${qtyMade} ${product.unit} of ${product.name} to inventory.`);
             } catch(e) {}
         }
 
@@ -2410,7 +2287,6 @@
             } catch(e) {}
         }
 
-        // --- EXPENSES MODULE LOGIC ---
         function addExpense() {
             try {
                 const dateVal = document.getElementById('expenseDateInput').value || new Date().toISOString().split('T')[0];
@@ -2427,7 +2303,7 @@
                     return;
                 }
 
-                const expRecord = {
+                expenseHistory.unshift({
                     refId: "EXP-" + Math.floor(100000 + Math.random() * 900000),
                     rawDate: dateVal,
                     date: dateVal,
@@ -2435,9 +2311,7 @@
                     amount: amount,
                     notes: notes,
                     totalValue: amount
-                };
-
-                expenseHistory.unshift(expRecord);
+                });
                 systemBalances.cashInHand -= amount;
 
                 saveSharedData();
@@ -2447,11 +2321,10 @@
                 if (titleInput) titleInput.value = '';
                 if (amountInput) amountInput.value = '';
                 if (notesInput) notesInput.value = '';
-                alert("Expense successfully recorded and deducted from cash in hand!");
+                alert("Expense recorded and deducted from cash!");
             } catch(e) {}
         }
 
-        // --- INVENTORY TAB FILTERING & LOW STOCK ALERTS ---
         function setInventoryTab(tabName) {
             try {
                 currentInventoryTab = tabName;
@@ -2462,11 +2335,8 @@
                 const activeId = tabName === 'all' ? 'tab-all' : tabName === 'Finish Goods' ? 'tab-finish' : tabName === 'Raw Material' ? 'tab-raw' : tabName === 'Agro' ? 'tab-agro' : 'tab-low';
                 const activeBtn = document.getElementById(activeId);
                 if (activeBtn) {
-                    if (tabName === 'lowStock') {
-                        activeBtn.className = "text-xs px-3.5 py-2 rounded-xl bg-rose-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-rose-500/20";
-                    } else {
-                        activeBtn.className = "text-xs px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20";
-                    }
+                    if (tabName === 'lowStock') activeBtn.className = "text-xs px-3.5 py-2 rounded-xl bg-rose-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-rose-500/20";
+                    else activeBtn.className = "text-xs px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20";
                 }
                 renderInventoryTable();
             } catch(e) {}
@@ -2481,13 +2351,9 @@
                 tbody.innerHTML = '';
 
                 let filteredProducts = [];
-                if (currentInventoryTab === 'all') {
-                    filteredProducts = agroProducts;
-                } else if (currentInventoryTab === 'lowStock') {
-                    filteredProducts = agroProducts.filter(p => (p.openingQty || 0) < 5);
-                } else {
-                    filteredProducts = agroProducts.filter(p => (p.group || '').toLowerCase() === currentInventoryTab.toLowerCase());
-                }
+                if (currentInventoryTab === 'all') filteredProducts = agroProducts;
+                else if (currentInventoryTab === 'lowStock') filteredProducts = agroProducts.filter(p => (p.openingQty || 0) < 5);
+                else filteredProducts = agroProducts.filter(p => (p.group || '').toLowerCase() === currentInventoryTab.toLowerCase());
 
                 if (badge) badge.innerText = `${filteredProducts.length} Items`;
 
@@ -2499,26 +2365,20 @@
                 filteredProducts.forEach((p) => {
                     const actualIndex = agroProducts.findIndex(item => item.code === p.code && item.name === p.name);
                     const isLow = (p.openingQty || 0) < 5;
-                    
-                    const qtyBadgeHtml = isLow 
-                        ? `<span class="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2 py-0.5 rounded-md font-bold">⚠️ ${p.openingQty || 0} (Low)</span>` 
-                        : `<span class="text-emerald-500 font-bold">${p.openingQty || 0}</span>`;
-
+                    const qtyBadgeHtml = isLow ? `<span class="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2 py-0.5 rounded-md font-bold">⚠️ ${p.openingQty || 0} (Low)</span>` : `<span class="text-emerald-500 font-bold">${p.openingQty || 0}</span>`;
                     const actionButtonsHtml = isOwner ? `
-                        <button onclick="editProduct(${actualIndex})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer mr-1">Edit</button>
-                        <button onclick="deleteProduct(${actualIndex})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
+                        <button onclick="editProduct(${actualIndex})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer mr-1">Edit</button>
+                        <button onclick="deleteProduct(${actualIndex})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
                     ` : `<span class="text-[10px] text-slate-500 italic">View Only</span>`;
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
-                            <td class="py-3 pl-3 font-bold text-cyan-600 dark:text-cyan-400 font-mono">${p.code || ''}</td>
+                            <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${p.code || ''}</td>
                             <td class="py-3 font-medium">${p.name || ''}</td>
-                            <td class="py-3 text-slate-300 font-medium">
-                                <span class="bg-slate-800/80 px-2.5 py-1 rounded-lg text-[10px] text-cyan-300 border border-slate-700/60 font-semibold">${p.group || 'General'} / ${p.category || 'General'}</span>
-                            </td>
+                            <td class="py-3 text-slate-300 font-medium"><span class="bg-slate-800/80 px-2.5 py-1 rounded-lg text-[10px] text-cyan-300 border border-slate-700/60 font-semibold">${p.group || 'General'}</span></td>
                             <td class="py-3 text-slate-300 font-medium">${p.unit || 'Pcs'}</td>
-                            <td class="py-3 text-right font-semibold text-cyan-600 dark:text-cyan-300 font-mono">${(p.retailRate || 0).toFixed(2)}</td>
-                            <td class="py-3 text-right font-semibold text-indigo-600 dark:text-indigo-300 font-mono">${(p.wholesaleRate || 0).toFixed(2)}</td>
+                            <td class="py-3 text-right font-semibold text-cyan-300 font-mono">${(p.retailRate || 0).toFixed(2)}</td>
+                            <td class="py-3 text-right font-semibold text-indigo-300 font-mono">${(p.wholesaleRate || 0).toFixed(2)}</td>
                             <td class="py-3 text-right font-mono">${qtyBadgeHtml}</td>
                             <td class="py-3 text-center pr-3">${actionButtonsHtml}</td>
                         </tr>
@@ -2549,8 +2409,6 @@
                 renderInventoryTable();
                 renderItemsEntryTable();
                 populateSalesProductDropdown();
-                populateMfgProductDropdown();
-                populatePurchaseSupplierDropdown();
                 alert("Product updated successfully!");
             } catch(e) {}
         }
@@ -2567,13 +2425,10 @@
                     renderInventoryTable();
                     renderItemsEntryTable();
                     populateSalesProductDropdown();
-                    populateMfgProductDropdown();
-                    populatePurchaseSupplierDropdown();
                 }
             } catch(e) {}
         }
 
-        // --- SALES & POS RECEIPT MODULE ---
         function populateSalesProductDropdown() {
             try {
                 const select = document.getElementById('itemSelect');
@@ -2616,11 +2471,8 @@
                 }
 
                 const existingIndex = cartList.findIndex(item => item.code === select.value);
-                if (existingIndex > -1) {
-                    cartList[existingIndex].qty += qty;
-                } else {
-                    cartList.push({ code: product.code, name: product.name, unit: product.unit, qty: qty, price: price });
-                }
+                if (existingIndex > -1) cartList[existingIndex].qty += qty;
+                else cartList.push({ code: product.code, name: product.name, unit: product.unit, qty: qty, price: price });
                 renderCart();
             } catch(e) {}
         }
@@ -2700,7 +2552,6 @@
                 renderRecordsTable();
                 renderInventoryTable();
                 renderItemsEntryTable();
-
                 showReceiptModal(record, cartList);
 
                 cartList = [];
@@ -2712,17 +2563,12 @@
         function printDirectPOS() {
             try {
                 if (cartList.length === 0) {
-                    alert("Cart is empty! Add items to cart before printing POS receipt.");
+                    alert("Cart is empty!");
                     return;
                 }
                 let total = 0;
                 cartList.forEach(i => total += (i.qty * i.price));
-                const dummyRecord = {
-                    refId: "POS-" + Math.floor(100000 + Math.random() * 900000),
-                    date: new Date().toISOString().split('T')[0],
-                    totalValue: total
-                };
-                showReceiptModal(dummyRecord, cartList);
+                showReceiptModal({ refId: "POS-" + Math.floor(100000 + Math.random() * 900000), date: new Date().toISOString().split('T')[0], totalValue: total }, cartList);
             } catch(e) {}
         }
 
@@ -2738,11 +2584,10 @@
                 if (listEl) {
                     listEl.innerHTML = '';
                     items.forEach(i => {
-                        const lineTotal = (i.qty * (i.price || i.rate || 0)).toFixed(2);
                         listEl.innerHTML += `
                             <div class="flex justify-between">
                                 <span>${i.name} x${i.qty}</span>
-                                <span>${lineTotal}</span>
+                                <span>${(i.qty * (i.price || i.rate || 0)).toFixed(2)}</span>
                             </div>
                         `;
                     });
@@ -2752,56 +2597,36 @@
         }
 
         function closeReceiptModal() {
-            try {
-                const modal = document.getElementById('receiptModal');
-                if (modal) modal.classList.add('hidden');
-            } catch(e) {}
+            try { document.getElementById('receiptModal').classList.add('hidden'); } catch(e) {}
         }
 
-        // --- PURCHASE & SCM MODULE (FILTERED BY SUPPLIER PROVISIONS) ---
         function populatePurchaseProductDropdown(supplierProvidesStr) {
             try {
                 const select = document.getElementById('purchaseItemSelect');
                 if (!select) return;
                 select.innerHTML = '';
-
-                const allowedNames = supplierProvidesStr 
-                    ? supplierProvidesStr.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
-                    : [];
-
+                const allowedNames = supplierProvidesStr ? supplierProvidesStr.split(',').map(s => s.trim().toLowerCase()).filter(Boolean) : [];
                 const purchaseEligible = agroProducts.filter(p => {
                     const g = (p.group || '').toLowerCase();
-                    const isRawOrAgro = g.includes('raw material') || g.includes('agro');
-                    if (!isRawOrAgro) return false;
-
+                    if (!g.includes('raw material') && !g.includes('agro')) return false;
                     if (allowedNames.length === 0) return true;
                     return allowedNames.some(allowed => p.name.toLowerCase().includes(allowed) || allowed.includes(p.name.toLowerCase()));
                 });
 
                 if (purchaseEligible.length === 0) {
-                    select.innerHTML = `<option value="">No matching items found for this supplier</option>`;
-                    const rateInput = document.getElementById('purchaseRateInput');
-                    if (rateInput) rateInput.value = 0;
+                    select.innerHTML = `<option value="">No matching items found</option>`;
                     return;
                 }
-
                 purchaseEligible.forEach(p => {
                     const rate = p.purchaseRate > 0 ? p.purchaseRate : p.wholesaleRate;
                     select.innerHTML += `<option value="${p.code}" data-rate="${rate}">${p.name} [${p.group}] (${p.unit})</option>`;
                 });
-                
                 select.onchange = function() {
                     const selectedOpt = select.options[select.selectedIndex];
                     const rate = selectedOpt ? selectedOpt.getAttribute('data-rate') : 0;
                     const rateInput = document.getElementById('purchaseRateInput');
                     if (rateInput) rateInput.value = rate;
                 };
-
-                if (purchaseEligible.length > 0) {
-                    const initialRate = purchaseEligible[0].purchaseRate > 0 ? purchaseEligible[0].purchaseRate : purchaseEligible[0].wholesaleRate;
-                    const rateInput = document.getElementById('purchaseRateInput');
-                    if (rateInput) rateInput.value = initialRate;
-                }
             } catch(e) {}
         }
 
@@ -2818,11 +2643,8 @@
                 if (!product) return;
 
                 const existingIndex = purchaseList.findIndex(item => item.code === select.value);
-                if (existingIndex > -1) {
-                    purchaseList[existingIndex].qty += qty;
-                } else {
-                    purchaseList.push({ code: product.code, name: product.name, unit: product.unit, qty: qty, rate: rate });
-                }
+                if (existingIndex > -1) purchaseList[existingIndex].qty += qty;
+                else purchaseList.push({ code: product.code, name: product.name, unit: product.unit, qty: qty, rate: rate });
                 renderPurchaseManifest();
             } catch(e) {}
         }
@@ -2879,20 +2701,17 @@
                 purchaseList.forEach(pItem => {
                     shipmentTotal += (pItem.qty * pItem.rate);
                     const targetProduct = agroProducts.find(p => p.code === pItem.code);
-                    if (targetProduct) {
-                        targetProduct.openingQty = (targetProduct.openingQty || 0) + pItem.qty;
-                    }
+                    if (targetProduct) targetProduct.openingQty = (targetProduct.openingQty || 0) + pItem.qty;
                 });
 
-                const record = {
+                purchaseHistory.unshift({
                     refId: "GRN-" + Math.floor(100000 + Math.random() * 900000),
                     rawDate: dateVal,
                     date: dateVal,
                     supplier: supplierName,
                     itemsSummary: purchaseList.map(i => `${i.name} (${i.qty} ${i.unit})`).join(', '),
                     totalValue: shipmentTotal
-                };
-                purchaseHistory.unshift(record);
+                });
                 systemBalances.supplierDue += shipmentTotal;
 
                 saveSharedData();
@@ -2900,14 +2719,12 @@
                 renderRecordsTable();
                 renderInventoryTable();
                 renderItemsEntryTable();
-
-                alert("GRN confirmed and inventory stock updated!");
+                alert("GRN confirmed and stock updated!");
                 purchaseList = [];
                 renderPurchaseManifest();
             } catch(e) {}
         }
 
-        // --- TRANSACTION LOGS HUB ---
         function setRecordTab(tab) {
             try {
                 currentRecordTab = tab;
@@ -2923,28 +2740,16 @@
 
                 if (tab === 'purchase') {
                     if(btnP) btnP.className = "text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20";
-                    if(titleEl) {
-                        titleEl.innerText = "Purchase History Logs (GRN)";
-                        titleEl.className = "text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400";
-                    }
+                    if(titleEl) titleEl.innerText = "Purchase History Logs (GRN)";
                 } else if (tab === 'sales') {
                     if(btnS) btnS.className = "text-xs px-3.5 py-2.5 rounded-xl bg-indigo-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-indigo-500/20";
-                    if(titleEl) {
-                        titleEl.innerText = "Sales Invoices History";
-                        titleEl.className = "text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400";
-                    }
+                    if(titleEl) titleEl.innerText = "Sales Invoices History";
                 } else if (tab === 'manufacturing') {
                     if(btnM) btnM.className = "text-xs px-3.5 py-2.5 rounded-xl bg-purple-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-purple-500/20";
-                    if(titleEl) {
-                        titleEl.innerText = "Manufacturing Production Logs";
-                        titleEl.className = "text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400";
-                    }
+                    if(titleEl) titleEl.innerText = "Manufacturing Production Logs";
                 } else if (tab === 'expenses') {
                     if(btnE) btnE.className = "text-xs px-3.5 py-2.5 rounded-xl bg-rose-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-rose-500/20";
-                    if(titleEl) {
-                        titleEl.innerText = "Operating Expenses History";
-                        titleEl.className = "text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400";
-                    }
+                    if(titleEl) titleEl.innerText = "Operating Expenses History";
                 }
                 renderRecordsTable();
             } catch(e) {}
@@ -2954,9 +2759,8 @@
             try {
                 const now = new Date();
                 let selectedDate = '';
-                if (type === 'today') {
-                    selectedDate = now.toISOString().split('T')[0];
-                } else if (type === 'yesterday') {
+                if (type === 'today') selectedDate = now.toISOString().split('T')[0];
+                else if (type === 'yesterday') {
                     const y = new Date(now);
                     y.setDate(y.getDate() - 1);
                     selectedDate = y.toISOString().split('T')[0];
@@ -2978,24 +2782,14 @@
                 const badge = document.getElementById('recordCountBadge');
                 const partyHeader = document.getElementById('recordHeaderParty');
                 const isOwner = getCurrentRole() === 'owner';
-
                 if (!tbody) return;
                 tbody.innerHTML = '';
 
                 let dataList = [];
-                if (currentRecordTab === 'purchase') {
-                    dataList = purchaseHistory;
-                    if (partyHeader) partyHeader.innerText = 'Supplier / Vendor';
-                } else if (currentRecordTab === 'sales') {
-                    dataList = salesHistory;
-                    if (partyHeader) partyHeader.innerText = 'Customer';
-                } else if (currentRecordTab === 'manufacturing') {
-                    dataList = manufacturingHistory;
-                    if (partyHeader) partyHeader.innerText = 'Sweet / Item Made';
-                } else if (currentRecordTab === 'expenses') {
-                    dataList = expenseHistory;
-                    if (partyHeader) partyHeader.innerText = 'Category / Title';
-                }
+                if (currentRecordTab === 'purchase') { dataList = purchaseHistory; if (partyHeader) partyHeader.innerText = 'Supplier / Vendor'; }
+                else if (currentRecordTab === 'sales') { dataList = salesHistory; if (partyHeader) partyHeader.innerText = 'Customer'; }
+                else if (currentRecordTab === 'manufacturing') { dataList = manufacturingHistory; if (partyHeader) partyHeader.innerText = 'Sweet / Item Made'; }
+                else if (currentRecordTab === 'expenses') { dataList = expenseHistory; if (partyHeader) partyHeader.innerText = 'Category / Title'; }
 
                 if (recordFilterPicker && recordFilterPicker.selectedDates && recordFilterPicker.selectedDates.length > 0) {
                     const dates = recordFilterPicker.selectedDates;
@@ -3003,11 +2797,8 @@
                         const singleDateStr = dates[0].toISOString().split('T')[0];
                         dataList = dataList.filter(item => item.rawDate === singleDateStr);
                     } else if (dates.length >= 2) {
-                        const startDate = new Date(dates[0]);
-                        startDate.setHours(0, 0, 0, 0);
-                        const endDate = new Date(dates[dates.length - 1]);
-                        endDate.setHours(23, 59, 59, 999);
-
+                        const startDate = new Date(dates[0]); startDate.setHours(0, 0, 0, 0);
+                        const endDate = new Date(dates[dates.length - 1]); endDate.setHours(23, 59, 59, 999);
                         dataList = dataList.filter(item => {
                             const itemDate = new Date(item.rawDate);
                             return itemDate >= startDate && itemDate <= endDate;
@@ -3016,18 +2807,14 @@
                 }
 
                 if (badge) badge.innerText = `${dataList.length} Records`;
-
                 if (dataList.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No records found for the selected date range.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No records found.</td></tr>`;
                     return;
                 }
 
                 dataList.forEach((rec, index) => {
                     if (currentRecordTab === 'expenses') {
-                        const deleteBtnHtml = isOwner ? `
-                            <button onclick="deleteRecord('expenses', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
-                        ` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
-
+                        const deleteBtnHtml = isOwner ? `<button onclick="deleteRecord('expenses', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
                         tbody.innerHTML += `
                             <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
                                 <td class="py-3 pl-3 font-bold text-rose-400 font-mono">${rec.refId}</td>
@@ -3039,10 +2826,7 @@
                             </tr>
                         `;
                     } else if (currentRecordTab === 'manufacturing') {
-                        const deleteBtnHtml = isOwner ? `
-                            <button onclick="deleteRecord('manufacturing', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
-                        ` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
-
+                        const deleteBtnHtml = isOwner ? `<button onclick="deleteRecord('manufacturing', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
                         tbody.innerHTML += `
                             <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
                                 <td class="py-3 pl-3 font-bold text-purple-400 font-mono">${rec.refId}</td>
@@ -3055,10 +2839,7 @@
                         `;
                     } else {
                         const partyName = rec.supplier || rec.customer || 'N/A';
-                        const deleteBtnHtml = isOwner ? `
-                            <button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
-                        ` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
-
+                        const deleteBtnHtml = isOwner ? `<button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
                         tbody.innerHTML += `
                             <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
                                 <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${rec.refId}</td>
@@ -3081,46 +2862,34 @@
                     return;
                 }
                 if (confirm("Are you sure you want to delete this record?")) {
-                    let deletedItem = null;
                     if (type === 'purchase') {
-                        deletedItem = purchaseHistory.splice(index, 1)[0];
-                        if (deletedItem) systemBalances.supplierDue -= deletedItem.totalValue;
+                        const item = purchaseHistory.splice(index, 1)[0];
+                        if (item) systemBalances.supplierDue -= item.totalValue;
                     } else if (type === 'sales') {
-                        deletedItem = salesHistory.splice(index, 1)[0];
-                        if (deletedItem) {
-                            systemBalances.cashInHand -= deletedItem.totalValue;
-                            if (deletedItem.cartSnapshot && Array.isArray(deletedItem.cartSnapshot)) {
-                                deletedItem.cartSnapshot.forEach(soldItem => {
-                                    const targetProduct = agroProducts.find(p => p.code === soldItem.code);
-                                    if (targetProduct) {
-                                        targetProduct.openingQty = (targetProduct.openingQty || 0) + soldItem.qty;
-                                    }
+                        const item = salesHistory.splice(index, 1)[0];
+                        if (item) {
+                            systemBalances.cashInHand -= item.totalValue;
+                            if (item.cartSnapshot) {
+                                item.cartSnapshot.forEach(s => {
+                                    const t = agroProducts.find(p => p.code === s.code);
+                                    if (t) t.openingQty += s.qty;
                                 });
                             }
                         }
                     } else if (type === 'manufacturing') {
-                        deletedItem = manufacturingHistory.splice(index, 1)[0];
-                        if (deletedItem) {
-                            const targetProduct = agroProducts.find(p => p.code === deletedItem.itemCode || p.name === deletedItem.itemName);
-                            if (targetProduct) {
-                                targetProduct.openingQty = (targetProduct.openingQty || 0) - deletedItem.qty;
-                                if (targetProduct.openingQty < 0) targetProduct.openingQty = 0;
-                            }
+                        const item = manufacturingHistory.splice(index, 1)[0];
+                        if (item) {
+                            const t = agroProducts.find(p => p.code === item.itemCode);
+                            if (t) { t.openingQty -= item.qty; if (t.openingQty < 0) t.openingQty = 0; }
                         }
                     } else if (type === 'expenses') {
-                        deletedItem = expenseHistory.splice(index, 1)[0];
-                        if (deletedItem) systemBalances.cashInHand += deletedItem.amount;
+                        const item = expenseHistory.splice(index, 1)[0];
+                        if (item) systemBalances.cashInHand += item.amount;
                     }
-
                     saveSharedData();
                     renderRecordsTable();
                     renderDashboardBalances();
                     renderInventoryTable();
-                    renderItemsEntryTable();
-                    renderManufacturingTable();
-                    populateSalesProductDropdown();
-                    populateMfgProductDropdown();
-                    populatePurchaseSupplierDropdown();
                 }
             } catch(e) {}
         }
