@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.9</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.10</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -150,7 +150,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.9</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.10</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -181,7 +181,7 @@
                     <div>
                         <h1 class="text-sm sm:text-base font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.9</p>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium">AUTONOMOUS ERP CORE V4.10</p>
                             <span id="roleBadge" class="text-[9px] px-2.5 py-0.5 rounded-full font-mono font-bold uppercase border"></span>
                         </div>
                     </div>
@@ -515,25 +515,27 @@
                     <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                 </div>
 
-                <!-- Hub Controls -->
-                <div class="glass-card p-4 rounded-2xl flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 hover-purple text-left">
-                    <div class="flex space-x-2 overflow-x-auto pb-1 lg:pb-0 shrink-0">
+                <!-- Hub Controls (Properly Stacked & Wrapped to Avoid Overflow) -->
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col gap-4 hover-purple text-left">
+                    <!-- Row 1: Section Tabs -->
+                    <div class="flex space-x-2 overflow-x-auto pb-1">
                         <button onclick="setRecordTab('purchase')" id="rec-tab-purchase" class="text-xs px-3.5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-amber-500/20">Purchase (GRN)</button>
                         <button onclick="setRecordTab('sales')" id="rec-tab-sales" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Sales Invoices</button>
                         <button onclick="setRecordTab('manufacturing')" id="rec-tab-manufacturing" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Manufacturing Production</button>
                         <button onclick="setRecordTab('expenses')" id="rec-tab-expenses" class="text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Operating Expenses</button>
                     </div>
-                    
-                    <div class="flex items-center space-x-2 flex-wrap sm:flex-nowrap gap-2">
-                        <span class="text-xs text-slate-400 font-medium whitespace-nowrap">Date Range Filter:</span>
+
+                    <!-- Row 2: Date Range Filter Controls -->
+                    <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800/60">
+                        <span class="text-xs text-slate-400 font-semibold whitespace-nowrap">Date Range Filter:</span>
                         <button onclick="setQuickFilterDate('today')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 border border-slate-700 cursor-pointer whitespace-nowrap font-medium">Today</button>
                         <button onclick="setQuickFilterDate('yesterday')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 text-slate-300 border border-slate-700 cursor-pointer whitespace-nowrap font-medium">Yesterday</button>
                         
-                        <div class="relative flex-grow min-w-[210px]">
-                            <input type="text" id="recordDateFilter" placeholder="Select Date Range (e.g. Nov 1 to Oct 1)..." class="custom-input border rounded-xl px-3 py-2 text-xs font-mono font-medium focus:outline-none cursor-pointer w-full">
+                        <div class="relative flex-grow min-w-[200px] max-w-xs">
+                            <input type="text" id="recordDateFilter" placeholder="Select Date Range..." class="custom-input border rounded-xl px-3 py-2 text-xs font-mono font-medium focus:outline-none cursor-pointer w-full">
                         </div>
                         
-                        <button onclick="clearDateFilter()" class="text-xs px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 cursor-pointer whitespace-nowrap font-medium">Clear</button>
+                        <button onclick="clearDateFilter()" class="text-xs px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 cursor-pointer whitespace-nowrap font-medium">Clear Filter</button>
                     </div>
                 </div>
 
@@ -610,7 +612,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-            CHOWDHURY AGRO ERP CORE v4.9 • Date Range Filter Integration • Real-Time Multi-Device Sync
+            CHOWDHURY AGRO ERP CORE v4.10 • Responsive Layout Refinement • Real-Time Multi-Device Sync
         </footer>
     </div>
 
