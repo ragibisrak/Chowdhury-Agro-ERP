@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.26</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.27</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -174,7 +174,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.26</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.27</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -207,7 +207,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.26</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.27</p>
                     </div>
                 </div>
             </div>
@@ -261,6 +261,10 @@
                     <button onclick="switchView('staffsuppliers')" id="nav-btn-staffsuppliers" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="briefcase" class="w-4 h-4 shrink-0"></i>
                         <span>Staff & Supplier Manager</span>
+                    </button>
+                    <button onclick="switchView('attendance')" id="nav-btn-attendance" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
+                        <i data-lucide="calendar-check" class="w-4 h-4 shrink-0"></i>
+                        <span>Staff Attendance Hub</span>
                     </button>
                     <button onclick="switchView('inventory')" id="nav-btn-inventory" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="boxes" class="w-4 h-4 shrink-0"></i>
@@ -360,7 +364,14 @@
                                     <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="briefcase" class="w-5 h-5"></i></div>
                                     <div>
                                         <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Staff & Supplier</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Vendors, items & salaries.</p>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Vendors, items & locations.</p>
+                                    </div>
+                                </div>
+                                <div onclick="switchView('attendance')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+                                    <div>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Attendance Hub</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Log present/absent dates.</p>
                                     </div>
                                 </div>
                                 <div onclick="switchView('inventory')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
@@ -375,13 +386,6 @@
                                     <div>
                                         <h4 class="text-xs sm:text-sm font-bold group-hover:text-purple-400 transition">Manufacturing</h4>
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Record production batches.</p>
-                                    </div>
-                                </div>
-                                <div onclick="switchView('purchases')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
-                                    <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Purchase</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Raw material GRN entries.</p>
                                     </div>
                                 </div>
                                 <div onclick="switchView('sales')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
@@ -563,12 +567,12 @@
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
                             <div class="text-left">
                                 <h2 class="text-lg sm:text-xl font-bold">Staff & Supplier Manager Hub</h2>
-                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage vendors, staff work locations, and daily attendance tracking.</p>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage vendors, staff profiles, and branch work locations.</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <div class="flex space-x-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700">
                                     <button onclick="setStaffSupplierTab('suppliers')" id="ss-tab-suppliers" class="text-xs px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold cursor-pointer transition">Suppliers</button>
-                                    <button onclick="setStaffSupplierTab('staff')" id="ss-tab-staff" class="text-xs px-3 py-1.5 rounded-lg text-slate-300 font-semibold cursor-pointer transition">Staff & Attendance</button>
+                                    <button onclick="setStaffSupplierTab('staff')" id="ss-tab-staff" class="text-xs px-3 py-1.5 rounded-lg text-slate-300 font-semibold cursor-pointer transition">Staff Directory</button>
                                 </div>
                                 <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                             </div>
@@ -636,7 +640,7 @@
                             </div>
                         </div>
 
-                        <!-- STAFF & ATTENDANCE SUB-VIEW -->
+                        <!-- STAFF SUB-VIEW -->
                         <div id="subview-staff" class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 hidden">
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-amber text-left">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Add New Staff Member</h3>
@@ -666,17 +670,16 @@
                             <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-amber text-left">
                                 <div>
                                     <div class="flex justify-between items-center mb-3">
-                                        <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Staff Directory & Attendance Log</h3>
-                                        <span class="text-[10px] text-slate-400 font-mono">Click status buttons to toggle Daily Attendance</span>
+                                        <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Registered Staff Directory & Locations</h3>
                                     </div>
                                     <div class="overflow-x-auto max-h-[450px]">
-                                        <table class="w-full text-left text-xs min-w-[650px]">
+                                        <table class="w-full text-left text-xs min-w-[600px]">
                                             <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
                                                 <tr>
                                                     <th class="pb-2.5 pl-3">Staff ID & Name</th>
                                                     <th class="pb-2.5">Role</th>
                                                     <th class="pb-2.5">Work Location</th>
-                                                    <th class="pb-2.5 text-center">Today's Attendance</th>
+                                                    <th class="pb-2.5 font-mono">Phone</th>
                                                     <th class="pb-2.5 text-right">Salary</th>
                                                     <th class="pb-2.5 text-center pr-3">Actions</th>
                                                 </tr>
@@ -690,6 +693,72 @@
                                 <div class="border-t border-slate-800 pt-4 flex justify-between items-center">
                                     <p class="text-xs text-slate-400 font-medium">Total Registered Staff:</p>
                                     <p id="totalStaffCount" class="text-sm font-bold font-mono text-amber-400">0 Staff Members</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATTENDANCE HUB VIEW -->
+                    <div id="view-attendance" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                        <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
+                            <div class="text-left">
+                                <h2 class="text-lg sm:text-xl font-bold">Staff Attendance Hub</h2>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Log and review staff presence date-by-date (Present, Absent, or On Leave).</p>
+                            </div>
+                            <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+                            <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-amber text-left">
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Mark Attendance For Date</h3>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Select Date</label>
+                                    <input type="text" id="attDateInput" class="custom-input custom-datepicker w-full border rounded-xl p-2.5 text-xs font-mono cursor-pointer">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Select Staff Member</label>
+                                    <select id="attStaffSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium"></select>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Status</label>
+                                    <select id="attStatusSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                                        <option value="Present">🟢 Present</option>
+                                        <option value="Absent">🔴 Absent</option>
+                                        <option value="On Leave">🟡 On Leave</option>
+                                    </select>
+                                </div>
+                                <button onclick="saveStaffAttendanceEntry()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition shadow-md shadow-amber-500/20">Save Attendance Record</button>
+                            </div>
+
+                            <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-amber text-left">
+                                <div>
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
+                                        <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Attendance Log History</h3>
+                                        <div class="flex items-center space-x-2">
+                                            <input type="text" id="attFilterDate" placeholder="Filter by date..." class="custom-input border rounded-xl px-3 py-1.5 text-xs font-mono cursor-pointer">
+                                            <button onclick="clearAttFilter()" class="text-[10px] bg-slate-800 text-slate-300 px-2.5 py-1.5 rounded-xl border border-slate-700">Clear</button>
+                                        </div>
+                                    </div>
+                                    <div class="overflow-x-auto max-h-[420px]">
+                                        <table class="w-full text-left text-xs min-w-[550px]">
+                                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
+                                                <tr>
+                                                    <th class="pb-2.5 pl-3">Date</th>
+                                                    <th class="pb-2.5">Staff Name & Role</th>
+                                                    <th class="pb-2.5">Work Location</th>
+                                                    <th class="pb-2.5 text-center">Status</th>
+                                                    <th class="pb-2.5 text-center pr-3">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="attendanceTableBody" class="divide-y divide-slate-800/40">
+                                                <tr><td colspan="5" class="py-8 text-center text-slate-500 italic">No attendance records found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="border-t border-slate-800 pt-4 flex justify-between items-center">
+                                    <p class="text-xs text-slate-400 font-medium">Total Attendance Logs:</p>
+                                    <p id="totalAttendanceCount" class="text-sm font-bold font-mono text-amber-400">0 Records</p>
                                 </div>
                             </div>
                         </div>
@@ -1052,7 +1121,7 @@
                 </div>
 
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.26 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.27 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
@@ -1224,11 +1293,13 @@
                             renderCustomersTable();
                             renderSuppliersTable();
                             renderStaffTable();
+                            renderAttendanceTable();
                             renderItemsEntryTable();
                             populateMfgProductDropdown();
                             populatePurchaseSupplierDropdown();
                             populateSalesProductDropdown();
                             populateSalesCustomerDropdown();
+                            populateAttendanceStaffDropdown();
 
                             if (typeof lucide !== 'undefined') lucide.createIcons();
                         }, 350);
@@ -1292,6 +1363,7 @@
         let customerDirectory = [];
         let supplierDirectory = [];
         let staffDirectory = [];
+        let attendanceHistory = [];
         let purchaseHistory = [];
         let salesHistory = [];
         let expenseHistory = [];
@@ -1300,6 +1372,7 @@
         let currentItemEntryTab = 'Finish Goods';
         let currentRecordTab = 'purchase';
         let recordFilterPicker = null;
+        let attendanceFilterPicker = null;
 
         function loadSharedData() {
             try {
@@ -1308,6 +1381,7 @@
                 const savedCustomers = localStorage.getItem('chowdhury_customers');
                 const savedSuppliers = localStorage.getItem('chowdhury_suppliers');
                 const savedStaff = localStorage.getItem('chowdhury_staff');
+                const savedAttendance = localStorage.getItem('chowdhury_attendance');
                 const savedPurchases = localStorage.getItem('chowdhury_purchases');
                 const savedSales = localStorage.getItem('chowdhury_sales');
                 const savedExpenses = localStorage.getItem('chowdhury_expenses');
@@ -1319,7 +1393,12 @@
                 supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
                 
                 staffDirectory = savedStaff ? JSON.parse(savedStaff) : [
-                    { id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Central Branch", phone: "01799887766", salary: 14000, attendance: "Present" }
+                    { id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Branch", phone: "01799887766", salary: 14000 }
+                ];
+
+                const todayStr = new Date().toISOString().split('T')[0];
+                attendanceHistory = savedAttendance ? JSON.parse(savedAttendance) : [
+                    { id: "ATT-101", date: todayStr, rawDate: todayStr, staffId: "STAFF-3001", staffName: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Branch", status: "Present" }
                 ];
 
                 purchaseHistory = savedPurchases ? JSON.parse(savedPurchases) : [];
@@ -1338,6 +1417,7 @@
                 localStorage.setItem('chowdhury_customers', JSON.stringify(customerDirectory));
                 localStorage.setItem('chowdhury_suppliers', JSON.stringify(supplierDirectory));
                 localStorage.setItem('chowdhury_staff', JSON.stringify(staffDirectory));
+                localStorage.setItem('chowdhury_attendance', JSON.stringify(attendanceHistory));
                 localStorage.setItem('chowdhury_purchases', JSON.stringify(purchaseHistory));
                 localStorage.setItem('chowdhury_sales', JSON.stringify(salesHistory));
                 localStorage.setItem('chowdhury_expenses', JSON.stringify(expenseHistory));
@@ -1347,13 +1427,14 @@
 
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.26",
+                version: "4.27",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
                 customers: customerDirectory,
                 suppliers: supplierDirectory,
                 staff: staffDirectory,
+                attendance: attendanceHistory,
                 purchases: purchaseHistory,
                 sales: salesHistory,
                 expenses: expenseHistory,
@@ -1437,6 +1518,7 @@
                     customerDirectory = parsedDB.customers || customerDirectory;
                     supplierDirectory = parsedDB.suppliers || supplierDirectory;
                     staffDirectory = parsedDB.staff || staffDirectory;
+                    attendanceHistory = parsedDB.attendance || attendanceHistory;
                     purchaseHistory = parsedDB.purchases || purchaseHistory;
                     salesHistory = parsedDB.sales || salesHistory;
                     expenseHistory = parsedDB.expenses || expenseHistory;
@@ -1450,6 +1532,7 @@
                     renderCustomersTable();
                     renderSuppliersTable();
                     renderStaffTable();
+                    renderAttendanceTable();
                     renderItemsEntryTable();
                     closeImportModal();
                     alert("Database successfully restored!");
@@ -1527,11 +1610,13 @@
                 renderCustomersTable();
                 renderSuppliersTable();
                 renderStaffTable();
+                renderAttendanceTable();
                 renderItemsEntryTable();
                 populateSalesProductDropdown();
                 populateSalesCustomerDropdown();
                 populatePurchaseSupplierDropdown();
                 populateMfgProductDropdown();
+                populateAttendanceStaffDropdown();
                 renderInventoryTable();
                 renderRecordsTable();
                 renderManufacturingTable();
@@ -1542,7 +1627,15 @@
                 flatpickr("#salesDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
                 flatpickr("#expenseDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
                 flatpickr("#mfgDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
+                flatpickr("#attDateInput", { dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", defaultDate: todayStr });
                 
+                attendanceFilterPicker = flatpickr("#attFilterDate", {
+                    dateFormat: "Y-m-d",
+                    altInput: true,
+                    altFormat: "M j, Y",
+                    onChange: function() { renderAttendanceTable(); }
+                });
+
                 recordFilterPicker = flatpickr("#recordDateFilter", {
                     mode: "range",
                     dateFormat: "Y-m-d",
@@ -1576,7 +1669,7 @@
 
         function switchView(viewName) {
             try {
-                ['view-dashboard', 'view-customers', 'view-items', 'view-staffsuppliers', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
+                ['view-dashboard', 'view-customers', 'view-items', 'view-staffsuppliers', 'view-attendance', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
                     const el = document.getElementById(v);
                     if (el) {
                         el.classList.add('hidden');
@@ -1589,7 +1682,7 @@
                     void target.offsetWidth;
                     target.classList.add('fade-slide-enter');
 
-                    const navButtons = ['dashboard', 'customers', 'items', 'staffsuppliers', 'manufacturing', 'purchases', 'sales', 'expenses', 'inventory', 'records'];
+                    const navButtons = ['dashboard', 'customers', 'items', 'staffsuppliers', 'attendance', 'manufacturing', 'purchases', 'sales', 'expenses', 'inventory', 'records'];
                     navButtons.forEach(btnKey => {
                         const btn = document.getElementById(`nav-btn-${btnKey}`);
                         if (btn) {
@@ -1599,6 +1692,7 @@
                                     btnKey === 'customers' ? 'bg-teal-500/20 text-teal-300 border-teal-500/40 shadow-teal-500/10' :
                                     btnKey === 'items' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-emerald-500/10' :
                                     btnKey === 'staffsuppliers' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
+                                    btnKey === 'attendance' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
                                     btnKey === 'manufacturing' ? 'bg-purple-500/20 text-purple-300 border-purple-500/40 shadow-purple-500/10' :
                                     btnKey === 'purchases' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
                                     btnKey === 'sales' ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40 shadow-indigo-500/10' :
@@ -1625,6 +1719,10 @@
                     if (viewName === 'staffsuppliers') {
                         renderSuppliersTable();
                         renderStaffTable();
+                    }
+                    if (viewName === 'attendance') {
+                        populateAttendanceStaffDropdown();
+                        renderAttendanceTable();
                     }
                     if (viewName === 'sales') {
                         populateSalesProductDropdown();
@@ -2066,7 +2164,7 @@
             } catch(e) {}
         }
 
-        // --- STAFF MEMBERS & ATTENDANCE MODULE ---
+        // --- STAFF MEMBERS MODULE ---
         function addStaffMember() {
             try {
                 const nameInput = document.getElementById('staffNameInput');
@@ -2092,11 +2190,11 @@
                     role: role || 'Staff Employee',
                     location: location || 'Main Branch',
                     phone: phone || 'N/A',
-                    salary: salary,
-                    attendance: 'Present' // Default attendance
+                    salary: salary
                 });
                 saveSharedData();
                 renderStaffTable();
+                populateAttendanceStaffDropdown();
 
                 if (nameInput) nameInput.value = '';
                 if (roleInput) roleInput.value = '';
@@ -2104,21 +2202,6 @@
                 if (phoneInput) phoneInput.value = '';
                 if (salaryInput) salaryInput.value = '12000';
                 alert("Staff member and work location registered successfully!");
-            } catch(e) {}
-        }
-
-        function toggleStaffAttendance(index) {
-            try {
-                const staff = staffDirectory[index];
-                if (!staff) return;
-                
-                // Cycle through: Present -> Absent -> On Leave -> Present
-                if (staff.attendance === 'Present') staff.attendance = 'Absent';
-                else if (staff.attendance === 'Absent') staff.attendance = 'On Leave';
-                else staff.attendance = 'Present';
-
-                saveSharedData();
-                renderStaffTable();
             } catch(e) {}
         }
 
@@ -2138,10 +2221,6 @@
                 if (countEl) countEl.innerText = `${staffDirectory.length} Staff Members`;
 
                 staffDirectory.forEach((st, index) => {
-                    let badgeClass = "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
-                    if (st.attendance === 'Absent') badgeClass = "bg-rose-500/20 text-rose-400 border-rose-500/40";
-                    else if (st.attendance === 'On Leave') badgeClass = "bg-amber-500/20 text-amber-400 border-amber-500/40";
-
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/35 transition border-b border-slate-800/40">
                             <td class="py-3 pl-3">
@@ -2154,11 +2233,7 @@
                             <td class="py-3 font-semibold text-amber-300">
                                 📍 ${st.location || 'Main Branch'}
                             </td>
-                            <td class="py-3 text-center">
-                                <button onclick="toggleStaffAttendance(${index})" class="px-3 py-1 rounded-full text-[11px] font-bold border ${badgeClass} cursor-pointer transition shadow-sm" title="Click to toggle attendance status">
-                                    ${st.attendance || 'Present'} 🔄
-                                </button>
-                            </td>
+                            <td class="py-3 font-mono text-slate-300">${st.phone || 'N/A'}</td>
                             <td class="py-3 text-right font-mono text-emerald-400 font-bold">${(st.salary || 0).toFixed(2)} TK.</td>
                             <td class="py-3 text-center pr-3">
                                 <button onclick="deleteStaff(${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
@@ -2179,6 +2254,131 @@
                     staffDirectory.splice(index, 1);
                     saveSharedData();
                     renderStaffTable();
+                    populateAttendanceStaffDropdown();
+                }
+            } catch(e) {}
+        }
+
+        // --- ATTENDANCE HUB MODULE ---
+        function populateAttendanceStaffDropdown() {
+            try {
+                const select = document.getElementById('attStaffSelect');
+                if (!select) return;
+                select.innerHTML = '';
+                if (staffDirectory.length === 0) {
+                    select.innerHTML = `<option value="">No staff members available</option>`;
+                    return;
+                }
+                staffDirectory.forEach(st => {
+                    select.innerHTML += `<option value="${st.id}">${st.name} - ${st.role} [${st.location}]</option>`;
+                });
+            } catch(e) {}
+        }
+
+        function saveStaffAttendanceEntry() {
+            try {
+                const dateVal = document.getElementById('attDateInput').value || new Date().toISOString().split('T')[0];
+                const staffSelect = document.getElementById('attStaffSelect');
+                const statusSelect = document.getElementById('attStatusSelect');
+
+                if (!staffSelect || !staffSelect.value) {
+                    alert("Please select a valid staff member.");
+                    return;
+                }
+
+                const staffId = staffSelect.value;
+                const status = statusSelect ? statusSelect.value : 'Present';
+                const staffObj = staffDirectory.find(s => s.id === staffId);
+                if (!staffObj) return;
+
+                // Check if entry already exists for this staff on this date, update if so or add new
+                const existingIndex = attendanceHistory.findIndex(a => a.staffId === staffId && a.rawDate === dateVal);
+                if (existingIndex > -1) {
+                    attendanceHistory[existingIndex].status = status;
+                } else {
+                    attendanceHistory.unshift({
+                        id: "ATT-" + Math.floor(1000 + Math.random() * 9000),
+                        date: dateVal,
+                        rawDate: dateVal,
+                        staffId: staffObj.id,
+                        staffName: staffObj.name,
+                        role: staffObj.role,
+                        location: staffObj.location || 'Main Branch',
+                        status: status
+                    });
+                }
+
+                saveSharedData();
+                renderAttendanceTable();
+                alert(`Attendance saved: ${staffObj.name} marked as ${status} for ${dateVal}!`);
+            } catch(e) {}
+        }
+
+        function clearAttFilter() {
+            try {
+                if (attendanceFilterPicker) attendanceFilterPicker.clear();
+                renderAttendanceTable();
+            } catch(e) {}
+        }
+
+        function renderAttendanceTable() {
+            try {
+                const tbody = document.getElementById('attendanceTableBody');
+                const countEl = document.getElementById('totalAttendanceCount');
+                if (!tbody) return;
+
+                let list = [...attendanceHistory];
+                const filterDateVal = document.getElementById('attFilterDate') ? document.getElementById('attFilterDate').value : '';
+                if (filterDateVal) {
+                    list = list.filter(a => a.rawDate === filterDateVal);
+                }
+
+                if (countEl) countEl.innerText = `${list.length} Records`;
+
+                if (list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500 italic">No attendance records found for this date.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                list.forEach((att) => {
+                    const actualIndex = attendanceHistory.findIndex(item => item.id === att.id);
+                    let badgeClass = "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
+                    if (att.status === 'Absent') badgeClass = "bg-rose-500/20 text-rose-400 border-rose-500/40";
+                    else if (att.status === 'On Leave') badgeClass = "bg-amber-500/20 text-amber-400 border-amber-500/40";
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/35 transition border-b border-slate-800/40">
+                            <td class="py-3 pl-3 font-mono text-cyan-400 font-bold text-[11px]">${att.date}</td>
+                            <td class="py-3">
+                                <div class="font-bold text-slate-100">${att.staffName}</div>
+                                <div class="text-[10px] text-slate-400">${att.role}</div>
+                            </td>
+                            <td class="py-3 text-amber-300 font-semibold">📍 ${att.location}</td>
+                            <td class="py-3 text-center">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold border ${badgeClass}">
+                                    ${att.status}
+                                </span>
+                            </td>
+                            <td class="py-3 text-center pr-3">
+                                <button onclick="deleteAttendance(${actualIndex})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {}
+        }
+
+        function deleteAttendance(index) {
+            try {
+                if (getCurrentRole() !== 'owner' && getCurrentRole() !== 'manager') {
+                    alert("Permission Denied.");
+                    return;
+                }
+                if (confirm("Delete this attendance log?")) {
+                    attendanceHistory.splice(index, 1);
+                    saveSharedData();
+                    renderAttendanceTable();
                 }
             } catch(e) {}
         }
