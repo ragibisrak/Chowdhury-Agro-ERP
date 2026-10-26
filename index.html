@@ -1451,7 +1451,12 @@
                 window.githubFileSha = data.sha;
 
                 systemBalances = parsedDB.balances || systemBalances;
-                agroProducts = (parsedDB.products && parsedDB.products.length > 0) ? parsedDB.products : JSON.parse(JSON.stringify(defaultAgroProducts));
+                
+                // Only update products from GitHub if GitHub actually has products stored. Otherwise keep local!
+                if (parsedDB.products && parsedDB.products.length > 0) {
+                    agroProducts = parsedDB.products;
+                }
+
                 customerDirectory = parsedDB.customers || customerDirectory;
                 supplierDirectory = parsedDB.suppliers || supplierDirectory;
                 staffDirectory = parsedDB.staff || staffDirectory;
@@ -1549,7 +1554,12 @@
                 systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, customerDue: 0.00, supplierDue: 0.00 };
                 
                 let parsedProds = savedProducts ? JSON.parse(savedProducts) : [];
-                agroProducts = (parsedProds && parsedProds.length > 0) ? parsedProds : JSON.parse(JSON.stringify(defaultAgroProducts));
+                if (parsedProds && parsedProds.length > 0) {
+                    agroProducts = parsedProds;
+                } else {
+                    agroProducts = JSON.parse(JSON.stringify(defaultAgroProducts));
+                    localStorage.setItem('chowdhury_products', JSON.stringify(agroProducts));
+                }
 
                 customerDirectory = savedCustomers ? JSON.parse(savedCustomers) : [{ id: "CUST-1001", name: "Walk-in Customer", phone: "N/A", address: "General Counter", creditLimit: 0 }];
                 supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal, 45 kg Cylinder", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
