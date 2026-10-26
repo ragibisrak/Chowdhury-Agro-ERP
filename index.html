@@ -1105,6 +1105,26 @@
                             <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
                         </div>
 
+                        <!-- EXPORT / IMPORT HUB ACTION BAR -->
+                        <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-3 hover-emerald text-left">
+                            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                                <button onclick="exportInventoryCSV()" class="text-xs px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-md shadow-emerald-500/20">
+                                    <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
+                                    <span>Export CSV</span>
+                                </button>
+                                <button onclick="exportInventoryJS()" class="text-xs px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-md shadow-cyan-500/20">
+                                    <i data-lucide="code" class="w-3.5 h-3.5"></i>
+                                    <span>Export JS / JSON</span>
+                                </button>
+                                <label class="text-xs px-3.5 py-2 rounded-xl bg-purple-500 hover:bg-purple-400 text-slate-950 font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-md shadow-purple-500/20">
+                                    <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                                    <span>Import CSV / JS</span>
+                                    <input type="file" id="inventoryFileInput" accept=".csv, .json, .js" onchange="handleInventoryFileImport(event)" class="hidden">
+                                </label>
+                            </div>
+                            <span id="productCountBadge" class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 rounded-full border border-emerald-500/40 font-bold whitespace-nowrap">0 Items</span>
+                        </div>
+
                         <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-emerald text-left">
                             <div class="flex space-x-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
                                 <button onclick="setInventoryTab('all')" id="tab-all" class="text-xs px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold cursor-pointer transition whitespace-nowrap shadow-md shadow-emerald-500/20">All Items</button>
@@ -1113,7 +1133,6 @@
                                 <button onclick="setInventoryTab('Agro')" id="tab-agro" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:opacity-80 text-slate-300 font-semibold cursor-pointer transition whitespace-nowrap">Agro & Feed</button>
                                 <button onclick="setInventoryTab('lowStock')" id="tab-low" class="text-xs px-3.5 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 font-bold cursor-pointer transition whitespace-nowrap">⚠️ Low Stock Alerts</button>
                             </div>
-                            <span id="productCountBadge" class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 rounded-full border border-emerald-500/40 font-bold whitespace-nowrap">0 Items</span>
                         </div>
 
                         <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 hover-emerald text-left">
@@ -1429,7 +1448,7 @@
                 const jsonString = decodeURIComponent(escape(atob(data.content)));
                 const parsedDB = JSON.parse(jsonString);
 
-                window.githubFileSha = data.sha; // Save SHA required for updates
+                window.githubFileSha = data.sha;
 
                 systemBalances = parsedDB.balances || systemBalances;
                 agroProducts = (parsedDB.products && parsedDB.products.length > 0) ? parsedDB.products : JSON.parse(JSON.stringify(defaultAgroProducts));
@@ -1454,7 +1473,7 @@
         async function pushToGitHub() {
             const token = getGitHubToken();
             const statusEl = document.getElementById('syncStatusBadge');
-            if (!token) return; // Silent return if no token configured on this device
+            if (!token) return;
 
             if (statusEl) statusEl.innerText = "☁️ Pushing updates to GitHub Cloud...";
             try {
@@ -1682,6 +1701,167 @@
                 });
             } catch(e) {}
         });
+
+        // --- CSV & JS (JSON) IMPORT & EXPORT SYSTEM ---
+        function exportInventoryCSV() {
+            try {
+                if (!agroProducts || agroProducts.length === 0) {
+                    alert("No inventory items found to export.");
+                    return;
+                }
+
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += "Code,Name,Group,Unit,RetailRate,WholesaleRate,PurchaseRate,OpeningQty\r\n";
+
+                agroProducts.forEach(p => {
+                    const row = [
+                        `"${p.code || ''}"`,
+                        `"${(p.name || '').replace(/"/g, '""')}"`,
+                        `"${p.group || 'Finish Goods'}"`,
+                        `"${p.unit || 'PCS'}"`,
+                        p.retailRate || 0,
+                        p.wholesaleRate || 0,
+                        p.purchaseRate || 0,
+                        p.openingQty || 0
+                    ].join(",");
+                    csvContent += row + "\r\n";
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `Chowdhury_Agro_Inventory_${new Date().toISOString().split('T')[0]}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch(e) {
+                alert("Export failed: " + e.message);
+            }
+        }
+
+        function exportInventoryJS() {
+            try {
+                if (!agroProducts || agroProducts.length === 0) {
+                    alert("No inventory items found to export.");
+                    return;
+                }
+
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(agroProducts, null, 2));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", `Chowdhury_Agro_Products_${new Date().toISOString().split('T')[0]}.json`);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.removeChild(downloadAnchor);
+            } catch(e) {
+                alert("JS/JSON Export failed: " + e.message);
+            }
+        }
+
+        function handleInventoryFileImport(event) {
+            try {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                const fileName = file.name.toLowerCase();
+
+                reader.onload = function(e) {
+                    const content = e.target.result;
+
+                    if (fileName.endsWith('.json') || fileName.endsWith('.js')) {
+                        try {
+                            const parsedData = JSON.parse(content);
+                            if (Array.isArray(parsedData)) {
+                                agroProducts = parsedData;
+                                saveSharedData();
+                                refreshAllUIs();
+                                alert(`Successfully imported ${agroProducts.length} items from JSON file and synced to cloud!`);
+                            } else {
+                                alert("Invalid JSON format. Expected an array of product objects.");
+                            }
+                        } catch(err) {
+                            alert("Error parsing JSON file: " + err.message);
+                        }
+                    } else if (fileName.endsWith('.csv')) {
+                        try {
+                            const lines = content.split(/\r\n|\n/);
+                            if (lines.length < 2) {
+                                alert("CSV file is empty or formatted incorrectly.");
+                                return;
+                            }
+
+                            let importedCount = 0;
+                            for (let i = 1; i < lines.length; i++) {
+                                const line = lines[i].trim();
+                                if (!line) continue;
+
+                                const row = [];
+                                let insideQuote = false;
+                                let entry = '';
+                                for (let char of line) {
+                                    if (char === '"') {
+                                        insideQuote = !insideQuote;
+                                    } else if (char === ',' && !insideQuote) {
+                                        row.push(entry.trim());
+                                        entry = '';
+                                    } else {
+                                        entry += char;
+                                    }
+                                }
+                                row.push(entry.trim());
+
+                                if (row.length >= 8) {
+                                    const code = row[0].replace(/^"|"$/g, '');
+                                    const name = row[1].replace(/^"|"$/g, '');
+                                    const group = row[2].replace(/^"|"$/g, '') || 'Finish Goods';
+                                    const unit = row[3].replace(/^"|"$/g, '') || 'PCS';
+                                    const retailRate = parseFloat(row[4]) || 0;
+                                    const wholesaleRate = parseFloat(row[5]) || retailRate;
+                                    const purchaseRate = parseFloat(row[6]) || 0;
+                                    const openingQty = parseInt(row[7]) || 0;
+
+                                    if (name) {
+                                        const existingIndex = agroProducts.findIndex(p => p.code === code || p.name.toLowerCase() === name.toLowerCase());
+                                        const newItem = {
+                                            code: code || ("IT-" + Math.floor(10000 + Math.random() * 90000)),
+                                            name: name,
+                                            group: group,
+                                            category: group + "[ITEM]",
+                                            unit: unit,
+                                            retailRate: retailRate,
+                                            wholesaleRate: wholesaleRate,
+                                            purchaseRate: purchaseRate,
+                                            openingQty: openingQty
+                                        };
+
+                                        if (existingIndex > -1) {
+                                            agroProducts[existingIndex] = newItem;
+                                        } else {
+                                            agroProducts.push(newItem);
+                                        }
+                                        importedCount++;
+                                    }
+                                }
+                            }
+
+                            saveSharedData();
+                            refreshAllUIs();
+                            alert(`Successfully imported/updated ${importedCount} items from CSV and synced to cloud!`);
+                        } catch(err) {
+                            alert("Error parsing CSV file: " + err.message);
+                        }
+                    } else {
+                        alert("Please upload a valid .csv, .json, or .js file.");
+                    }
+                    event.target.value = '';
+                };
+
+                reader.readAsText(file);
+            } catch(e) {
+                alert("Import failed: " + e.message);
+            }
+        }
 
         function renderDashboardBalances() {
             try {
