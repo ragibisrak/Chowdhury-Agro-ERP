@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.31</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.32</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -174,7 +174,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.31</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.32</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -207,7 +207,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.31</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.32</p>
                     </div>
                 </div>
             </div>
@@ -282,6 +282,10 @@
                         <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i>
                         <span>Sales & POS</span>
                     </button>
+                    <button onclick="switchView('paylater')" id="nav-btn-paylater" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-rose-500/10 text-slate-300 hover:text-rose-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
+                        <i data-lucide="clock" class="w-4 h-4 shrink-0"></i>
+                        <span>Pay Later (Due) Manager</span>
+                    </button>
                     <button onclick="switchView('expenses')" id="nav-btn-expenses" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-rose-500/10 text-slate-300 hover:text-rose-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="wallet" class="w-4 h-4 shrink-0"></i>
                         <span>Expenses</span>
@@ -290,10 +294,6 @@
                     <div class="pt-2 pb-1 border-t border-slate-800/80">
                         <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest px-3 py-1 font-bold">System Hub</p>
                     </div>
-                    <button onclick="switchView('bank')" id="nav-btn-bank" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-cyan-500/10 text-slate-300 hover:text-cyan-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
-                        <i data-lucide="landmark" class="w-4 h-4 shrink-0"></i>
-                        <span>Cash in Bank / Digital</span>
-                    </button>
                     <button onclick="switchView('attendance')" id="nav-btn-attendance" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="calendar-check" class="w-4 h-4 shrink-0"></i>
                         <span>Staff Attendance Hub</span>
@@ -328,14 +328,10 @@
                             </div>
                         </div>
 
-                        <div id="ownerBalancesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                        <div id="ownerBalancesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                             <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-cyan-500 dark:border-l-cyan-400 hover-cyan text-left">
                                 <p class="text-xs text-slate-400 font-medium">Cash In Hand</p>
                                 <p id="cashInHand" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
-                            </div>
-                            <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-teal-500 dark:border-l-teal-400 hover-cyan text-left">
-                                <p class="text-xs text-slate-400 font-medium">Cash in Bank / Digital</p>
-                                <p id="dashCashInBank" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                             </div>
                             <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-emerald-500 dark:border-l-emerald-400 hover-emerald text-left">
                                 <p class="text-xs text-slate-400 font-medium">Total Revenue (Sales)</p>
@@ -345,7 +341,7 @@
                                 <p class="text-xs text-slate-400 font-medium">Operating Expenses</p>
                                 <p id="dashTotalExpenses" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                             </div>
-                            <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-indigo-500 dark:border-l-indigo-400 hover-purple text-left sm:col-span-2 lg:col-span-1">
+                            <div class="glass-card p-4 sm:p-5 rounded-2xl border-l-4 border-l-indigo-500 dark:border-l-indigo-400 hover-purple text-left">
                                 <p class="text-xs text-slate-400 font-medium">Supplier Due</p>
                                 <p id="supplierDue" class="text-base sm:text-lg font-bold font-mono mt-1">0.00 TK.</p>
                             </div>
@@ -354,25 +350,18 @@
                         <div class="space-y-3">
                             <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest text-left px-1">Quick Access Hub (Important Core Modules)</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                                <div onclick="switchView('customers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
+                                <div onclick="switchView('sales')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/40 shrink-0"><i data-lucide="receipt" class="w-5 h-5"></i></div>
                                     <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-cyan-400 transition">Customers</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Manage clients & credits.</p>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-indigo-400 transition">Sales & POS</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Process orders & payments.</p>
                                     </div>
                                 </div>
-                                <div onclick="switchView('items')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0"><i data-lucide="package-plus" class="w-5 h-5"></i></div>
+                                <div onclick="switchView('paylater')" class="glass-card p-4 sm:p-5 rounded-2xl hover-rose cursor-pointer group text-left flex items-start space-x-3.5">
+                                    <div class="p-2.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 shrink-0"><i data-lucide="clock" class="w-5 h-5"></i></div>
                                     <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-emerald-400 transition">Item Entry</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Register sweets & agro items.</p>
-                                    </div>
-                                </div>
-                                <div onclick="switchView('staffsuppliers')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="briefcase" class="w-5 h-5"></i></div>
-                                    <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Staff & Supplier</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Vendors, items & locations.</p>
+                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-rose-400 transition">Pay Later (Due)</h4>
+                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Manage pending customer dues.</p>
                                     </div>
                                 </div>
                                 <div onclick="switchView('inventory')" class="glass-card p-4 sm:p-5 rounded-2xl hover-emerald cursor-pointer group text-left flex items-start space-x-3.5">
@@ -387,27 +376,6 @@
                                     <div>
                                         <h4 class="text-xs sm:text-sm font-bold group-hover:text-purple-400 transition">Manufacturing</h4>
                                         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Record production batches.</p>
-                                    </div>
-                                </div>
-                                <div onclick="switchView('purchases')" class="glass-card p-4 sm:p-5 rounded-2xl hover-amber cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
-                                    <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-amber-400 transition">Purchase</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Restock raw materials.</p>
-                                    </div>
-                                </div>
-                                <div onclick="switchView('sales')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/40 shrink-0"><i data-lucide="receipt" class="w-5 h-5"></i></div>
-                                    <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-indigo-400 transition">Sales & POS</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Process orders & print slips.</p>
-                                    </div>
-                                </div>
-                                <div onclick="switchView('bank')" class="glass-card p-4 sm:p-5 rounded-2xl hover-cyan cursor-pointer group text-left flex items-start space-x-3.5">
-                                    <div class="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shrink-0"><i data-lucide="landmark" class="w-5 h-5"></i></div>
-                                    <div>
-                                        <h4 class="text-xs sm:text-sm font-bold group-hover:text-cyan-400 transition">Bank & bKash Hub</h4>
-                                        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">Manage digital accounts.</p>
                                     </div>
                                 </div>
                             </div>
@@ -706,70 +674,6 @@
                         </div>
                     </div>
 
-                    <!-- BANK & bKASH HUB VIEW -->
-                    <div id="view-bank" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
-                        <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
-                            <div class="text-left">
-                                <h2 class="text-lg sm:text-xl font-bold">Cash in Bank & Digital Accounts Hub</h2>
-                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Manage bank accounts, bKash, Nagad digital wallets, and record fund transfers.</p>
-                            </div>
-                            <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-                            <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-cyan text-left">
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Add Bank / Digital Account</h3>
-                                <div>
-                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Account / Provider Name</label>
-                                    <input type="text" id="bankNameInput" placeholder="e.g. bKash Merchant / EBL Bank" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Account Number / Wallet ID</label>
-                                    <input type="text" id="bankAccNoInput" placeholder="e.g. 01712345678 or AC-9921" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Account Type</label>
-                                    <select id="bankTypeSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
-                                        <option value="Mobile Wallet (bKash/Nagad)">Mobile Wallet (bKash / Nagad)</option>
-                                        <option value="Bank Current Account">Bank Current Account</option>
-                                        <option value="Bank Savings Account">Bank Savings Account</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Opening Balance (TK.)</label>
-                                    <input type="number" id="bankOpeningBal" value="0" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
-                                </div>
-                                <button onclick="addBankAccount()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition shadow-md shadow-cyan-500/20">Save Account & Fund</button>
-                            </div>
-
-                            <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-cyan text-left">
-                                <div>
-                                    <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 mb-3">Bank & Digital Accounts Overview</h3>
-                                    <div class="overflow-x-auto max-h-[420px]">
-                                        <table class="w-full text-left text-xs min-w-[550px]">
-                                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
-                                                <tr>
-                                                    <th class="pb-2.5 pl-3">Account Name</th>
-                                                    <th class="pb-2.5">Number / ID</th>
-                                                    <th class="pb-2.5">Type</th>
-                                                    <th class="pb-2.5 text-right">Balance (TK.)</th>
-                                                    <th class="pb-2.5 text-center pr-3">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bankAccountsTableBody" class="divide-y divide-slate-800/40">
-                                                <tr><td colspan="5" class="py-8 text-center text-slate-500 italic">No bank or digital accounts added yet.</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="border-t border-slate-800 pt-4 flex justify-between items-center">
-                                    <p class="text-xs text-slate-400 font-medium">Total Cash in Bank / Digital:</p>
-                                    <p id="totalBankBalanceLabel" class="text-sm font-bold font-mono text-cyan-400">0.00 TK.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- ATTENDANCE HUB VIEW -->
                     <div id="view-attendance" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
@@ -972,7 +876,7 @@
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-cyan">
                             <div class="text-left">
                                 <h2 class="text-lg sm:text-xl font-bold">Sales Matrix & POS Billing</h2>
-                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Process customer orders and generate printable thermal receipts.</p>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Process customer orders, select payment mode (Cash, bKash, Card, Pay Later), and print receipts.</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <button onclick="printDirectPOS()" class="text-xs px-3.5 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 font-bold cursor-pointer transition flex items-center space-x-1.5 shadow-md shadow-cyan-500/10">
@@ -992,6 +896,15 @@
                                 <div>
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Customer</label>
                                     <select id="salesCustomerSelect" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium"></select>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Payment Mode</label>
+                                    <select id="salesPaymentMode" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                                        <option value="Cash">💵 Cash</option>
+                                        <option value="bKash">📱 bKash</option>
+                                        <option value="Card">💳 Card</option>
+                                        <option value="Pay Later">⏳ Pay Later (Due)</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Select Finish Good Product</label>
@@ -1033,6 +946,67 @@
                                         <p id="cartGrandTotal" class="text-lg sm:text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400">0.00 TK.</p>
                                     </div>
                                     <button onclick="checkoutSale()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs cursor-pointer transition shadow-md shadow-emerald-500/20">Complete Sale & Print Receipt</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PAY LATER (DUE) MANAGER VIEW -->
+                    <div id="view-paylater" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                        <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-rose">
+                            <div class="text-left">
+                                <h2 class="text-lg sm:text-xl font-bold">Pay Later (Due) Manager</h2>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Track customer credit/due records, phone numbers, locations, and settle pending amounts.</p>
+                            </div>
+                            <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+                            <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 hover-rose text-left">
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">Add Manual Due Record</h3>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Customer Name</label>
+                                    <input type="text" id="dueCustName" placeholder="e.g. Kamal Hossain" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Phone Number</label>
+                                    <input type="text" id="dueCustPhone" placeholder="e.g. 01711223344" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Location / Address</label>
+                                    <input type="text" id="dueCustLocation" placeholder="e.g. Dhanmondi, Dhaka" class="custom-input w-full border rounded-xl p-2.5 text-xs font-medium">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1 font-semibold">Money Amount Due (TK.)</label>
+                                    <input type="number" id="dueAmount" placeholder="0.00" class="custom-input w-full border rounded-xl p-2.5 text-xs font-mono font-medium">
+                                </div>
+                                <button onclick="addManualDueRecord()" class="w-full bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold py-3 rounded-xl text-xs cursor-pointer transition shadow-md shadow-rose-500/20">Save Due Record</button>
+                            </div>
+
+                            <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 col-span-1 lg:col-span-2 flex flex-col justify-between hover-rose text-left">
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-3">Pending Dues & Pay Later Ledger</h3>
+                                    <div class="overflow-x-auto max-h-[450px]">
+                                        <table class="w-full text-left text-xs min-w-[600px]">
+                                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
+                                                <tr>
+                                                    <th class="pb-2.5 pl-3">Ref ID & Date</th>
+                                                    <th class="pb-2.5">Customer Name</th>
+                                                    <th class="pb-2.5">Phone Number</th>
+                                                    <th class="pb-2.5">Location</th>
+                                                    <th class="pb-2.5 text-right">Due Amount</th>
+                                                    <th class="pb-2.5 text-center pr-3">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dueTableBody" class="divide-y divide-slate-800/40">
+                                                <tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No pending dues found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="border-t border-slate-800 pt-4 flex justify-between items-center">
+                                    <p class="text-xs text-slate-400 font-medium">Total Pending Dues:</p>
+                                    <p id="totalDueLabel" class="text-sm font-bold font-mono text-rose-400">0.00 TK.</p>
                                 </div>
                             </div>
                         </div>
@@ -1193,7 +1167,7 @@
                 </div>
 
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.31 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.32 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
@@ -1231,6 +1205,7 @@
                     <h2 class="font-bold text-sm tracking-widest">CHOWDHURY AGRO</h2>
                     <p class="text-[10px] text-slate-500">Autonomous ERP POS Receipt</p>
                     <p id="receiptDate" class="text-[10px] text-slate-500"></p>
+                    <p id="receiptPaymentMode" class="text-[10px] font-bold text-indigo-600"></p>
                 </div>
                 <div id="receiptItemsList" class="space-y-1.5 border-b border-dashed border-slate-300 pb-3"></div>
                 <div class="flex justify-between font-bold text-sm pt-1">
@@ -1366,7 +1341,7 @@
                             renderSuppliersTable();
                             renderStaffTable();
                             renderAttendanceTable();
-                            renderBankAccountsTable();
+                            renderDueTable();
                             renderItemsEntryTable();
                             populateMfgProductDropdown();
                             populatePurchaseSupplierDropdown();
@@ -1420,7 +1395,7 @@
             }
         }
 
-        let systemBalances = { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
+        let systemBalances = { cashInHand: 0.00, customerDue: 0.00, supplierDue: 0.00 };
 
         const defaultAgroProducts = [
             { code: "IT000001", name: "Rasgulla #1", group: "Finish Goods", category: "Rasgulla[ITEM]", unit: "BAG", retailRate: 200.0, wholesaleRate: 190.0, purchaseRate: 0.0, openingQty: 50 },
@@ -1437,7 +1412,7 @@
         let customerDirectory = [];
         let supplierDirectory = [];
         let staffDirectory = [];
-        let bankDirectory = [];
+        let dueRecords = [];
         let attendanceHistory = [];
         let purchaseHistory = [];
         let salesHistory = [];
@@ -1456,14 +1431,14 @@
                 const savedCustomers = localStorage.getItem('chowdhury_customers');
                 const savedSuppliers = localStorage.getItem('chowdhury_suppliers');
                 const savedStaff = localStorage.getItem('chowdhury_staff');
-                const savedBank = localStorage.getItem('chowdhury_bank_accounts');
+                const savedDues = localStorage.getItem('chowdhury_dues');
                 const savedAttendance = localStorage.getItem('chowdhury_attendance');
                 const savedPurchases = localStorage.getItem('chowdhury_purchases');
                 const savedSales = localStorage.getItem('chowdhury_sales');
                 const savedExpenses = localStorage.getItem('chowdhury_expenses');
                 const savedMfg = localStorage.getItem('chowdhury_manufacturing');
 
-                systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, bankAccounts: 0.00, customerDue: 0.00, supplierDue: 0.00 };
+                systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, customerDue: 0.00, supplierDue: 0.00 };
                 agroProducts = savedProducts ? JSON.parse(savedProducts) : JSON.parse(JSON.stringify(defaultAgroProducts));
                 customerDirectory = savedCustomers ? JSON.parse(savedCustomers) : [{ id: "CUST-1001", name: "Walk-in Customer", phone: "N/A", address: "General Counter", creditLimit: 0 }];
                 supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal, 45 kg Cylinder", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
@@ -1472,10 +1447,7 @@
                     { id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Branch", phone: "01799887766", salary: 14000 }
                 ];
 
-                bankDirectory = savedBank ? JSON.parse(savedBank) : [
-                    { id: "BNK-5001", name: "bKash Merchant", accNo: "01712345678", type: "Mobile Wallet (bKash/Nagad)", balance: 25000.00 },
-                    { id: "BNK-5002", name: "Eastern Bank PLC", accNo: "AC-1192-88", type: "Bank Current Account", balance: 120000.00 }
-                ];
+                dueRecords = savedDues ? JSON.parse(savedDues) : [];
 
                 const todayStr = new Date().toISOString().split('T')[0];
                 attendanceHistory = savedAttendance ? JSON.parse(savedAttendance) : [
@@ -1493,17 +1465,16 @@
 
         function saveSharedData() {
             try {
-                // Calculate total bank balance automatically
-                let totalBank = 0;
-                bankDirectory.forEach(b => totalBank += (b.balance || 0));
-                systemBalances.bankAccounts = totalBank;
+                let totalDue = 0;
+                dueRecords.forEach(d => totalDue += (d.amount || 0));
+                systemBalances.customerDue = totalDue;
 
                 localStorage.setItem('chowdhury_balances', JSON.stringify(systemBalances));
                 localStorage.setItem('chowdhury_products', JSON.stringify(agroProducts));
                 localStorage.setItem('chowdhury_customers', JSON.stringify(customerDirectory));
                 localStorage.setItem('chowdhury_suppliers', JSON.stringify(supplierDirectory));
                 localStorage.setItem('chowdhury_staff', JSON.stringify(staffDirectory));
-                localStorage.setItem('chowdhury_bank_accounts', JSON.stringify(bankDirectory));
+                localStorage.setItem('chowdhury_dues', JSON.stringify(dueRecords));
                 localStorage.setItem('chowdhury_attendance', JSON.stringify(attendanceHistory));
                 localStorage.setItem('chowdhury_purchases', JSON.stringify(purchaseHistory));
                 localStorage.setItem('chowdhury_sales', JSON.stringify(salesHistory));
@@ -1514,14 +1485,14 @@
 
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.31",
+                version: "4.32",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
                 customers: customerDirectory,
                 suppliers: supplierDirectory,
                 staff: staffDirectory,
-                bankAccounts: bankDirectory,
+                dues: dueRecords,
                 attendance: attendanceHistory,
                 purchases: purchaseHistory,
                 sales: salesHistory,
@@ -1606,7 +1577,7 @@
                     customerDirectory = parsedDB.customers || customerDirectory;
                     supplierDirectory = parsedDB.suppliers || supplierDirectory;
                     staffDirectory = parsedDB.staff || staffDirectory;
-                    bankDirectory = parsedDB.bankAccounts || bankDirectory;
+                    dueRecords = parsedDB.dues || dueRecords;
                     attendanceHistory = parsedDB.attendance || attendanceHistory;
                     purchaseHistory = parsedDB.purchases || purchaseHistory;
                     salesHistory = parsedDB.sales || salesHistory;
@@ -1621,7 +1592,7 @@
                     renderCustomersTable();
                     renderSuppliersTable();
                     renderStaffTable();
-                    renderBankAccountsTable();
+                    renderDueTable();
                     renderAttendanceTable();
                     renderItemsEntryTable();
                     closeImportModal();
@@ -1700,7 +1671,7 @@
                 renderCustomersTable();
                 renderSuppliersTable();
                 renderStaffTable();
-                renderBankAccountsTable();
+                renderDueTable();
                 renderAttendanceTable();
                 renderItemsEntryTable();
                 populateSalesProductDropdown();
@@ -1746,11 +1717,6 @@
                     if (el) el.innerText = (val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TK.";
                 };
                 setElem('cashInHand', systemBalances.cashInHand);
-                
-                let totalBank = 0;
-                bankDirectory.forEach(b => totalBank += (b.balance || 0));
-                systemBalances.bankAccounts = totalBank;
-                setElem('dashCashInBank', totalBank);
                 setElem('supplierDue', systemBalances.supplierDue);
 
                 let totalRev = 0;
@@ -1765,7 +1731,7 @@
 
         function switchView(viewName) {
             try {
-                ['view-dashboard', 'view-customers', 'view-items', 'view-staffsuppliers', 'view-bank', 'view-attendance', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
+                ['view-dashboard', 'view-customers', 'view-items', 'view-staffsuppliers', 'view-paylater', 'view-attendance', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
                     const el = document.getElementById(v);
                     if (el) {
                         el.classList.add('hidden');
@@ -1778,7 +1744,7 @@
                     void target.offsetWidth;
                     target.classList.add('fade-slide-enter');
 
-                    const navButtons = ['dashboard', 'customers', 'items', 'staffsuppliers', 'bank', 'attendance', 'manufacturing', 'purchases', 'sales', 'expenses', 'inventory', 'records'];
+                    const navButtons = ['dashboard', 'customers', 'items', 'staffsuppliers', 'paylater', 'attendance', 'manufacturing', 'purchases', 'sales', 'expenses', 'inventory', 'records'];
                     navButtons.forEach(btnKey => {
                         const btn = document.getElementById(`nav-btn-${btnKey}`);
                         if (btn) {
@@ -1788,7 +1754,7 @@
                                     btnKey === 'customers' ? 'bg-teal-500/20 text-teal-300 border-teal-500/40 shadow-teal-500/10' :
                                     btnKey === 'items' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-emerald-500/10' :
                                     btnKey === 'staffsuppliers' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
-                                    btnKey === 'bank' ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 shadow-cyan-500/10' :
+                                    btnKey === 'paylater' ? 'bg-rose-500/20 text-rose-300 border-rose-500/40 shadow-rose-500/10' :
                                     btnKey === 'attendance' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
                                     btnKey === 'manufacturing' ? 'bg-purple-500/20 text-purple-300 border-purple-500/40 shadow-purple-500/10' :
                                     btnKey === 'purchases' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
@@ -1817,7 +1783,7 @@
                         renderSuppliersTable();
                         renderStaffTable();
                     }
-                    if (viewName === 'bank') renderBankAccountsTable();
+                    if (viewName === 'paylater') renderDueTable();
                     if (viewName === 'attendance') {
                         populateAttendanceStaffDropdown();
                         renderAttendanceTable();
@@ -1859,85 +1825,106 @@
             } catch(e) {}
         }
 
-        // --- BANK & DIGITAL ACCOUNTS MODULE ---
-        function addBankAccount() {
+        // --- PAY LATER (DUE) MANAGER MODULE ---
+        function addManualDueRecord() {
             try {
-                const nameInput = document.getElementById('bankNameInput');
-                const accNoInput = document.getElementById('bankAccNoInput');
-                const typeSelect = document.getElementById('bankTypeSelect');
-                const balInput = document.getElementById('bankOpeningBal');
+                const nameInput = document.getElementById('dueCustName');
+                const phoneInput = document.getElementById('dueCustPhone');
+                const locInput = document.getElementById('dueCustLocation');
+                const amtInput = document.getElementById('dueAmount');
 
                 const name = nameInput ? nameInput.value.trim() : '';
-                const accNo = accNoInput ? accNoInput.value.trim() : '';
-                const type = typeSelect ? typeSelect.value : 'Bank Current Account';
-                const balance = parseFloat(balInput ? balInput.value : 0) || 0;
+                const phone = phoneInput ? phoneInput.value.trim() : '';
+                const location = locInput ? locInput.value.trim() : '';
+                const amount = parseFloat(amtInput ? amtInput.value : 0) || 0;
 
-                if (!name) {
-                    alert("Please enter a bank or digital account name.");
+                if (!name || amount <= 0) {
+                    alert("Please enter a customer name and a valid due amount.");
                     return;
                 }
 
-                bankDirectory.push({
-                    id: "BNK-" + Math.floor(5000 + Math.random() * 9000),
+                const todayStr = new Date().toISOString().split('T')[0];
+                dueRecords.unshift({
+                    id: "DUE-" + Math.floor(1000 + Math.random() * 9000),
+                    date: todayStr,
                     name: name,
-                    accNo: accNo || 'N/A',
-                    type: type,
-                    balance: balance
+                    phone: phone || 'N/A',
+                    location: location || 'N/A',
+                    amount: amount
                 });
+
                 saveSharedData();
-                renderBankAccountsTable();
+                renderDueTable();
                 renderDashboardBalances();
 
                 if (nameInput) nameInput.value = '';
-                if (accNoInput) accNoInput.value = '';
-                if (balInput) balInput.value = '0';
-                alert("Bank / Digital account added successfully!");
+                if (phoneInput) phoneInput.value = '';
+                if (locInput) locInput.value = '';
+                if (amtInput) amtInput.value = '';
+                alert("Pay Later (Due) record saved successfully!");
             } catch(e) {}
         }
 
-        function renderBankAccountsTable() {
+        function renderDueTable() {
             try {
-                const tbody = document.getElementById('bankAccountsTableBody');
-                const labelEl = document.getElementById('totalBankBalanceLabel');
+                const tbody = document.getElementById('dueTableBody');
+                const labelEl = document.getElementById('totalDueLabel');
                 if (!tbody) return;
 
-                if (bankDirectory.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500 italic">No bank or digital accounts added yet.</td></tr>`;
+                if (dueRecords.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic">No pending dues found.</td></tr>`;
                     if (labelEl) labelEl.innerText = "0.00 TK.";
                     return;
                 }
 
                 tbody.innerHTML = '';
-                let totalBankBal = 0;
+                let totalDue = 0;
 
-                bankDirectory.forEach((b, index) => {
-                    totalBankBal += (b.balance || 0);
+                dueRecords.forEach((d, index) => {
+                    totalDue += (d.amount || 0);
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/35 transition border-b border-slate-800/40">
-                            <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${b.name} <span class="block text-[10px] text-slate-400 font-normal">${b.id}</span></td>
-                            <td class="py-3 text-slate-300 font-mono">${b.accNo}</td>
-                            <td class="py-3"><span class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-2 py-0.5 rounded text-[10px]">${b.type}</span></td>
-                            <td class="py-3 text-right font-mono font-bold text-emerald-400">${(b.balance || 0).toFixed(2)} TK.</td>
+                            <td class="py-3 pl-3 font-bold text-rose-400 font-mono">${d.id} <span class="block text-[10px] text-slate-400 font-normal">${d.date}</span></td>
+                            <td class="py-3 font-medium text-slate-200">${d.name}</td>
+                            <td class="py-3 text-slate-300 font-mono">${d.phone}</td>
+                            <td class="py-3 text-amber-300 font-medium">📍 ${d.location}</td>
+                            <td class="py-3 text-right font-mono font-bold text-rose-400">${(d.amount || 0).toFixed(2)} TK.</td>
                             <td class="py-3 text-center pr-3">
-                                <button onclick="deleteBankAccount(${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
+                                <button onclick="settleDue(${index})" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer mr-1">Settle / Paid</button>
+                                <button onclick="deleteDue(${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>
                             </td>
                         </tr>
                     `;
                 });
-                if (labelEl) labelEl.innerText = totalBankBal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TK.";
+                if (labelEl) labelEl.innerText = totalDue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TK.";
             } catch(e) {}
         }
 
-        function deleteBankAccount(index) {
+        function settleDue(index) {
+            try {
+                if (confirm("Mark this due as paid / settled? This will add the amount to Cash in Hand.")) {
+                    const settled = dueRecords.splice(index, 1)[0];
+                    if (settled) {
+                        systemBalances.cashInHand += settled.amount;
+                    }
+                    saveSharedData();
+                    renderDueTable();
+                    renderDashboardBalances();
+                    alert("Due settled successfully and added to cash!");
+                }
+            } catch(e) {}
+        }
+
+        function deleteDue(index) {
             try {
                 if (getCurrentRole() !== 'owner') {
-                    alert("Permission Denied: Only Owner can delete financial bank accounts.");
+                    alert("Permission Denied: Only Owner can delete due records.");
                     return;
                 }
-                if (confirm("Are you sure you want to delete this account?")) {
-                    bankDirectory.splice(index, 1);
+                if (confirm("Are you sure you want to delete this due record?")) {
+                    dueRecords.splice(index, 1);
                     saveSharedData();
-                    renderBankAccountsTable();
+                    renderDueTable();
                     renderDashboardBalances();
                 }
             } catch(e) {}
@@ -2036,7 +2023,7 @@
                 if (!select) return;
                 select.innerHTML = '';
                 customerDirectory.forEach(c => {
-                    select.innerHTML += `<option value="${c.name}">${c.name} (${c.phone})</option>`;
+                    select.innerHTML += `<option value="${c.name}" data-phone="${c.phone}" data-address="${c.address}">${c.name} (${c.phone})</option>`;
                 });
             } catch(e) {}
         }
@@ -2904,9 +2891,11 @@
                 }
                 const dateVal = document.getElementById('salesDateInput').value || new Date().toISOString().split('T')[0];
                 const custSelect = document.getElementById('salesCustomerSelect');
+                const payModeSelect = document.getElementById('salesPaymentMode');
                 const customerName = custSelect && custSelect.value ? custSelect.value : "Walk-in Customer";
+                const paymentMode = payModeSelect ? payModeSelect.value : "Cash";
+
                 let saleTotal = 0;
-                
                 cartList.forEach(item => {
                     saleTotal += (item.qty * item.price);
                     const target = agroProducts.find(p => p.code === item.code);
@@ -2916,23 +2905,43 @@
                     }
                 });
 
+                if (paymentMode === 'Pay Later') {
+                    let custPhone = 'N/A';
+                    let custAddress = 'N/A';
+                    if (custSelect && custSelect.options[custSelect.selectedIndex]) {
+                        custPhone = custSelect.options[custSelect.selectedIndex].getAttribute('data-phone') || 'N/A';
+                        custAddress = custSelect.options[custSelect.selectedIndex].getAttribute('data-address') || 'N/A';
+                    }
+                    dueRecords.unshift({
+                        id: "DUE-" + Math.floor(1000 + Math.random() * 9000),
+                        date: dateVal,
+                        name: customerName,
+                        phone: custPhone,
+                        location: custAddress,
+                        amount: saleTotal
+                    });
+                } else {
+                    systemBalances.cashInHand += saleTotal;
+                }
+
                 const record = {
                     refId: "INV-" + Math.floor(100000 + Math.random() * 900000),
                     rawDate: dateVal,
                     date: dateVal,
                     customer: customerName,
+                    paymentMode: paymentMode,
                     cartSnapshot: JSON.parse(JSON.stringify(cartList)),
                     itemsSummary: cartList.map(i => `${i.name} (${i.qty} ${i.unit})`).join(', '),
                     totalValue: saleTotal
                 };
                 salesHistory.unshift(record);
-                systemBalances.cashInHand += saleTotal;
 
                 saveSharedData();
                 renderDashboardBalances();
                 renderRecordsTable();
                 renderInventoryTable();
                 renderItemsEntryTable();
+                renderDueTable();
                 showReceiptModal(record, cartList);
 
                 cartList = [];
@@ -2947,9 +2956,11 @@
                     alert("Cart is empty!");
                     return;
                 }
+                const payModeSelect = document.getElementById('salesPaymentMode');
+                const paymentMode = payModeSelect ? payModeSelect.value : "Cash";
                 let total = 0;
                 cartList.forEach(i => total += (i.qty * i.price));
-                showReceiptModal({ refId: "POS-" + Math.floor(100000 + Math.random() * 900000), date: new Date().toISOString().split('T')[0], totalValue: total }, cartList);
+                showReceiptModal({ refId: "POS-" + Math.floor(100000 + Math.random() * 900000), date: new Date().toISOString().split('T')[0], paymentMode: paymentMode, totalValue: total }, cartList);
             } catch(e) {}
         }
 
@@ -2959,8 +2970,10 @@
                 const listEl = document.getElementById('receiptItemsList');
                 const totalEl = document.getElementById('receiptTotal');
                 const dateEl = document.getElementById('receiptDate');
+                const payModeEl = document.getElementById('receiptPaymentMode');
 
                 if (dateEl) dateEl.innerText = `Ref: ${record.refId} | Date: ${record.date}`;
+                if (payModeEl) payModeEl.innerText = `Payment Mode: ${record.paymentMode || 'Cash'}`;
                 if (totalEl) totalEl.innerText = record.totalValue.toFixed(2) + " TK.";
                 if (listEl) {
                     listEl.innerHTML = '';
@@ -3168,7 +3181,7 @@
 
                 let dataList = [];
                 if (currentRecordTab === 'purchase') { dataList = purchaseHistory; if (partyHeader) partyHeader.innerText = 'Supplier / Vendor'; }
-                else if (currentRecordTab === 'sales') { dataList = salesHistory; if (partyHeader) partyHeader.innerText = 'Customer'; }
+                else if (currentRecordTab === 'sales') { dataList = salesHistory; if (partyHeader) partyHeader.innerText = 'Customer & Payment Mode'; }
                 else if (currentRecordTab === 'manufacturing') { dataList = manufacturingHistory; if (partyHeader) partyHeader.innerText = 'Sweet / Item Made'; }
                 else if (currentRecordTab === 'expenses') { dataList = expenseHistory; if (partyHeader) partyHeader.innerText = 'Category / Title'; }
 
@@ -3218,8 +3231,22 @@
                                 <td class="py-3 text-center pr-3">${deleteBtnHtml}</td>
                             </tr>
                         `;
+                    } else if (currentRecordTab === 'sales') {
+                        const partyName = rec.customer || 'N/A';
+                        const paymentBadge = `<span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded text-[10px]">${rec.paymentMode || 'Cash'}</span>`;
+                        const deleteBtnHtml = isOwner ? `<button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
+                                <td class="py-3 pl-3 font-bold text-cyan-400 font-mono">${rec.refId}</td>
+                                <td class="py-3 text-slate-300 font-mono text-[11px]">${rec.date}</td>
+                                <td class="py-3 font-semibold">${partyName} <div class="mt-0.5">${paymentBadge}</div></td>
+                                <td class="py-3 text-slate-300 max-w-xs truncate" title="${rec.itemsSummary}">${rec.itemsSummary}</td>
+                                <td class="py-3 text-right font-bold text-emerald-400 font-mono">${rec.totalValue.toFixed(2)} TK.</td>
+                                <td class="py-3 text-center pr-3">${deleteBtnHtml}</td>
+                            </tr>
+                        `;
                     } else {
-                        const partyName = rec.supplier || rec.customer || 'N/A';
+                        const partyName = rec.supplier || 'N/A';
                         const deleteBtnHtml = isOwner ? `<button onclick="deleteRecord('${currentRecordTab}', ${index})" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2.5 py-1 rounded-lg text-[10px] font-semibold cursor-pointer">Delete</button>` : `<span class="text-[10px] text-slate-500 italic">Protected</span>`;
                         tbody.innerHTML += `
                             <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
@@ -3249,7 +3276,9 @@
                     } else if (type === 'sales') {
                         const item = salesHistory.splice(index, 1)[0];
                         if (item) {
-                            systemBalances.cashInHand -= item.totalValue;
+                            if (item.paymentMode !== 'Pay Later') {
+                                systemBalances.cashInHand -= item.totalValue;
+                            }
                             if (item.cartSnapshot) {
                                 item.cartSnapshot.forEach(s => {
                                     const t = agroProducts.find(p => p.code === s.code);
