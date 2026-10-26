@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chowdhury Agro - Autonomous ERP Core v4.33</title>
+    <title>Chowdhury Agro - Autonomous ERP Core v4.34</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/lib/index.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -174,7 +174,7 @@
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-2xl shadow-lg shadow-cyan-500/20 animate-pulse">Δ</div>
                 <h1 class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">CHOWDHURY AGRO</h1>
-                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.33</p>
+                <p class="text-xs text-slate-400 font-mono tracking-widest uppercase">Autonomous ERP Core v4.34</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -207,7 +207,7 @@
                     <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg shadow-md shadow-cyan-500/20">Δ</div>
                     <div>
                         <h1 class="text-xs sm:text-sm font-bold tracking-wider text-cyan-600 dark:text-cyan-400 leading-tight">CHOWDHURY AGRO</h1>
-                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.33</p>
+                        <p class="text-[9px] text-slate-400 font-mono font-medium">ERP CORE V4.34</p>
                     </div>
                 </div>
             </div>
@@ -281,6 +281,10 @@
                     <button onclick="switchView('sales')" id="nav-btn-sales" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-indigo-500/10 text-slate-300 hover:text-indigo-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i>
                         <span>Sales & POS</span>
+                    </button>
+                    <button onclick="switchView('paylater')" id="nav-btn-paylater" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
+                        <i data-lucide="clock" class="w-4 h-4 shrink-0"></i>
+                        <span>Pay Later (Due)</span>
                     </button>
                     <button onclick="switchView('expenses')" id="nav-btn-expenses" class="w-full text-left text-xs px-3.5 py-2.5 rounded-xl bg-slate-800/50 hover:bg-rose-500/10 text-slate-300 hover:text-rose-300 font-semibold cursor-pointer transition flex items-center space-x-3 border border-transparent">
                         <i data-lucide="wallet" class="w-4 h-4 shrink-0"></i>
@@ -947,6 +951,41 @@
                         </div>
                     </div>
 
+                    <!-- PAY LATER (DUE) VIEW -->
+                    <div id="view-paylater" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
+                        <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-amber">
+                            <div class="text-left">
+                                <h2 class="text-lg sm:text-xl font-bold">Pay Later (Due) Log & Management</h2>
+                                <p class="text-xs text-slate-400 mt-0.5 font-medium">Review customer sales made on credit/due and settle payments when collected.</p>
+                            </div>
+                            <button onclick="switchView('dashboard')" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:opacity-80 border border-slate-700 font-semibold cursor-pointer">← Dashboard</button>
+                        </div>
+
+                        <div class="glass-card p-4 sm:p-5 rounded-2xl space-y-4 hover-amber text-left">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Pending Due Sales Ledger</h3>
+                                <span id="payLaterCountBadge" class="text-xs bg-amber-500/20 text-amber-700 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-500/40 font-bold">0 Dues</span>
+                            </div>
+                            <div class="overflow-x-auto max-h-[500px]">
+                                <table class="w-full text-left text-xs min-w-[650px]">
+                                    <thead class="sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-slate-400 font-semibold">
+                                        <tr>
+                                            <th class="pb-2.5 pl-3">Invoice Ref</th>
+                                            <th class="pb-2.5">Date</th>
+                                            <th class="pb-2.5">Customer Name</th>
+                                            <th class="pb-2.5">Items Summary</th>
+                                            <th class="pb-2.5 text-right">Due Amount (TK.)</th>
+                                            <th class="pb-2.5 text-center pr-3">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="payLaterTableBody" class="divide-y divide-slate-800/50">
+                                        <tr><td colspan="6" class="py-8 text-center text-slate-500 italic font-medium">No pending Pay Later dues found.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- EXPENSES VIEW -->
                     <div id="view-expenses" class="hidden space-y-4 sm:space-y-6 fade-slide-enter">
                         <div class="glass-card p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-rose">
@@ -1102,7 +1141,7 @@
                 </div>
 
                 <footer class="text-center text-[10px] text-slate-500 font-mono mt-6 pb-2 font-medium">
-                    CHOWDHURY AGRO ERP CORE v4.33 • WebView-Safe JSON Sync
+                    CHOWDHURY AGRO ERP CORE v4.34 • WebView-Safe JSON Sync
                 </footer>
             </main>
         </div>
@@ -1164,15 +1203,37 @@
     <script>
         let currentAppMode = 'website';
 
-        function toggleAppMode() {
+        function detectDeviceAndSetMode() {
+            try {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                const isAndroid = /android/i.test(ua);
+                const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+                
+                // If opened on Android device or touch tablet (like Xiaomi Pad 7), default to APK mode
+                if (isAndroid || (isTouch && window.innerWidth <= 1200)) {
+                    currentAppMode = 'apk';
+                } else {
+                    currentAppMode = 'website';
+                }
+
+                // Allow manual override saved in localStorage if user toggled it before
+                const savedMode = localStorage.getItem('chowdhury_app_mode');
+                if (savedMode) {
+                    currentAppMode = savedMode;
+                }
+
+                applyAppModeUI();
+            } catch(e) {}
+        }
+
+        function applyAppModeUI() {
             try {
                 const sidebar = document.getElementById('appSidebar');
                 const backdrop = document.getElementById('sidebarBackdrop');
                 const modeText = document.getElementById('modeText');
                 const modeIcon = document.getElementById('modeIcon');
 
-                if (currentAppMode === 'website') {
-                    currentAppMode = 'apk';
+                if (currentAppMode === 'apk') {
                     if (sidebar) {
                         sidebar.className = 'sidebar-apk glass-card p-4 overflow-y-auto';
                         sidebar.classList.remove('open');
@@ -1180,9 +1241,7 @@
                     if (backdrop) backdrop.classList.add('hidden');
                     if (modeText) modeText.innerText = 'Android APK Mode';
                     if (modeIcon) modeIcon.setAttribute('data-lucide', 'smartphone');
-                    localStorage.setItem('chowdhury_app_mode', 'apk');
                 } else {
-                    currentAppMode = 'website';
                     if (sidebar) {
                         sidebar.className = 'sidebar-website glass-card p-4 overflow-y-auto';
                         sidebar.classList.remove('open');
@@ -1190,9 +1249,21 @@
                     if (backdrop) backdrop.classList.add('hidden');
                     if (modeText) modeText.innerText = 'Website Mode';
                     if (modeIcon) modeIcon.setAttribute('data-lucide', 'monitor');
-                    localStorage.setItem('chowdhury_app_mode', 'website');
                 }
                 if (typeof lucide !== 'undefined') lucide.createIcons();
+            } catch(e) {}
+        }
+
+        function toggleAppMode() {
+            try {
+                if (currentAppMode === 'website') {
+                    currentAppMode = 'apk';
+                    localStorage.setItem('chowdhury_app_mode', 'apk');
+                } else {
+                    currentAppMode = 'website';
+                    localStorage.setItem('chowdhury_app_mode', 'website');
+                }
+                applyAppModeUI();
             } catch(e) {}
         }
 
@@ -1277,6 +1348,7 @@
                             renderStaffTable();
                             renderAttendanceTable();
                             renderItemsEntryTable();
+                            renderPayLaterTable();
                             populateMfgProductDropdown();
                             populatePurchaseSupplierDropdown();
                             populateSalesProductDropdown();
@@ -1416,7 +1488,7 @@
 
         function getDatabaseJSONString() {
             const dbData = {
-                version: "4.33",
+                version: "4.34",
                 exportDate: new Date().toISOString(),
                 balances: systemBalances,
                 products: agroProducts,
@@ -1523,6 +1595,7 @@
                     renderStaffTable();
                     renderAttendanceTable();
                     renderItemsEntryTable();
+                    renderPayLaterTable();
                     closeImportModal();
                     alert("Database successfully restored!");
                 }
@@ -1583,16 +1656,7 @@
                 }
 
                 loadSharedData();
-                const savedMode = localStorage.getItem('chowdhury_app_mode');
-                if (savedMode === 'apk') {
-                    currentAppMode = 'apk';
-                    const sidebar = document.getElementById('appSidebar');
-                    const modeText = document.getElementById('modeText');
-                    const modeIcon = document.getElementById('modeIcon');
-                    if (sidebar) sidebar.className = 'sidebar-apk glass-card p-4 overflow-y-auto';
-                    if (modeText) modeText.innerText = 'Android APK Mode';
-                    if (modeIcon) modeIcon.setAttribute('data-lucide', 'smartphone');
-                }
+                detectDeviceAndSetMode();
 
                 updateClock();
                 renderDashboardBalances();
@@ -1601,6 +1665,7 @@
                 renderStaffTable();
                 renderAttendanceTable();
                 renderItemsEntryTable();
+                renderPayLaterTable();
                 populateSalesProductDropdown();
                 populateSalesCustomerDropdown();
                 populatePurchaseSupplierDropdown();
@@ -1658,7 +1723,7 @@
 
         function switchView(viewName) {
             try {
-                ['view-dashboard', 'view-customers', 'view-items', 'view-staffsuppliers', 'view-attendance', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
+                ['view-dashboard', 'view-customers', 'view-items', 'view-staffsuppliers', 'view-attendance', 'view-manufacturing', 'view-purchases', 'view-sales', 'view-paylater', 'view-expenses', 'view-inventory', 'view-records'].forEach(v => {
                     const el = document.getElementById(v);
                     if (el) {
                         el.classList.add('hidden');
@@ -1671,7 +1736,7 @@
                     void target.offsetWidth;
                     target.classList.add('fade-slide-enter');
 
-                    const navButtons = ['dashboard', 'customers', 'items', 'staffsuppliers', 'attendance', 'manufacturing', 'purchases', 'sales', 'expenses', 'inventory', 'records'];
+                    const navButtons = ['dashboard', 'customers', 'items', 'staffsuppliers', 'attendance', 'manufacturing', 'purchases', 'sales', 'paylater', 'expenses', 'inventory', 'records'];
                     navButtons.forEach(btnKey => {
                         const btn = document.getElementById(`nav-btn-${btnKey}`);
                         if (btn) {
@@ -1685,6 +1750,7 @@
                                     btnKey === 'manufacturing' ? 'bg-purple-500/20 text-purple-300 border-purple-500/40 shadow-purple-500/10' :
                                     btnKey === 'purchases' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
                                     btnKey === 'sales' ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40 shadow-indigo-500/10' :
+                                    btnKey === 'paylater' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-amber-500/10' :
                                     btnKey === 'expenses' ? 'bg-rose-500/20 text-rose-300 border-rose-500/40 shadow-rose-500/10' :
                                     btnKey === 'inventory' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-emerald-500/10' :
                                     'bg-purple-500/20 text-purple-300 border-purple-500/40 shadow-purple-500/10'
@@ -1705,6 +1771,7 @@
                     if (viewName === 'inventory') renderInventoryTable();
                     if (viewName === 'customers') renderCustomersTable();
                     if (viewName === 'items') renderItemsEntryTable();
+                    if (viewName === 'paylater') renderPayLaterTable();
                     if (viewName === 'staffsuppliers') {
                         renderSuppliersTable();
                         renderStaffTable();
@@ -2746,11 +2813,62 @@
                 renderRecordsTable();
                 renderInventoryTable();
                 renderItemsEntryTable();
+                renderPayLaterTable();
                 showReceiptModal(record, cartList);
 
                 cartList = [];
                 renderCart();
                 populateSalesProductDropdown();
+            } catch(e) {}
+        }
+
+        function renderPayLaterTable() {
+            try {
+                const tbody = document.getElementById('payLaterTableBody');
+                const badge = document.getElementById('payLaterCountBadge');
+                if (!tbody) return;
+
+                const dueSales = salesHistory.filter(s => s.paymentMode === 'Pay Later');
+                if (badge) badge.innerText = `${dueSales.length} Dues`;
+
+                if (dueSales.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 italic font-medium">No pending Pay Later dues found.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                dueSales.forEach((rec) => {
+                    const actualIndex = salesHistory.findIndex(s => s.refId === rec.refId);
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
+                            <td class="py-3 pl-3 font-bold text-amber-400 font-mono">${rec.refId}</td>
+                            <td class="py-3 text-slate-300 font-mono text-[11px]">${rec.date}</td>
+                            <td class="py-3 font-semibold text-slate-200">${rec.customer || 'Walk-in Customer'}</td>
+                            <td class="py-3 text-slate-300 max-w-xs truncate" title="${rec.itemsSummary}">${rec.itemsSummary}</td>
+                            <td class="py-3 text-right font-bold text-amber-400 font-mono">${rec.totalValue.toFixed(2)} TK.</td>
+                            <td class="py-3 text-center pr-3">
+                                <button onclick="settlePayLaterDue(${actualIndex})" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Settle Due</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {}
+        }
+
+        function settlePayLaterDue(salesIndex) {
+            try {
+                if (confirm("Mark this Pay Later due as fully paid? This will add the amount to Cash in Hand and clear the due.")) {
+                    const saleRecord = salesHistory[salesIndex];
+                    if (saleRecord) {
+                        saleRecord.paymentMode = 'Cash (Settled)';
+                        systemBalances.cashInHand += saleRecord.totalValue;
+                        saveSharedData();
+                        renderDashboardBalances();
+                        renderPayLaterTable();
+                        renderRecordsTable();
+                        alert("Due settled successfully and added to Cash in Hand!");
+                    }
+                }
             } catch(e) {}
         }
 
