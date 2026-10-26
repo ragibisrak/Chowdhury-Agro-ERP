@@ -1432,7 +1432,7 @@
                 window.githubFileSha = data.sha; // Save SHA required for updates
 
                 systemBalances = parsedDB.balances || systemBalances;
-                agroProducts = parsedDB.products || agroProducts;
+                agroProducts = (parsedDB.products && parsedDB.products.length > 0) ? parsedDB.products : JSON.parse(JSON.stringify(defaultAgroProducts));
                 customerDirectory = parsedDB.customers || customerDirectory;
                 supplierDirectory = parsedDB.suppliers || supplierDirectory;
                 staffDirectory = parsedDB.staff || staffDirectory;
@@ -1476,7 +1476,6 @@
                 const jsonString = JSON.stringify(dbData, null, 2);
                 const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
 
-                // First get latest SHA if not present
                 if (!window.githubFileSha) {
                     const shaRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
                         headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
@@ -1529,7 +1528,10 @@
                 const savedMfg = localStorage.getItem('chowdhury_manufacturing');
 
                 systemBalances = savedBalances ? JSON.parse(savedBalances) : { cashInHand: 0.00, customerDue: 0.00, supplierDue: 0.00 };
-                agroProducts = savedProducts ? JSON.parse(savedProducts) : JSON.parse(JSON.stringify(defaultAgroProducts));
+                
+                let parsedProds = savedProducts ? JSON.parse(savedProducts) : [];
+                agroProducts = (parsedProds && parsedProds.length > 0) ? parsedProds : JSON.parse(JSON.stringify(defaultAgroProducts));
+
                 customerDirectory = savedCustomers ? JSON.parse(savedCustomers) : [{ id: "CUST-1001", name: "Walk-in Customer", phone: "N/A", address: "General Counter", creditLimit: 0 }];
                 supplierDirectory = savedSuppliers ? JSON.parse(savedSuppliers) : [{ id: "SUP-2001", name: "Agro Feed Corp", provides: "Maize, Soybean Meal, 45 kg Cylinder", contact: "Mr. Kamal", phone: "01811223344", address: "Tejgaon" }];
                 staffDirectory = savedStaff ? JSON.parse(savedStaff) : [{ id: "STAFF-3001", name: "Md. Rafiq", role: "Store Keeper", location: "Dhanmondi Branch", phone: "01799887766", salary: 14000 }];
@@ -1570,7 +1572,7 @@
 
         function saveSharedData() {
             saveLocalCache();
-            pushToGitHub(); // Automatically push updates to GitHub in background
+            pushToGitHub();
         }
 
         function initCloudSyncAndLoad() {
