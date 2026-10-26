@@ -1,0 +1,13 @@
+{
+  "version": "4.35",
+  "balances": { "cashInHand": 0, "customerDue": 0, "supplierDue": 0 },
+  "products": [],
+  "customers": [],
+  "suppliers": [],
+  "staff": [],
+  "attendance": [],
+  "purchases": [],
+  "sales": [],
+  "expenses": [],
+  "manufacturing": []
+}
